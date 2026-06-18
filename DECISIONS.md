@@ -13,7 +13,7 @@ Format setiap entry:
 
 ## D-01: Grant — Bounded Context Mandiri atau Sub-domain Fund?
 
-**Status:** `OPEN`
+**Status:** `DECIDED`
 
 **Pertanyaan:**
 Apakah Grant adalah bounded context tersendiri dengan DocType mandiri (Grant, Grant Agreement, Grant Budget Line), atau Grant diabsorb sebagai set atribut tambahan di dalam Fund master ketika Fund Type = Grant Fund?
@@ -30,17 +30,24 @@ Apakah Grant adalah bounded context tersendiri dengan DocType mandiri (Grant, Gr
 - `workflow.md` seksi 7 — Grant lifecycle
 - `domain-brainstorm.md` — ER diagram awal mengasumsikan Opsi A
 
-**Keputusan:** _(belum diisi)_
+**Keputusan:** Opsi A — Grant adalah Bounded Context Mandiri. Grant memiliki DocType sendiri: Grant, Grant Agreement, Grant Budget Line, Grant Reporting Schedule.
 
-**Alasan:** _(belum diisi)_
+**Alasan:** Satu donor bisa punya multiple grant. Grant pipeline perlu dikelola sebelum Fund terbentuk. Lifecycle grant (Pipeline → Awarded → Active → Closed) harus bisa berjalan independent dari Fund lifecycle.
 
-**Implikasi:** Menentukan schema database, jumlah DocType, dan cara transaksi di-link ke grant.
+**Implikasi:**
+- `04-grant-context.md` dikerjakan sesuai Opsi A
+- Relasi: satu Grant menghasilkan satu Grant Fund (di Fund Stewardship). Fund punya FK ke Grant.
+- Transaksi di-link ke: Fund → Grant Budget Line (via Grant)
 
 ---
 
 ## D-02: Formula Fund Balance — Definisi "Committed"
 
-**Status:** `OPEN`
+**Status:** `OPEN — Menunggu klarifikasi`
+
+> **Pertanyaan disederhanakan:** Ketika staf mengajukan Cash Advance atau Purchase Request dan sudah disetujui — apakah budget langsung berkurang (reserved), atau baru berkurang ketika uang benar-benar dibayar?
+>
+> Contoh: Budget travel Rp5 juta. Cash Advance Rp3 juta disetujui tapi belum dibayar. Apakah sisa budget = Rp2 juta (budget sudah dikunci) atau Rp5 juta (belum dikurangi)?
 
 **Pertanyaan:**
 Apa saja yang masuk ke komponen "Committed" dalam formula:
@@ -71,7 +78,7 @@ Available Budget = Approved Budget − Committed − Actual
 
 ## D-03: Target Versi ERPNext
 
-**Status:** `OPEN`
+**Status:** `DECIDED`
 
 **Pertanyaan:**
 ERPNext versi berapa yang menjadi target minimum Fundara?
@@ -84,17 +91,20 @@ ERPNext versi berapa yang menjadi target minimum Fundara?
 | ERPNext v15 | Stable, community support aktif | Bank reconciliation lebih baik, accounting dimensions lebih mature |
 | ERPNext v16 | Stable, terbaru | API terbaru, tapi ekosistem plugin belum semua update |
 
-**Keputusan:** _(belum diisi)_
+**Keputusan:** ERPNext v16 (versi terbaru stabil).
 
-**Alasan:** _(belum diisi)_
+**Alasan:** Menggunakan versi terbaru menghindari technical debt sejak awal. Bank reconciliation dan accounting dimensions di v16 lebih mature.
 
-**Implikasi:** Menentukan cara konfigurasi accounting dimensions, fitur bank reconciliation yang tersedia, dan API yang digunakan untuk custom DocType.
+**Implikasi:**
+- Semua DocType design dan API mengacu dokumentasi v16
+- Minimum Python 3.11+, Node 18+
+- Pastikan library dependencies Fundara kompatibel dengan Frappe v16
 
 ---
 
 ## D-04: Multi-currency — Masuk MVP atau Tidak?
 
-**Status:** `OPEN`
+**Status:** `DECIDED`
 
 **Pertanyaan:**
 Apakah Fundara mendukung transaksi multi-currency (misalnya grant dalam USD, pengeluaran dalam IDR) di MVP, atau hanya single-currency?
@@ -114,15 +124,23 @@ Banyak NGO Indonesia menerima grant dalam USD atau EUR dan melaporkannya ke dono
 | B — Multi-currency di MVP | Mendukung USD, EUR, IDR dari awal. Kompleksitas tinggi tapi menghindari refactor besar. |
 | C — Partial multi-currency | Fund master bisa dalam berbagai currency, tapi konversi ke IDR dilakukan manual saat entry. Tidak ada auto exchange rate. |
 
-**Keputusan:** _(belum diisi)_
+**Keputusan:** Opsi B — Multi-currency masuk MVP.
 
-**Implikasi:** Menentukan desain journal entry, laporan donor, dan apakah ERPNext multi-currency fitur diaktifkan atau tidak.
+**Alasan:** NGO Indonesia yang menerima grant dari donor internasional (UNICEF, EU, USAID) membutuhkan ini dari hari pertama. Menambahkan multi-currency setelah MVP akan membutuhkan refactor besar pada journal entry dan laporan donor.
+
+**Implikasi:**
+- Aktifkan ERPNext Multi-Currency feature dari awal
+- Setiap transaksi harus menyimpan: currency, exchange rate, amount in transaction currency, amount in base currency (IDR)
+- Fund master menyimpan currency fund
+- Laporan donor dapat ditarik dalam currency fund, laporan internal dalam IDR
+- Perlu spec tambahan: bagaimana exchange rate ditentukan (manual input per transaksi, atau ambil dari ERPNext Currency Exchange master?)
+- Unrealized gain/loss dicatat sebagai journal entry periodik (bukan per transaksi)
 
 ---
 
 ## D-05: Source of Truth untuk Accounting Specification
 
-**Status:** `OPEN`
+**Status:** `DECIDED`
 
 **Pertanyaan:**
 Antara `docs/accounting/` (12 file terpisah per topik) dan `fundara-domain-contexts/06-financial-accountability-context.md` (satu file komprehensif), mana yang menjadi canonical source untuk spec accounting?
@@ -138,17 +156,23 @@ Kedua sumber menduplikasi konten yang sama (advance lifecycle, bank reconciliati
 | B — `06-financial-accountability-context.md` adalah canonical | File `docs/accounting/` diarsip atau dihapus | Satu file besar, lebih mudah dijaga konsistensinya. |
 | C — Pisahkan by concern | Domain context = konseptual/domain logic. `docs/accounting/` = implementasi detail dan edge case. | Keduanya dipertahankan tapi dengan scope berbeda dan tidak duplikasi. |
 
-**Rekomendasi:** Opsi C — pisahkan dengan jelas antara domain logic (di domain context) dan implementation spec (di docs/accounting/).
+**Keputusan:** Opsi C — pisahkan by concern.
 
-**Keputusan:** _(belum diisi)_
+**Alasan:** Keduanya memiliki nilai yang berbeda. Domain context menjelaskan *mengapa* dan *apa* (konseptual). `docs/accounting/` menjelaskan *bagaimana* (implementasi detail, edge case, aturan akuntansi). Tidak perlu memilih salah satu — cukup bedakan scope-nya dengan jelas.
 
-**Implikasi:** Developer perlu tahu "baca yang mana" untuk setiap pertanyaan. Harus ada README yang menjelaskan struktur dokumen.
+**Aturan yang berlaku mulai sekarang:**
+- `fundara-domain-contexts/06-financial-accountability-context.md` = **domain logic** — entitas, relasi, lifecycle status, aturan bisnis
+- `docs/accounting/*.md` = **implementation spec** — format field, edge case, formula, aturan akuntansi detail, contoh jurnal
+- Jika ada konflik antara keduanya, **domain context adalah yang benar** untuk lifecycle dan aturan bisnis; `docs/accounting/` adalah yang benar untuk detail akuntansi
+- Setiap `docs/accounting/` file harus memiliki referensi ke domain context terkait
+
+**Implikasi:** Perlu audit `docs/accounting/` untuk memastikan tidak ada lifecycle status yang berbeda dari domain context. (Sudah dimulai: advance lifecycle sudah diselaraskan.)
 
 ---
 
 ## D-06: Multi-tenancy Strategy untuk v1.0
 
-**Status:** `OPEN`
+**Status:** `DEFERRED — Diputuskan sebelum v1.0 release`
 
 **Pertanyaan:**
 Bagaimana Fundara di-deploy untuk multiple organisasi?
@@ -169,13 +193,16 @@ Bagaimana Fundara di-deploy untuk multiple organisasi?
 
 ---
 
-## Keputusan yang Sudah Dibuat
+## Ringkasan Status
 
-_(kosong untuk saat ini — isi setelah diskusi tim)_
-
-| ID | Keputusan | Tanggal | Diputuskan oleh |
+| ID | Topik | Status | Keputusan Singkat |
 |---|---|---|---|
-| — | — | — | — |
+| D-01 | Grant — bounded context atau sub-domain? | `DECIDED` | Bounded context mandiri (Opsi A) |
+| D-02 | Formula Committed | `OPEN` | Menunggu klarifikasi — lihat pertanyaan di atas |
+| D-03 | Versi ERPNext | `DECIDED` | ERPNext v16 |
+| D-04 | Multi-currency di MVP? | `DECIDED` | Ya, masuk MVP (Opsi B) |
+| D-05 | Source of truth accounting spec | `DECIDED` | Pisahkan by concern (Opsi C) |
+| D-06 | Multi-tenancy strategy | `DEFERRED` | Diputuskan sebelum v1.0 release |
 
 ---
 
