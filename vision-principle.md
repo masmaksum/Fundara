@@ -393,7 +393,7 @@ Implikasi:
 
 ### 9.2 Local-first, Global-ready
 
-Fundara harus mampu menjawab kebutuhan lokal, seperti bahasa, mata uang, regulasi, format laporan, praktik donor lokal, dan konteks organisasi kecil-menengah. Namun arsitekturnya tetap harus cukup umum agar dapat digunakan di berbagai negara.
+Fundara harus mampu menjawab kebutuhan lokal, seperti bahasa, mata uang, regulasi, format laporan, praktik donor lokal, dan konteks organisasi kecil-menengah. Namun arsitekturnya tetap harus cukup umum agar dapat digunakan di Indonesia dengan donor dari berbagai negara.
 
 Implikasi:
 
@@ -402,7 +402,7 @@ Implikasi:
 - konfigurasi mata uang dan fiscal year;
 - istilah dapat disesuaikan;
 - dokumentasi dapat diterjemahkan;
-- tidak mengunci desain hanya untuk satu negara.
+- tidak mengunci desain hanya untuk satu negara donor.
 
 ### 9.3 Dokumentasi adalah Bagian dari Produk
 
