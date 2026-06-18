@@ -57,11 +57,15 @@ Laporan utama yang perlu didukung:
 
 ```text
 Laporan Posisi Keuangan
-Laporan Penghasilan Komprehensif / Laporan Aktivitas
+Laporan Aktivitas
 Laporan Perubahan Aset Neto
 Laporan Arus Kas
-Catatan atas Laporan Keuangan
+Catatan atas Laporan Keuangan (CALK)
 ```
+
+> **Catatan nama laporan:** ISAK 35 memperbolehkan dua nama untuk laporan kedua — "Laporan Aktivitas" atau "Laporan Penghasilan Komprehensif". Fundara menggunakan **"Laporan Aktivitas"** sebagai default karena lebih lazim di konteks NGO Indonesia. Organisasi dapat mengkonfigurasi nama laporan sesuai preferensi auditor atau standar internal mereka.
+>
+> **Catatan CALK:** Fundara menyediakan data CALK (tabel rincian, angka, dan schedule) yang dapat diekspor. Narasi kebijakan akuntansi dan penjelasan pos tetap ditulis oleh akuntan organisasi.
 
 ### 3.2 FASB ASC 958 / ASU 2016-14 sebagai rujukan konseptual global
 
@@ -475,8 +479,24 @@ Atribut konseptual:
 Status cash advance:
 
 ```text
-Requested → Approved → Paid → Pending Liquidation → Liquidation Submitted → Reviewed → Closed
+Draft → Submitted → Under Review → Approved → Paid → Pending Liquidation → Overdue → Liquidated → Closed → Rejected → Cancelled
 ```
+
+Keterangan status:
+
+| Status | Keterangan |
+|---|---|
+| Draft | Pengajuan sedang disusun pemohon |
+| Submitted | Pengajuan disubmit ke supervisor |
+| Under Review | Sedang direview Finance |
+| Approved | Advance disetujui, siap dicairkan |
+| Paid | Dana sudah dibayarkan ke pemohon |
+| Pending Liquidation | Menunggu pertanggungjawaban dari pemohon |
+| Overdue | Batas waktu pertanggungjawaban terlampaui |
+| Liquidated | Pertanggungjawaban disubmit, sedang direview Finance |
+| Closed | Advance selesai, semua disettle (termasuk refund/reimbursement) |
+| Rejected | Pengajuan ditolak |
+| Cancelled | Advance dibatalkan sebelum dibayarkan |
 
 ---
 

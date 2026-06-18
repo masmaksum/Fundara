@@ -149,8 +149,22 @@ Atribut konseptual:
 Status campaign:
 
 ```text
-Draft → Active → Paused → Completed → Closed
+Draft → Under Review → Approved → Active → Paused → Completed → Reporting → Closed → Cancelled
 ```
+
+Keterangan status:
+
+| Status | Keterangan |
+|---|---|
+| Draft | Campaign sedang disusun, belum diajukan |
+| Under Review | Campaign diajukan untuk direview Finance/Fundraising |
+| Approved | Campaign disetujui, siap diluncurkan |
+| Active | Campaign aktif menerima donasi |
+| Paused | Campaign dijeda sementara |
+| Completed | Periode campaign berakhir, donasi ditutup |
+| Reporting | Laporan campaign sedang disusun |
+| Closed | Campaign selesai, laporan final disubmit |
+| Cancelled | Campaign dibatalkan sebelum aktif |
 
 ---
 

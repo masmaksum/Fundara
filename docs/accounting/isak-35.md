@@ -45,7 +45,9 @@ Laporan ini menunjukkan:
 
 Fundara perlu memastikan saldo laporan ini bersumber dari general ledger dan fund dimension.
 
-## 5. Laporan Penghasilan Komprehensif / Aktivitas
+## 5. Laporan Aktivitas
+
+> **Nama standar Fundara:** "Laporan Aktivitas" (alias: Laporan Penghasilan Komprehensif). ISAK 35 memperbolehkan kedua nama. Fundara menggunakan "Laporan Aktivitas" sebagai default.
 
 Laporan ini menunjukkan perubahan aset neto selama periode tertentu.
 

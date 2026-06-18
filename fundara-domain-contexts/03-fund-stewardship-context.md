@@ -87,31 +87,36 @@ Draft → Active → Suspended → Closing → Closed
 
 ### 4.2 Fund Type
 
-Kategori fund yang menentukan perilaku dasar.
+Kategori fund yang menentukan perilaku dasar. Ini adalah daftar canonical Fund Type di Fundara.
 
-Contoh:
+| Fund Type | Sumber Dana | Restricted? | Masuk MVP? | Keterangan |
+|---|---|---|---|---|
+| Grant Fund | Institutional donor / grant agreement | Ya (restricted) | Ya | Ada donor agreement, budget line donor, reporting schedule |
+| Campaign Fund | Fundraising publik / donasi bertujuan | Ya (restricted) | Ya | Ada public accountability requirement |
+| Unrestricted Fund | Donasi umum, membership, misc | Tidak | Ya | Fleksibel, mengikuti kebijakan internal |
+| Business Surplus Fund | Surplus unit usaha | Tidak (board policy) | Ya | Berasal dari perhitungan surplus BU |
+| Reserve Fund | Surplus yang disisihkan, board decision | Board-designated | Ya | Cadangan operasional atau emergency |
+| Co-funding Fund | Unrestricted / BU surplus | Tergantung konteks | Ya | Untuk matching fund atau kontribusi lokal |
+| Bridging Fund | Unrestricted / Reserve (sementara) | Internal | Ya | Dana talangan sementara sebelum grant cair |
+| Board-designated Fund | Unrestricted yang di-designate board | Board-designated | Ya | Secara hukum unrestricted, tapi tujuan ditetapkan board |
+| Endowment Fund | Hibah abadi / wakaf produktif | Ya (principal) | Tidak (post-MVP) | Principal tidak boleh digunakan, hanya return-nya |
 
-- Grant Fund: memiliki donor, grant agreement, budget line donor, reporting schedule.
-- Campaign Fund: memiliki campaign purpose dan public accountability report.
-- Unrestricted Fund: lebih fleksibel, mengikuti kebijakan internal.
-- Business Surplus Fund: berasal dari surplus unit usaha.
-- Reserve Fund: digunakan untuk cadangan atau emergency.
-- Bridging Fund: digunakan untuk dana talangan sementara.
+> **Catatan:** `README.md` dan versi awal dokumen hanya menyebut 6 jenis Fund Type. Daftar di atas adalah daftar lengkap yang digunakan sebagai referensi canonical. Untuk MVP, 8 tipe pertama cukup — Endowment Fund akan ditambahkan di versi selanjutnya karena implikasi akuntingnya berbeda (perpetual principal).
 
 ---
 
 ### 4.3 Fund Restriction
 
-Aturan pembatasan penggunaan fund.
+Aturan pembatasan penggunaan fund. Fundara menggunakan 4 tipe restriction canonical berikut:
 
-Jenis restriction:
+| Restriction Type | Definisi | Contoh |
+|---|---|---|
+| Restricted | Dana hanya boleh dipakai untuk tujuan tertentu yang ditetapkan donor/pemberi | Grant donor, wakaf untuk aset tertentu |
+| Temporarily Restricted | Dana dibatasi sampai kondisi atau periode tertentu terpenuhi | Campaign fund yang belum selesai dipakai, pledge belum dicairkan |
+| Unrestricted | Dana dapat dipakai untuk misi organisasi secara umum | Donasi umum, surplus unit usaha |
+| Board-designated | Secara hukum unrestricted, tetapi manajemen/board menetapkan tujuan internal | Emergency reserve, innovation fund |
 
-- restricted
-- temporarily restricted
-- unrestricted
-- board-designated
-- donor-designated
-- campaign-designated
+> **Catatan terminologi:** Donor-designated dan campaign-designated adalah **sub-karakteristik** dari Restricted (bukan tipe restriction terpisah). Informasi ini dicatat sebagai atribut pada Fund master (donor atau campaign yang menetapkan restriction), bukan sebagai tipe restriction yang berbeda.
 
 Atribut konseptual:
 
@@ -359,12 +364,15 @@ Start Fund Closing
 |---|---|
 | Funding Context | Funding source menciptakan Fund |
 | Organization Context | Fund memiliki owner, responsible unit, dan approval authority |
+| **Grant Context** | Grant Fund memiliki sub-context tersendiri: donor agreement, budget line donor, reporting schedule, grant lifecycle. Lihat `04-grant-context.md` |
 | Mission Delivery Context | Fund dialokasikan ke program, project, dan activity |
 | Financial Accountability Context | Transaction memakai fund sebagai dimensi utama |
 | Procurement & Operations Context | Procurement request mengecek fund availability dan restriction |
 | Evidence & Compliance Context | Fund menentukan evidence dan compliance requirement |
 | Reporting Context | Fund menghasilkan fund utilization report |
 | Impact & Learning Context | Fund dihubungkan ke output dan outcome melalui activity |
+
+> **Catatan Grant Lifecycle:** Lifecycle status untuk Grant (Pipeline → Submitted → Awarded → Agreement Review → Active → Extended → Suspended → Closing → Closed → Rejected → Cancelled) didefinisikan di `workflow.md` seksi 7.3 dan akan dielaborasi di `04-grant-context.md`.
 
 ---
 
