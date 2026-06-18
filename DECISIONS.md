@@ -43,36 +43,32 @@ Apakah Grant adalah bounded context tersendiri dengan DocType mandiri (Grant, Gr
 
 ## D-02: Formula Fund Balance — Definisi "Committed"
 
-**Status:** `OPEN — Menunggu klarifikasi`
+**Status:** `DECIDED`
 
 > **Pertanyaan disederhanakan:** Ketika staf mengajukan Cash Advance atau Purchase Request dan sudah disetujui — apakah budget langsung berkurang (reserved), atau baru berkurang ketika uang benar-benar dibayar?
->
-> Contoh: Budget travel Rp5 juta. Cash Advance Rp3 juta disetujui tapi belum dibayar. Apakah sisa budget = Rp2 juta (budget sudah dikunci) atau Rp5 juta (belum dikurangi)?
 
-**Pertanyaan:**
-Apa saja yang masuk ke komponen "Committed" dalam formula:
+**Keputusan:** Budget berkurang setelah dibayar. Tidak ada commitment layer.
+
+Formula yang berlaku:
+
 ```
-Available Budget = Approved Budget − Committed − Actual
+Available Budget = Approved Budget − Actual
 ```
 
-**Opsi yang perlu diputuskan:**
+di mana Actual = transaksi yang sudah menghasilkan payment (Cash Advance Paid, Purchase Invoice dibayar).
 
-| DocType | Masuk Committed? | Pada Status Apa? | Kapan Dilepas? |
-|---|---|---|---|
-| Purchase Request | Ya / Tidak | Approved? Submitted? | Saat PO dibuat? |
-| Purchase Order | Ya / Tidak | Submitted? Approved? | Saat Invoice diposting? |
-| Cash Advance | Ya / Tidak | Approved? Paid? | Saat Liquidated? Closed? |
-| Travel Request | Ya / Tidak | Approved? | Saat Advance dibuat? |
-| Contract | Ya / Tidak | Signed? | Saat Invoice diposting? |
+**Implikasi implementasi:**
 
-**Referensi:**
-- `README.md` seksi 10 — menyebut formula tapi tanpa definisi teknis Committed
-- `fundara-domain-contexts/03-fund-stewardship-context.md` seksi 4.7 — Fund Balance components
-- `workflow.md` — approval matrix
+| DocType | Pengaruh ke Budget |
+|---|---|
+| Purchase Request | Tidak mengurangi budget |
+| Purchase Order | Tidak mengurangi budget |
+| Cash Advance (Approved, belum Paid) | Tidak mengurangi budget |
+| Cash Advance (Paid) | Mengurangi budget |
+| Purchase Invoice (posted) | Mengurangi budget |
+| Payment Entry | Mengurangi budget (jika linked ke invoice) |
 
-**Keputusan:** _(belum diisi — isi tabel di atas untuk setiap DocType)_
-
-**Implikasi:** Menentukan kapan ERPNext Budget module di-hook, dan apakah perlu custom script untuk commitment tracking.
+**Catatan risiko:** Tanpa commitment layer, ada kemungkinan overspending jika beberapa request disetujui bersamaan dari budget yang sama sebelum ada yang dibayar. Sistem perlu menampilkan "Pending Payment" (approved tapi belum paid) sebagai informasi di dashboard — bukan sebagai pengurang budget, tapi sebagai peringatan — agar Finance Officer sadar ada antrean pembayaran.
 
 ---
 
@@ -198,7 +194,7 @@ Bagaimana Fundara di-deploy untuk multiple organisasi?
 | ID | Topik | Status | Keputusan Singkat |
 |---|---|---|---|
 | D-01 | Grant — bounded context atau sub-domain? | `DECIDED` | Bounded context mandiri (Opsi A) |
-| D-02 | Formula Committed | `OPEN` | Menunggu klarifikasi — lihat pertanyaan di atas |
+| D-02 | Formula Committed | `DECIDED` | Available = Approved Budget − Actual (paid only) |
 | D-03 | Versi ERPNext | `DECIDED` | ERPNext v16 |
 | D-04 | Multi-currency di MVP? | `DECIDED` | Ya, masuk MVP (Opsi B) |
 | D-05 | Source of truth accounting spec | `DECIDED` | Pisahkan by concern (Opsi C) |
