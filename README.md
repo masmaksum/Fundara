@@ -1775,3 +1775,43 @@ Minimum modules:
 
 Dengan MVP ini, organisasi sudah dapat mengelola dana dari berbagai sumber dan menghubungkannya dengan project, aktivitas, transaksi, bukti, serta laporan pertanggungjawaban.
 
+---
+
+## 27. Untuk Developer
+
+Bagian ini adalah panduan singkat bagi developer yang baru bergabung. Untuk panduan lengkap termasuk setup environment dan konvensi koding, baca `CONTRIBUTING.md`.
+
+### 27.1 Urutan Baca Sebelum Mulai Coding
+
+Baca dokumen berikut dalam urutan ini sebelum menyentuh kode:
+
+| Urutan | Dokumen | Tujuan |
+|---|---|---|
+| 1 | `README.md` (dokumen ini) | Pahami masalah yang diselesaikan dan konsep fund-centric |
+| 2 | `DECISIONS.md` | 6 keputusan arsitektur yang tidak boleh diulang diskusinya |
+| 3 | `READINESS.md` | Peta seluruh dokumen dan status kesiapannya |
+| 4 | `roadmap.md` | Apa yang masuk MVP dan apa yang tidak |
+| 5 | `arsitektur.md` | Stack tech, struktur custom app, deployment |
+| 6 | Domain context yang relevan dengan tugas pertama kamu | Entitas, lifecycle, business rules per domain |
+
+### 27.2 Dokumen untuk Task Spesifik
+
+| Task | Dokumen yang dipakai |
+|---|---|
+| Membuat atau memodifikasi DocType | `docs/spec/doctypes/[XX]-*.md` |
+| Menulis server script untuk posting GL | `docs/accounting/journal-entries.md` |
+| Setup atau memodifikasi Frappe Workflow | `docs/spec/workflows.md` |
+| Setup Role Permission Manager | `docs/spec/permissions.md` |
+| Implementasi logika multi-currency | `docs/spec/multicurrency.md` |
+| Implementasi split expense / cost sharing | `docs/spec/cost-sharing.md` |
+| Menulis test case atau skenario QA | `docs/spec/test-scenarios.md` |
+| Memahami business rules suatu domain | `fundara-domain-contexts/[XX]-*.md` |
+| Ragu soal keputusan desain | `DECISIONS.md` — cek dulu sebelum membuat keputusan baru |
+
+### 27.3 Catatan Penting
+
+- **`DECISIONS.md` adalah otoritas tertinggi** untuk keputusan arsitektur. Jika ada konflik antara dokumen lain dan DECISIONS.md, ikuti DECISIONS.md.
+- README ini adalah dokumen konseptual. Beberapa rumus di README (misalnya formula budget di seksi 10) sudah diperbarui keputusannya — lihat D-02 di DECISIONS.md untuk formula yang berlaku.
+- Setiap DocType yang dibuat harus memiliki field `fund` (Link ke Fund) jika DocType tersebut terlibat dalam transaksi keuangan.
+- Multi-currency wajib dari hari pertama (D-04). Setiap field Currency harus disertai field `currency` (Link ke Currency) dan `exchange_rate` (Float).
+
