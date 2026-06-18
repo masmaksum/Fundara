@@ -1,8 +1,8 @@
 # Domain Model Fundara
 
-Untuk **Fundara — Mission Impact Platform**, domain model yang cocok sebaiknya tidak dimulai dari modul ERP seperti Accounting, Purchase, Sales, atau HR. Domain model harus dimulai dari **misi, dana, aktivitas, akuntabilitas, dan dampak**.
+**Fundara — Mission Impact Platform**, domain model yang cocok sebaiknya tidak dimulai dari modul ERP seperti Accounting, Purchase, Sales, atau HR. Domain model harus dimulai dari **misi, dana, aktivitas, akuntabilitas, dan dampak**.
 
-Kita memakai pendekatan:
+Disini memakai pendekatan:
 
 > **Funding → Allocation → Mission Delivery → Accountability → Impact**
 
@@ -1188,7 +1188,7 @@ MVP harus bisa menjawab:
 
 Untuk dokumentasi teknis, kita bisa tulis seperti ini:
 
-```mermaid id="dwe8i3"
+```mermaid
 erDiagram
     ORGANIZATION ||--o{ OFFICE : has
     ORGANIZATION ||--o{ DEPARTMENT : has
@@ -1307,7 +1307,7 @@ Fund → Activity → Output → Outcome → Impact
 
 ---
 
-Kesimpulan awal saya:
+Kesimpulan awal:
 
 > Domain model Fundara sebaiknya berpusat pada **Fund**, lalu menghubungkan Fund ke **Project, Activity, Transaction, Evidence, Report, dan Impact Indicator**.
 
