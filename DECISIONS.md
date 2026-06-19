@@ -185,7 +185,30 @@ Bagaimana Fundara di-deploy untuk multiple organisasi?
 
 **Keputusan:** _(belum diisi)_
 
-**Implikasi:** Menentukan cara deployment script, cara update, dan apakah SaaS model yang shared-infrastructure bisa dikejar di versi selanjutnya.
+**Alasan penundaan (konteks penting):**
+
+Multi-tenancy ditunda bukan hanya karena kompleksitas teknis deployment, tetapi karena alasan domain yang lebih mendasar:
+
+> Setiap organisasi memiliki SOP tersendiri yang bisa berbeda dari workflow default Fundara. Workflow yang sudah didefinisikan di `docs/spec/workflows.md` adalah **template default** — bukan aturan baku yang bisa diterapkan secara menyeluruh ke semua organisasi.
+
+Implikasi desain yang harus dijaga sejak MVP:
+
+1. **Workflow harus modular dan dapat dikonfigurasi per organisasi** — approval threshold, jumlah approval level, dan urutan state transition tidak boleh di-hardcode. Semua harus bisa diubah via Frappe Workflow configuration tanpa ubah kode.
+
+2. **SOP organisasi ≠ workflow default Fundara** — ketika sebuah organisasi onboarding, mereka membawa SOP mereka sendiri. Fundara menyediakan template sebagai titik awal, bukan keharusan.
+
+3. **One site per org (Opsi A) mendukung ini secara alami** — setiap site bisa punya konfigurasi workflow berbeda tanpa mempengaruhi organisasi lain.
+
+4. **Workflow di `docs/spec/workflows.md` berlabel "Template Default"** — developer tidak boleh mengimplementasikannya sebagai fixed logic. Implementasikan sebagai Frappe Workflow fixture yang bisa di-override per site.
+
+**Implikasi untuk developer:**
+- Jangan hardcode approval logic di server script — gunakan Frappe Workflow engine
+- Semua threshold (nilai approval, jumlah approver) harus ada di konfigurasi, bukan di kode
+- Buat setiap workflow bisa diaktifkan/dinonaktifkan per site tanpa ubah kode aplikasi
+
+**Implikasi untuk MVP:**
+- Workflow fixture dibuat sebagai default yang bisa di-import saat onboarding organisasi baru
+- Perlu ada "Fundara Setup Wizard" atau onboarding checklist yang memandu organisasi mengkonfigurasi workflow sesuai SOP mereka
 
 ---
 
@@ -198,7 +221,7 @@ Bagaimana Fundara di-deploy untuk multiple organisasi?
 | D-03 | Versi ERPNext | `DECIDED` | ERPNext v16 |
 | D-04 | Multi-currency di MVP? | `DECIDED` | Ya, masuk MVP (Opsi B) |
 | D-05 | Source of truth accounting spec | `DECIDED` | Pisahkan by concern (Opsi C) |
-| D-06 | Multi-tenancy strategy | `DEFERRED` | Diputuskan sebelum v1.0 release |
+| D-06 | Multi-tenancy strategy | `DEFERRED` | One site per org (Opsi A direkomendasikan). Workflow = template default, bukan aturan baku — setiap org punya SOP sendiri |
 
 ---
 
