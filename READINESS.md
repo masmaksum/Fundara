@@ -162,6 +162,12 @@ Gap yang ditutup:
 | `DECISIONS.md` | Tambah D-07 (OPEN) — keputusan scope frontend FE-04 (7 print format, ~14 hari) dan FE-05 (7 role dashboard, ~14 hari). Rekomendasi Opsi C: keduanya ke v0.2. Deadline: sebelum Sprint 4. |
 | `docs/pm/d07-decision-brief.html` | Dokumen presentasi interaktif untuk Product Owner — cost meter visual per opsi, tiga alasan rekomendasi, tombol keputusan dengan ringkasan konsekuensi. |
 
+**Governance Documents — Critical (sesi 7 lanjutan):**
+
+| File | Isi |
+|---|---|
+| `docs/security/is-policy.md` | Kebijakan Keamanan Informasi formal (ISP-001 v1.0) — 12 area kebijakan, tujuan terukur, peran & tanggung jawab, pelanggaran, pengecualian, jadwal review tahunan, blok tanda tangan Pimpinan. Menutup gap CRITICAL #1 ISO 27001 (Klausul 5.2, A.5.1). |
+
 ---
 
 ## Status per Area
@@ -210,6 +216,7 @@ Gap yang ditutup:
 | Multi-tenancy strategy (D-06) | DEFERRED — diputuskan sebelum v1.0 release |
 | PM: client script overhead per FG (~14 hari) | Siap — tercatat di `docs/pm/complexity.md` § Client Script Track |
 | PM: keputusan D-07 frontend MVP scope | OPEN — presentasi disiapkan (`docs/pm/d07-decision-brief.html`), menunggu keputusan PO sebelum Sprint 4 |
+| Governance: IS Policy formal (ISP-001) | Siap — `docs/security/is-policy.md`. **Menunggu tanda tangan Pimpinan (PO) untuk berlaku efektif.** |
 
 ---
 
