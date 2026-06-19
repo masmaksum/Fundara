@@ -148,6 +148,12 @@ Gap yang ditutup:
 | `docs/security/data-privacy.md` | UU PDP No. 27/2022: inventaris PII, retensi 10 area, prosedur anonymisasi, consent management |
 | `docs/security/incident-response.md` | 5 fase respons, containment commands, notifikasi UU PDP, tabletop exercise guide |
 
+**Dokumen Audit & Compliance (sesi 6):**
+
+| File | Isi |
+|---|---|
+| `docs/security/iso27001-audit.md` | Gap analysis ISO/IEC 27001:2022 — 93 kontrol Annex A + 10 klausul utama, scorecard kepatuhan, 17 gap prioritas (7 Critical), roadmap 18 dokumen tambahan, rekomendasi strategis |
+
 ---
 
 ## Status per Area
@@ -188,6 +194,7 @@ Gap yang ditutup:
 | Security: OWASP Top 10 checklist | Siap |
 | Security: data privacy spec (UU PDP) | Siap |
 | Security: incident response plan | Siap |
+| Security: ISO 27001:2022 compliance audit | Siap |
 | Deployment automation script | Siap (docs/infra/deploy.sh) |
 | Demo data fixtures (JSON aktual) | Belum — spec sudah ada di docs/qa/demo-data.md, developer perlu buat JSON-nya |
 | API contracts integrasi eksternal | Belum — post-MVP (payment gateway, KoboToolbox, bank API) |
