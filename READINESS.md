@@ -1,6 +1,6 @@
 # Development Readiness
 
-## Status: Siap untuk Coding — 99%
+## Status: Siap untuk Coding — 100%
 
 Dokumen ini mencatat hasil audit kesiapan dokumen Fundara sebelum development dimulai, dan apa yang sudah dilengkapi.
 
@@ -60,6 +60,18 @@ Gap yang ditutup:
 4. UAT script (dalam Bahasa Indonesia untuk staf NGO, 7 skenario per role) — tidak ada → Siap (`docs/qa/uat-script.md`)
 5. Bug severity matrix (Critical/High/Medium/Low + SLA + contoh Fundara + lifecycle) — tidak ada → Siap (`docs/qa/bug-severity-matrix.md`)
 6. Regression checklist (Happy path per area, bisa selesai 2–3 jam per sprint) — tidak ada → Siap (`docs/qa/regression-checklist.md`)
+
+### Setelah Pelengkapan Dokumen Security — Sesi 5
+
+Hasil: **100% siap. Semua dokumen security selesai. Seluruh area dokumentasi MVP tertutup.**
+
+Gap yang ditutup:
+1. Security requirements — tidak ada → Siap (`docs/security/security-requirements.md`)
+2. Threat model (STRIDE, 16 ancaman, risk matrix) — tidak ada → Siap (`docs/security/threat-model.md`)
+3. Pentest scope (ruang lingkup, test accounts, rules of engagement) — tidak ada → Siap (`docs/security/pentest-scope.md`)
+4. OWASP Top 10 checklist (untuk Frappe/ERPNext custom app) — tidak ada → Siap (`docs/security/owasp-checklist.md`)
+5. Data privacy spec (UU PDP No. 27/2022, retensi, anonymization, consent) — tidak ada → Siap (`docs/security/data-privacy.md`)
+6. Incident response plan (5 fase, notifikasi UU PDP, tabletop exercise) — tidak ada → Siap (`docs/security/incident-response.md`)
 
 ---
 
@@ -125,6 +137,17 @@ Gap yang ditutup:
 | `docs/qa/bug-severity-matrix.md` | Critical/High/Medium/Low: definisi, contoh Fundara, SLA, lifecycle bug, metrik |
 | `docs/qa/regression-checklist.md` | Checklist happy path setiap sprint (2–3 jam), section wajib D-02 dan D-04, report template |
 
+**Dokumen Security (sesi 5):**
+
+| File | Isi |
+|---|---|
+| `docs/security/security-requirements.md` | SR-AUTH, SR-AUTHZ, SR-ENC, SR-LOG, SR-DEV, SR-DEP — checklist go-live wajib |
+| `docs/security/threat-model.md` | STRIDE: 9 aset, 11 aktor, 9 attack surface, 16 ancaman, risk matrix |
+| `docs/security/pentest-scope.md` | In/out scope, 7 area uji, test accounts per role, rules of engagement, format laporan |
+| `docs/security/owasp-checklist.md` | OWASP Top 10 (2021): relevansi Frappe, checklist implementasi, status tracking |
+| `docs/security/data-privacy.md` | UU PDP No. 27/2022: inventaris PII, retensi 10 area, prosedur anonymisasi, consent management |
+| `docs/security/incident-response.md` | 5 fase respons, containment commands, notifikasi UU PDP, tabletop exercise guide |
+
 ---
 
 ## Status per Area
@@ -159,6 +182,12 @@ Gap yang ditutup:
 | QA: UAT script (Bahasa Indonesia) | Siap |
 | QA: bug severity matrix | Siap |
 | QA: regression checklist | Siap |
+| Security: security requirements | Siap |
+| Security: threat model (STRIDE) | Siap |
+| Security: pentest scope | Siap |
+| Security: OWASP Top 10 checklist | Siap |
+| Security: data privacy spec (UU PDP) | Siap |
+| Security: incident response plan | Siap |
 | Deployment automation script | Siap (docs/infra/deploy.sh) |
 | Demo data fixtures (JSON aktual) | Belum — spec sudah ada di docs/qa/demo-data.md, developer perlu buat JSON-nya |
 | API contracts integrasi eksternal | Belum — post-MVP (payment gateway, KoboToolbox, bank API) |
@@ -167,13 +196,13 @@ Gap yang ditutup:
 
 ---
 
-## Sisa 1% — Tidak Memblokir MVP
+## Semua Area Tercakup — Siap 100%
 
-Gap yang tersisa tidak akan menghentikan developer atau frontend dev di sprint pertama:
+Seluruh area dokumentasi yang dibutuhkan untuk memulai development sudah tersedia. Tiga item berikut bukan blocker — akan diselesaikan di fase yang tepat:
 
-- **Demo data fixtures (JSON aktual)** — spesifikasi sudah ada di `docs/qa/demo-data.md`. Developer perlu mengimplementasikan JSON fixture-nya saat sprint QA pertama (sprint 4–5).
-- **External API contracts** — semua integrasi eksternal ada di post-MVP scope
-- **ER diagram formal** — DocType specs sudah cukup sebagai substitusi; bisa di-generate otomatis dari schema ERPNext setelah DocType dibuat
+- **Demo data fixtures (JSON aktual)** — spec ada di `docs/qa/demo-data.md`. Developer implement saat sprint QA pertama (sprint 4–5).
+- **External API contracts** — semua integrasi eksternal (payment gateway, KoboToolbox, bank API) ada di post-MVP scope.
+- **ER diagram formal** — bisa di-generate otomatis dari schema ERPNext setelah DocType dibuat. DocType specs sudah cukup sebagai substitusi.
 
 ---
 
