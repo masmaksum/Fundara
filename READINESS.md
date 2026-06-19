@@ -1,6 +1,6 @@
 # Development Readiness
 
-## Status: Siap untuk Coding — 97%
+## Status: Siap untuk Coding — 99%
 
 Dokumen ini mencatat hasil audit kesiapan dokumen Fundara sebelum development dimulai, dan apa yang sudah dilengkapi.
 
@@ -48,6 +48,18 @@ Gap yang ditutup:
 2. Feature development lifecycle (spec → code → test → staging) — tidak ada → Siap (`docs/dev/dev-workflow.md`)
 3. Frappe patterns & recipes for Fundara developer — tidak ada → Siap (`docs/dev/frappe-cookbook.md`)
 4. Git branching strategy & PR process — tidak ada → Siap (`docs/dev/git-branching.md`)
+
+### Setelah Pelengkapan Dokumen QA — Sesi 4
+
+Hasil: **99% siap. Semua dokumen QA selesai.**
+
+Gap yang ditutup:
+1. Test plan (strategi testing keseluruhan) — tidak ada → Siap (`docs/qa/test-plan.md`)
+2. Test case catalog (50 kasus beyond 34 BDD yang sudah ada) — tidak ada → Siap (`docs/qa/test-case-catalog.md`)
+3. Demo data specification (NGO fiktif YPN, 8 user, 5 fund, transaksi multi-state) — tidak ada → Siap (`docs/qa/demo-data.md`)
+4. UAT script (dalam Bahasa Indonesia untuk staf NGO, 7 skenario per role) — tidak ada → Siap (`docs/qa/uat-script.md`)
+5. Bug severity matrix (Critical/High/Medium/Low + SLA + contoh Fundara + lifecycle) — tidak ada → Siap (`docs/qa/bug-severity-matrix.md`)
+6. Regression checklist (Happy path per area, bisa selesai 2–3 jam per sprint) — tidak ada → Siap (`docs/qa/regression-checklist.md`)
 
 ---
 
@@ -102,6 +114,17 @@ Gap yang ditutup:
 | `docs/dev/frappe-cookbook.md` | Resep Frappe siap pakai: console, controller, GL posting, client script, API, scheduler, fixtures, debugging |
 | `docs/dev/git-branching.md` | Branching strategy, commit convention, PR template, release process, version tagging |
 
+**Dokumen QA (sesi 4):**
+
+| File | Isi |
+|---|---|
+| `docs/qa/test-plan.md` | Master testing strategy: 8 jenis test, prioritas per feature group, metrik kualitas, sprint QA report template |
+| `docs/qa/test-case-catalog.md` | 50 test case (TC-PERM, TC-WF, TC-UI, TC-GR, TC-DN, TC-ORG, TC-NT, TC-PF, TC-MC, TC-PERF) — melengkapi 34 BDD yang sudah ada |
+| `docs/qa/demo-data.md` | Spec dataset demo: Yayasan Peduli Nusantara, 8 user, 5 fund, 2 grant, transaksi multi-state, checklist verifikasi |
+| `docs/qa/uat-script.md` | Skrip UAT Bahasa Indonesia: 7 skenario per role staf NGO, formulir feedback, kriteria Pass/Fail |
+| `docs/qa/bug-severity-matrix.md` | Critical/High/Medium/Low: definisi, contoh Fundara, SLA, lifecycle bug, metrik |
+| `docs/qa/regression-checklist.md` | Checklist happy path setiap sprint (2–3 jam), section wajib D-02 dan D-04, report template |
+
 ---
 
 ## Status per Area
@@ -130,20 +153,25 @@ Gap yang ditutup:
 | Dev: feature development lifecycle | Siap |
 | Dev: Frappe patterns & cookbook | Siap |
 | Dev: git branching & PR process | Siap |
-| Deployment automation script | Belum — dibutuhkan sebelum staging/UAT |
-| Demo data fixtures (JSON aktual) | Belum — dibutuhkan di sprint QA pertama |
+| QA: test plan | Siap |
+| QA: test case catalog (50 kasus) | Siap |
+| QA: demo data specification | Siap |
+| QA: UAT script (Bahasa Indonesia) | Siap |
+| QA: bug severity matrix | Siap |
+| QA: regression checklist | Siap |
+| Deployment automation script | Siap (docs/infra/deploy.sh) |
+| Demo data fixtures (JSON aktual) | Belum — spec sudah ada di docs/qa/demo-data.md, developer perlu buat JSON-nya |
 | API contracts integrasi eksternal | Belum — post-MVP (payment gateway, KoboToolbox, bank API) |
 | Formal ER diagram dengan constraint | Belum — bisa di-generate dari kode setelah DocType dibuat |
 | Multi-tenancy strategy (D-06) | DEFERRED — diputuskan sebelum v1.0 release |
 
 ---
 
-## Sisa 3% — Tidak Memblokir MVP
+## Sisa 1% — Tidak Memblokir MVP
 
 Gap yang tersisa tidak akan menghentikan developer atau frontend dev di sprint pertama:
 
-- **Deployment script** — concern DevOps, bisa dikerjakan paralel saat sprint 1-2
-- **Demo data fixtures** — concern QA, dibutuhkan saat sprint testing pertama (sprint 4-5)
+- **Demo data fixtures (JSON aktual)** — spesifikasi sudah ada di `docs/qa/demo-data.md`. Developer perlu mengimplementasikan JSON fixture-nya saat sprint QA pertama (sprint 4–5).
 - **External API contracts** — semua integrasi eksternal ada di post-MVP scope
 - **ER diagram formal** — DocType specs sudah cukup sebagai substitusi; bisa di-generate otomatis dari schema ERPNext setelah DocType dibuat
 
