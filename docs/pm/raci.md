@@ -19,6 +19,7 @@
 | **FE** | Domain Expert: Finance | Accounting rules, ISAK 35, GL logic, journal entries |
 | **PE** | Domain Expert: Program | Activity, procurement, advance, MEAL workflows |
 | **UX** | UX Designer | Form layout, dashboards, conditional fields, user experience |
+| **DO** | DevOps / SysAdmin | Server provisioning, backup operations, monitoring, upgrade execution, site management. In a small team, this role is filled by TL. |
 
 ---
 
@@ -79,12 +80,17 @@
 | Configure permissions | I | I | **A** | R | I | I | I | I |
 | Write unit tests | I | I | C | **A/R** | C | I | I | I |
 | Code review | I | I | **A/R** | C | I | I | I | I |
+| Implement print format templates (Jinja2) | I | I | C | R | I | I | I | **A/R** |
+| Implement notification templates + scheduled jobs | I | I | C | R | I | I | C | **A** |
+| Implement role dashboards (7 role-specific) | I | I | C | R | I | I | I | **A/R** |
+| Implement status colors + `get_indicator` hooks | I | I | **A** | R | I | I | I | C |
 
 **Notes:**
 - DEV is solely responsible for DocType implementation; TL is consulted to confirm adherence to architecture decisions.
 - GL hooks require Finance Domain Expert consultation to ensure correct debit/credit mapping before merge.
 - Frappe Workflow configuration requires Program Domain Expert consultation to verify state transitions match approved workflow diagrams.
 - Code review is accountable to TL; DEV peers may participate but TL has final merge authority.
+- Frontend implementation (print formats, dashboards, notifications, status colors) is co-owned by UX (spec accountability) and DEV (technical execution). UX reviews and approves the implemented output against the frontend spec before sprint close.
 
 ---
 
@@ -93,14 +99,15 @@
 | Activity | PO | PM | TL | DEV | QA | FE | PE | UX |
 |----------|----|----|-----|-----|----|----|----|----|
 | Execute BDD test scenarios | I | I | I | I | **A/R** | I | I | I |
-| UAT (user acceptance testing) | **A/R** | C | I | I | C | R | R | I |
+| UAT facilitation (running the session) | C | **A/R** | R | I | I | R | R | I |
+| UAT findings triage + go/no-go | **A** | R | C | I | R | C | C | I |
 | Verify accounting correctness | I | I | C | I | I | **A/R** | I | I |
 | Approve sprint output | **A** | R | C | I | C | C | C | I |
 | Report bugs | I | R | I | I | **A/R** | C | C | I |
 
 **Notes:**
 - QA owns BDD test scenario execution against docs/spec/test-scenarios.md.
-- UAT involves PO and both domain experts (FE for accounting stories, PE for program/procurement stories) — PO has final sign-off.
+- UAT: PM is the mandatory Facilitator (active running role — reads instructions, records observations, does NOT help participants). TL is a mandatory silent Observer (must be physically present; not Informed = occasionally notified, but present throughout). QA enters all findings to issue tracker within H+1 afternoon. PO makes the go/no-go decision at H+2. See `docs/qa/uat-script.md` for full protocol.
 - Accounting correctness verification (GL entries, ISAK 35 mapping, D-02 budget formula) is exclusively the Finance Domain Expert's responsibility.
 - Sprint output approval requires PO's sign-off; PM coordinates the demo and triage.
 - Bugs are reported and tracked by QA; PM prioritizes them for the backlog.
@@ -116,12 +123,20 @@
 | User training | C | **A** | I | I | C | R | R | R |
 | Go-live approval | **A** | R | C | I | C | C | C | I |
 | Post-launch monitoring | I | **A** | R | R | R | I | I | I |
+| Monthly backup restore drill (sign drill log) | I | C | **A/R** | I | I | I | I | I |
+| Execute production upgrade (runbook Scenario A/B/C) | I | C | **A/R** | R | I | I | I | I |
+| Approve upgrade change window | C | C | **A** | I | I | I | I | I |
+| Finance Expert sign-off on staging upgrade test | I | C | C | I | I | **A/R** | I | I |
+| Site decommission (irreversible — bench drop-site) | **A** | C | **R** | I | I | I | I | I |
 
 **Notes:**
 - Staging environment setup and data migration are technical activities owned by TL (architecture) and executed by DEV.
 - User training is led by domain experts who understand the NGO context (FE for finance flows, PE for program flows, UX for navigating the interface). PM owns the training plan and schedule.
 - Go-live approval is the PO's final authority, executed only after PM confirms all Level 3 MVP DoD criteria are met.
 - Post-launch monitoring is TL/DEV (system health) and QA (regression), coordinated by PM.
+- Monthly backup restore drill: TL (as DevOps) executes and signs the drill log per `docs/infra/backup-recovery.md` Section 7. This is a recurring monthly commitment after go-live.
+- Production upgrade: TL owns the execution of the upgrade runbook per `docs/infra/upgrade-runbook.md`. Finance Domain Expert must sign off on staging upgrade test results before Scenario B/C production execution.
+- Site decommission is irreversible (`bench drop-site` cannot be undone) — PO must authorize in writing before execution. TL executes; confirmation of data export must precede the drop command.
 
 ---
 

@@ -21,6 +21,7 @@ A developer marks a story as **Done** only after all items below are checked. Th
 - [ ] Workflow states map to the status values defined in `workflow.md`
 - [ ] Permissions are set per the permission matrix (roles from `workflow.md` section 3 mapped to read/write/create/delete/submit/cancel as designed)
 - [ ] Conditional fields are implemented as specified (e.g., Grant-specific fields appear only when Fund Type = Grant Fund; per `workflow.md` section 43.4)
+- [ ] All user-facing strings (field labels, button text, dialog messages, validation messages, banner text) use Bahasa Indonesia as specified in the relevant frontend spec document — not ERPNext default English labels
 
 ### Business Logic
 
@@ -59,7 +60,9 @@ A sprint is **closed** only after all items below are checked. The PM verifies t
 
 - [ ] BDD test scenarios from `docs/spec/test-scenarios.md` that cover sprint features have been executed and are passing
 - [ ] Negative and edge case tests (as specified in each test scenario) have been executed
-- [ ] Regression: all test scenarios that were passing in the previous sprint are still passing (no previously-green test has been broken)
+- [ ] **[Sprint 5 and Sprint 10 only]** UAT session has been completed with NGO pilot participants (per `docs/qa/uat-script.md`). PM has run the post-UAT triage (H+1), QA has entered all findings to issue tracker (H+1 afternoon), and PO has made a documented go/no-go decision (H+2).
+- [ ] Regression checklist has been completed per `docs/qa/regression-checklist.md` — specifically: (a) Cash Advance full lifecycle C-01 through C-12 [WAJIB setiap sprint], (b) D-02 three-point compliance check at Under Review (budget unchanged), Approved (budget unchanged), and Paid (budget decreased), (c) D-04 multi-currency sanity check M-01 and M-02. Regression report saved as `docs/qa/regression-report-sprint-[N].md`.
+- [ ] Regression checklist completed BEFORE sprint review (not after)
 - [ ] If any test scenario was skipped, a skip reason has been documented in the sprint report
 
 ### Environment
@@ -67,6 +70,8 @@ A sprint is **closed** only after all items below are checked. The PM verifies t
 - [ ] Staging environment has been updated with the sprint's changes
 - [ ] Staging is running ERPNext v16 and the latest Fundara app code from the sprint branch
 - [ ] Staging has the demo dataset loaded and all sprint features can be demonstrated live
+- [ ] Developer has completed the 25-item verification checklist from `docs/qa/demo-data.md` Section 11 before handing staging to QA. This checklist verifies: user logins per role, fund balances, D-02 observable state (Approved-not-Paid advance), D-04 multi-currency display, grant linkage, and cross-context data integrity.
+- [ ] For E2E sprints (Sprint 2, 4, 6, 8, 10): demo data has been freshly reset to baseline before the E2E test cycle begins.
 
 ### Sprint Review
 
@@ -77,8 +82,9 @@ A sprint is **closed** only after all items below are checked. The PM verifies t
 
 ### Quality Gate
 
-- [ ] Known bugs introduced during the sprint are documented in the backlog with severity assigned (Critical / High / Medium / Low)
-- [ ] No Critical or High severity bugs are left without an assigned owner and a target sprint
+- [ ] Known bugs introduced during the sprint are documented in the backlog with severity assigned per `docs/qa/bug-severity-matrix.md` (Critical / High / Medium / Low)
+- [ ] Zero (0) Critical bugs are open at sprint close — Critical bugs must be resolved within 4 working hours of being filed, regardless of sprint timing. A Critical bug that is open at sprint review blocks sprint closure.
+- [ ] High severity bugs: maximum 3 may carry over to the next sprint, with explicit PM + TL documented agreement recorded in the issue tracker. Any carry-over beyond 3 requires PO sign-off.
 - [ ] Tech Lead has confirmed no unreviewed code was merged to main during the sprint
 
 ---
@@ -117,6 +123,8 @@ MVP is **ready for go-live** only after all items below are checked. The PM and 
   - TC-RP-01 through TC-RP-04 (Reporting — 4 scenarios)
 - [ ] No test scenario is marked as skipped without a documented, PO-accepted reason
 - [ ] All negative/edge case tests within each scenario have been executed
+- [ ] All 50 test cases from `docs/qa/test-case-catalog.md` have been executed and results documented: TC-PERM (RBAC wrong-role tests), TC-WF (workflow wrong-state tests), TC-UI (UX tests), TC-GR (grant tests), TC-DN (donation tests), TC-ORG (org setup tests), TC-NT (notification delivery tests), TC-PF (print format tests), TC-MC (multi-currency edge case tests), TC-PERF (performance tests).
+- [ ] UAT Milestone 2 has passed all four pass criteria per `docs/qa/uat-script.md` Section 6: (a) ≥90% scenarios completed without facilitator verbal assistance, (b) 0 Critical task failures, (c) average ease-of-use score ≥ 3.5/5, (d) no blocking bug preventing task completion.
 
 ### Accounting Correctness (verified by Finance Domain Expert)
 
@@ -137,6 +145,10 @@ MVP is **ready for go-live** only after all items below are checked. The PM and 
 - [ ] UFW rules verified: only ports 80, 443, 22 are publicly accessible; internal ports (8000, 8002) are blocked from public access
 - [ ] `pip audit` and `npm audit` have been run; no known Critical CVE in production dependencies (per SR-DEP)
 - [ ] No `ignore_permissions=True` in production server scripts (automated grep check on codebase before merge to main)
+- [ ] fail2ban installed and active: SSH jail and Nginx jail configured (ban after 5 failures, 1-hour ban), verified with `sudo fail2ban-client status`
+- [ ] SSH hardening verified: `PasswordAuthentication no`, `PermitRootLogin no`, and `AllowUsers frappe` in `/etc/ssh/sshd_config`
+- [ ] Nginx security headers present in production config: `X-Frame-Options SAMEORIGIN`, `X-Content-Type-Options nosniff`, HSTS header, OCSP stapling enabled
+- [ ] Custom health endpoint `/api/method/fundara.api.health` implemented in `fundara/api.py` — returns database, Redis, scheduler, queue, and backup status. Returns HTTP 200 on healthy.
 
 ### Security Governance (ISO 27001 Compliance)
 
@@ -164,16 +176,26 @@ Deliverable ini dikelola PM dan TL, bukan developer. Cek dilakukan oleh PM sebel
 
 ### Performance
 
-- [ ] Fund Utilization Report generates in under 10 seconds for a dataset of 1,000 transactions (tested on the staging server; result documented)
+- [ ] Fund Utilization Report generates in under 10 seconds for a dataset of 1,000 transactions AND PDF export completes in under 5 additional seconds AND XLSX export completes in under 5 additional seconds (TC-PERF-02, tested by Tech Lead using `wrk`/`locust`, result documented in Sprint QA Report)
+- [ ] Cash Advance list view renders in under 3 seconds for 50 records (TC-PERF-01)
 - [ ] Budget vs Actual dashboard loads without timeout for a fund with 500+ budget lines and transactions
 
 ### Deployment and Operations
 
 - [ ] System runs stably on Ubuntu Server 24.04.4 (the target platform per D-03 / roadmap.md section 11)
 - [ ] Installation guide has been followed from scratch on a clean server and produces a working system
-- [ ] Backup and restore has been tested successfully at least once on staging
+- [ ] Offsite (remote S3-compatible) backup is configured via rclone, GPG-encrypted (AES-256) before upload, and has been tested end-to-end: backup script runs, encrypts, uploads to remote, and the restore drill successfully decrypts and restores the site. Local-only backup is NOT sufficient.
+- [ ] Backup restore drill completed and drill log signed per `docs/infra/backup-recovery.md` Section 7 — includes decryption verification, site restore on staging, `bench doctor` pass, and spot-check of business data.
+- [ ] logrotate configured for Frappe logs (`bench setup logrotate` run) — without this, log files grow unbounded and are the most common cause of production outage per `docs/infra/monitoring-spec.md`
+- [ ] Monitoring stack operational: Netdata installed and running, Uptime Kuma deployed, alert channels (email + Telegram) tested with a real alert, Uptime Kuma monitors created for all production site URLs.
 - [ ] No database services (MySQL, Redis) are exposed to public network interfaces
 - [ ] SSL is configured on the staging/production server
+
+### Frontend Completeness
+
+- [ ] At minimum these print formats render correctly and can be exported to PDF: Bukti Pembayaran Uang Muka (when Cash Advance status = Paid), Ringkasan Pertanggungjawaban Uang Muka (when Liquidation status = Approved), Laporan Penggunaan Dana
+- [ ] Email notifications are operational: outgoing SMTP account configured in ERPNext, at least one notification (e.g., NOTIF-01 Cash Advance submitted) has been sent and received in a real inbox on staging
+- [ ] Scheduled notification jobs are registered in `hooks.py` and confirmed running via `bench scheduler logs`
 
 ### Training and Readiness
 

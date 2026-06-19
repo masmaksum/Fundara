@@ -585,6 +585,96 @@ If multi-currency is not tested early, fixing it later will require changes to e
 
 ---
 
+## Frontend & UX Track (Additional Dev Capacity — Di Luar 145 Dev-Days)
+
+Deliverable frontend berikut **tidak termasuk** dalam estimasi 145 dev-days di atas (yang secara eksplisit mengecualikan "UI polish, localization, documentation"). Namun berdasarkan audit spec frontend (`docs/spec/frontend/`), deliverable ini bukan sekadar UI polish — melainkan implementasi substantif yang membutuhkan server-side scripts, scheduled jobs, dan Jinja2 template development.
+
+**Total estimasi frontend tambahan: ~41 dev-days** — harus dialokasikan kepada Dev 1 atau Dev 2 dengan memperpanjang timeline, atau kepada UX/Frontend Developer terpisah.
+
+### FE-01: Status Colors & `get_indicator` Hooks (~5 hari)
+
+Berdasarkan `docs/spec/frontend/status-colors.md`: workflow state styling pada 13 DocType, `get_indicator` Python hook per DocType, listview highlight CSS pada 6 DocType, scheduled job harian untuk `indicator_color` flag (terpisah dari overdue transitions di FG-09).
+
+**Tersebar:** Sprint 3–8 (1 hari per kelompok DocType, dikerjakan bersamaan setelah DocType selesai diimplementasi).
+
+### FE-02: 65+ Validation Messages (Bahasa Indonesia) (~5 hari)
+
+Berdasarkan `docs/spec/frontend/validation-messages.md`: 65+ aturan validasi dengan Rule ID (VA-FUND-01 hingga VA-BR-08), termasuk D-02 pending payment banners (VA-ADV-13 s/d VA-ADV-15) yang memerlukan client script, server script, dan CSS/HTML khusus.
+
+**Tersebar:** Sprint 2–7 (digabungkan dengan implementasi DocType yang bersangkutan, tapi membutuhkan waktu tambahan ~0.5–1 hari per feature group yang punya validation rule kompleks).
+
+### FE-03: 21 Notification Templates + 5 Scheduled Jobs (~8 hari)
+
+Berdasarkan `docs/spec/frontend/notifications.md`: 21 template email Bahasa Indonesia (NOTIF-01 s/d NOTIF-21), 5 scheduled job di `hooks.py`, konfigurasi Frappe Notification DocType, multi-recipient logic, dan duplicate-prevention flag logic (NOTIF-14). SMTP outgoing email harus dikonfigurasi dan diuji sebelum deployment.
+
+**Sprint:** Sprint 5–8 (paralel dengan FG-09, FG-05, FG-08).
+
+### FE-04: 7 Print Format Templates (~14 hari)
+
+Berdasarkan `docs/spec/frontend/print-formats.md`: 7 Jinja2 print format templates dengan conditional elements (watermark, multi-currency block, conditional signature boxes), terbilang computation, QR code (Campaign report), paper size/orientation per format. Ini bukan UI polish — ini adalah substantial Jinja2 development.
+
+1. Kuitansi Penerimaan Donasi — Sprint 5
+2. Bukti Pembayaran Uang Muka — Sprint 6–7
+3. Surat Pesanan / Purchase Order — Sprint 7
+4. Laporan Penggunaan Dana — Sprint 9
+5. Laporan Donor — Sprint 9
+6. Laporan Pertanggungjawaban Campaign — Sprint 8
+7. Ringkasan Pertanggungjawaban Uang Muka — Sprint 6–7
+
+### FE-05: 7 Role-Specific Dashboards (~14 hari)
+
+**Perhatian:** FG-15 memperkirakan "Basic Dashboard" (8 number cards, 4 charts) = 6 hari Dev 2 di Sprint 9. Namun `docs/spec/frontend/dashboard-spec.md` mendefinisikan **7 dashboard terpisah per role** — Executive Director saja punya 10 number cards, 6 charts, 4 list views, 4 quick action buttons, 6 alert banners, banyak diantaranya memerlukan custom multi-DocType server scripts.
+
+Revisi estimasi: 7 dashboards = ~2 hari per dashboard rata-rata = **14 hari**, bukan 6 hari. Gap: 8 hari yang tidak ter-estimasi.
+
+**Sprint 9–10:** Dashboard harus digeser sebagian ke Sprint 10 atau dikerjakan oleh Dev 2 mulai Sprint 8.
+
+### FE-06: Bahasa Indonesia Labels & UI Copy (~3 hari)
+
+Semua form labels, button text ("Lihat Alokasi", "Liquidasi Advance"), dialog messages, dan banner text dalam Bahasa Indonesia per `docs/spec/frontend/form-layout.md` dan `notifications.md`. Ini membutuhkan review oleh Finance Domain Expert dan Program Domain Expert untuk akurasi terminologi.
+
+**Tersebar:** Sprint 1–9 (onboarding checklist setiap sprint: verifikasi semua user-facing strings dalam Bahasa Indonesia sesuai spec).
+
+### Implikasi pada Timeline
+
+| Track | Est. Days | Opsi Penanganan |
+|---|---|---|
+| 145 dev-days (backend) | 145 | 2 developer × 10 sprint (sudah diperhitungkan) |
+| Frontend tambahan | ~41 | Option A: Perpanjang 3 sprint (total 13 sprint = 26 minggu) |
+| | | Option B: Tambah Frontend Developer dari Sprint 5 |
+| | | Option C: Pindahkan FE-04 (print formats) dan FE-05 (dashboards extra) ke v0.2 |
+| | | **Option C direkomendasikan** — print formats dan extra dashboards bukan blocker UAT |
+
+**Keputusan diperlukan oleh PM + PO sebelum Sprint 4** tentang mana yang masuk MVP dan mana yang post-MVP.
+
+---
+
+## QA Capacity — Alokasi yang Hilang dari Sprint Plan
+
+Sprint plan 145 dev-days tidak mengalokasikan **satu hari pun** untuk aktivitas QA. Berdasarkan `docs/qa/test-plan.md` dan `docs/qa/regression-checklist.md`, berikut QA effort yang wajib ada per sprint:
+
+| Sprint | Aktivitas QA | Siapa | Est. Waktu |
+|---|---|---|---|
+| Sprint 2 | E2E test run (genap) — 50 test case catalog | QA | 1 hari |
+| Sprint 3–4 | Regression checklist (termasuk D-02 3-titik) | QA | 0.5 hari/sprint |
+| Sprint 4 | E2E test run (genap) | QA | 1 hari |
+| Sprint 5 | E2E test run (genap) | QA | 1 hari |
+| **Sprint 5 exit** | **UAT Milestone 1** — fasilitasi 2–3 hari penuh dengan staf NGO pilot | PM (fasilitator) + QA + FE + PE | **3 hari** |
+| Sprint 5 exit | Post-UAT triage (H+1), issue entry (H+1 sore), presentasi stakeholder (H+2) | PM + TL + QA | 1.5 hari |
+| Sprint 6–7 | Regression checklist × 2 sprint | QA | 0.5 hari/sprint |
+| Sprint 8 | E2E test run (genap) | QA | 1 hari |
+| Sprint 9 | Performance test (`wrk`/`locust`) untuk FG-15 reports | TL | 0.5 hari |
+| Sprint 10 | Regression checklist + E2E final | QA | 1.5 hari |
+| **Sprint 10 exit** | **UAT Milestone 2** — fasilitasi 2–3 hari sebelum go-live | PM (fasilitator) + QA + FE + PE | **3 hari** |
+| Sprint 10 exit | Post-UAT triage + go/no-go decision H+2 | PM + TL + QA | 1.5 hari |
+| Sprint 10 | Performance test final | TL | 0.5 hari |
+
+**Total QA overhead: ~20 hari** tersebar sepanjang 10 sprint (2 hari/sprint rata-rata).
+
+**Catatan:** UAT memerlukan koordinasi dengan NGO pilot — jadwal harus dikonfirmasi **minimal 3 minggu sebelum** Sprint 5 exit dan Sprint 10 exit. PM bertanggung jawab untuk rekrutmen dan konfirmasi peserta UAT (5 staf NGO per sesi, per `docs/qa/uat-script.md`).
+
+---
+
 ## Governance & Compliance Track (PM/TL Overhead — Di Luar Dev Capacity)
 
 Track ini berjalan **paralel** dengan sprint development. Deliverable ini bukan fitur software — dikerjakan oleh PM dan TL sebagai overhead terpisah dari developer capacity. Diidentifikasi melalui gap analysis ISO 27001:2022 (`docs/security/iso27001-audit.md`).

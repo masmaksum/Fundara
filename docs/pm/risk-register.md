@@ -13,11 +13,11 @@
 
 | Priority | Count |
 |---|---|
-| Critical (High Likelihood + High Impact) | 5 |
-| High (High + Medium or Medium + High) | 9 |
+| Critical (High Likelihood + High Impact) | 6 |
+| High (High + Medium or Medium + High) | 13 |
 | Medium | 8 |
 | Low | 5 |
-| **Total** | **27** |
+| **Total** | **32** |
 
 ---
 
@@ -549,13 +549,98 @@
 
 ---
 
+### RISK-INFRA-01
+
+| Field | Content |
+|---|---|
+| **ID** | RISK-INFRA-01 |
+| **Risk** | Disk space exhaustion causes production application outage — Frappe/ERPNext writes logs, backups, and file attachments continuously; a full disk crashes the application silently and is the most common cause of production NGO outage per `docs/infra/monitoring-spec.md` |
+| **Category** | Infrastructure |
+| **Likelihood** | High |
+| **Impact** | High |
+| **Priority** | Critical |
+| **Mitigation** | Configure monitoring alerts at 75% (warning) and 88% (critical) disk usage per monitoring-spec.md §2.1; keep maximum 3 days of local backups (backup-recovery.md §2.4); configure logrotate for Frappe logs via `bench setup logrotate`; set monthly restore drill to force disk hygiene review; alert channel must page the DevOps/TL on-call |
+| **Owner** | Tech Lead |
+| **Status** | Open |
+| **Early Warning** | Netdata disk alert fires at >75% usage; Frappe error log shows ENOSPC errors; backup cron job fails silently (check monitoring alert for backup job failure) |
+
+---
+
+### RISK-INFRA-02
+
+| Field | Content |
+|---|---|
+| **ID** | RISK-INFRA-02 |
+| **Risk** | GPG encryption passphrase for offsite backups is lost, rendering all encrypted remote backups permanently unrecoverable — loss of this single key equals loss of all backup history |
+| **Category** | Infrastructure |
+| **Likelihood** | Low |
+| **Impact** | High |
+| **Priority** | High |
+| **Mitigation** | Store GPG passphrase in a secrets manager (Bitwarden Teams or equivalent) with at least two authorized key holders (TL + PM); never store only locally; test key retrieval from secrets manager quarterly; document key recovery procedure in the BCP; include key material audit in quarterly access review |
+| **Owner** | Tech Lead + PM |
+| **Status** | Open |
+| **Early Warning** | Single key holder leaves organization; secrets manager account access is not verified in quarterly review; restore drill fails decryption step |
+
+---
+
+### RISK-INFRA-03
+
+| Field | Content |
+|---|---|
+| **ID** | RISK-INFRA-03 |
+| **Risk** | SSL certificate expiry or Certbot auto-renewal failure makes the production site inaccessible to all users (browsers show hard security error, no workaround for end users) |
+| **Category** | Infrastructure |
+| **Likelihood** | Medium |
+| **Impact** | High |
+| **Priority** | High |
+| **Mitigation** | Configure Certbot auto-renewal via systemd timer per environment-spec.md §3.6; configure monitoring alert at <30 days (warning) and <7 days (critical) remaining per monitoring-spec.md §2.2; test renewal with `certbot renew --dry-run` monthly; ensure port 80 remains open (required for Let's Encrypt ACME challenge) |
+| **Owner** | Tech Lead |
+| **Status** | Open |
+| **Early Warning** | Uptime Kuma SSL monitor alerts <30 days; `certbot renew --dry-run` fails in scheduled test; monitoring alert for certificate expiry fires |
+
+---
+
+### RISK-INFRA-04
+
+| Field | Content |
+|---|---|
+| **ID** | RISK-INFRA-04 |
+| **Risk** | A major ERPNext version upgrade (v16 → v17+) breaks Fundara custom fields, server scripts, or workflow configurations — upgrade-runbook.md Scenario C identifies database mid-migration rollback as the highest-risk operation with 30–90 minute recovery time and possible partial migration state |
+| **Category** | Infrastructure |
+| **Likelihood** | Medium |
+| **Impact** | High |
+| **Priority** | High |
+| **Mitigation** | Follow upgrade-runbook.md Scenario C protocol strictly: audit all `frappe.get_doc` and `frappe.db.get_value` calls against breaking changes; test on staging for minimum 2 weeks before production; require Finance Domain Expert sign-off on staging accounting correctness after upgrade; never upgrade production on a Friday; maintain a rollback snapshot (VM snapshot or db dump) taken immediately before production migration |
+| **Owner** | Tech Lead |
+| **Status** | Open |
+| **Early Warning** | ERPNext v17 release announced; breaking changes in changelog affect Fundara DocTypes; staging upgrade test fails any of the 34 BDD scenarios; Finance Domain Expert reports GL discrepancy on staging post-upgrade |
+
+---
+
+### RISK-INFRA-05
+
+| Field | Content |
+|---|---|
+| **ID** | RISK-INFRA-05 |
+| **Risk** | In multi-site deployment (post-D-06), Redis cache is shared across all sites on the same bench; a Redis misconfiguration or Frappe bug could cause cross-site cache pollution, exposing one NGO's data to another organization's users |
+| **Category** | Infrastructure |
+| **Likelihood** | Low |
+| **Impact** | High |
+| **Priority** | High |
+| **Mitigation** | Applies only after D-06 multi-site is enabled; monitor Redis namespace isolation in staging before enabling a second live site; include Redis cross-site test in pentest scope per docs/security/pentest-scope.md; consider separate Redis instance per org for high-sensitivity deployments (adds infrastructure cost); document as accepted risk if single-tenant deployment per server |
+| **Owner** | Tech Lead |
+| **Status** | Open — triggered only when D-06 is activated |
+| **Early Warning** | Frappe logs show cache key collisions; user reports seeing another organization's data; Redis keyspace inspection shows unexpected cross-site keys |
+
+---
+
 ## Risk Ownership Summary
 
 | Owner | Risk IDs |
 |---|---|
-| Tech Lead | RISK-TECH-01, RISK-TECH-02, RISK-TECH-03, RISK-TECH-04, RISK-TECH-06, RISK-TECH-07, RISK-QUAL-03, RISK-QUAL-05, RISK-QUAL-07, RISK-QUAL-08, RISK-DELIV-03, RISK-DELIV-05 |
+| Tech Lead | RISK-TECH-01, RISK-TECH-02, RISK-TECH-03, RISK-TECH-04, RISK-TECH-06, RISK-TECH-07, RISK-QUAL-03, RISK-QUAL-05, RISK-QUAL-07, RISK-QUAL-08, RISK-DELIV-03, RISK-DELIV-05, RISK-INFRA-01, RISK-INFRA-03, RISK-INFRA-04, RISK-INFRA-05 |
 | PM | RISK-SCOPE-01, RISK-SCOPE-02, RISK-SCOPE-03, RISK-SCOPE-04, RISK-DELIV-04, RISK-DELIV-06, RISK-DOMAIN-03 |
-| PM + Tech Lead | RISK-TECH-05, RISK-DELIV-02, RISK-SCOPE-05 |
+| PM + Tech Lead | RISK-TECH-05, RISK-DELIV-02, RISK-SCOPE-05, RISK-INFRA-02 |
 | PM + Domain Expert | RISK-DOMAIN-01, RISK-DOMAIN-02, RISK-QUAL-04 |
 | Finance Domain Expert | RISK-DOMAIN-05 |
 | Tech Lead + Finance Domain Expert | RISK-QUAL-01, RISK-QUAL-07 |
@@ -573,3 +658,4 @@
 | Date | Change | Changed By |
 |---|---|---|
 | 2026-06-18 | Initial version created from domain context audit, DECISIONS.md, and READINESS.md | PM |
+| 2026-06-20 | Tambah 5 risiko infrastruktur baru (RISK-INFRA-01 s/d RISK-INFRA-05) berdasarkan audit dokumen infra vs PM gap analysis | PM |
