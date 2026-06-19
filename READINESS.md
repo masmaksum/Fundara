@@ -154,6 +154,14 @@ Gap yang ditutup:
 |---|---|
 | `docs/security/iso27001-audit.md` | Gap analysis ISO/IEC 27001:2022 — 93 kontrol Annex A + 10 klausul utama, scorecard kepatuhan, 17 gap prioritas (7 Critical), roadmap 18 dokumen tambahan, rekomendasi strategis |
 
+**Dokumen PM — Revisi Estimasi & Keputusan Frontend (sesi 7 — 20 Juni 2026):**
+
+| File | Perubahan |
+|---|---|
+| `docs/pm/complexity.md` | Tambah kolom Client JS ke summary table (~14 hari overhead dari `form-layout.md`). Setiap FG-03 s/d FG-10 kini punya breakdown eksplisit client script (handler, custom button, `frappe.call`). Section baru "Client Script Track". Revised total: ~172 dev-days (Opsi C) + 20 QA = ~192 hari. FE-04 + FE-05 masuk Post-MVP table. |
+| `DECISIONS.md` | Tambah D-07 (OPEN) — keputusan scope frontend FE-04 (7 print format, ~14 hari) dan FE-05 (7 role dashboard, ~14 hari). Rekomendasi Opsi C: keduanya ke v0.2. Deadline: sebelum Sprint 4. |
+| `docs/pm/d07-decision-brief.html` | Dokumen presentasi interaktif untuk Product Owner — cost meter visual per opsi, tiga alasan rekomendasi, tombol keputusan dengan ringkasan konsekuensi. |
+
 ---
 
 ## Status per Area
@@ -200,6 +208,8 @@ Gap yang ditutup:
 | API contracts integrasi eksternal | Belum — post-MVP (payment gateway, KoboToolbox, bank API) |
 | Formal ER diagram dengan constraint | Belum — bisa di-generate dari kode setelah DocType dibuat |
 | Multi-tenancy strategy (D-06) | DEFERRED — diputuskan sebelum v1.0 release |
+| PM: client script overhead per FG (~14 hari) | Siap — tercatat di `docs/pm/complexity.md` § Client Script Track |
+| PM: keputusan D-07 frontend MVP scope | OPEN — presentasi disiapkan (`docs/pm/d07-decision-brief.html`), menunggu keputusan PO sebelum Sprint 4 |
 
 ---
 
