@@ -169,6 +169,7 @@ Gap yang ditutup:
 | `docs/security/is-policy.md` | Kebijakan Keamanan Informasi formal (ISP-001 v1.0) — 12 area kebijakan, tujuan terukur, peran & tanggung jawab, pelanggaran, pengecualian, jadwal review tahunan, blok tanda tangan Pimpinan. Menutup gap CRITICAL #1 ISO 27001 (Klausul 5.2, A.5.1). |
 | `docs/security/isms-scope.md` | Ruang Lingkup ISMS formal (ISP-002 v1.0) — pernyataan scope, 13 aset dalam lingkup, 7 pengecualian dengan justifikasi, antarmuka eksternal, siklus PDCA, pihak berkepentingan, konteks organisasi. Menutup gap CRITICAL #2 ISO 27001 (Klausul 4.3). |
 | `docs/security/offboarding-checklist.md` | Offboarding Checklist formal (ISP-003 v1.0) — inventarisasi akses D-2, pencabutan akses 11 kategori sistem dalam 24 jam (GitHub, Frappe dev/staging/prod, SSH keys, API keys, database, GPG backup, monitoring, vault, komunikasi), verifikasi D+7, rekam jejak audit. Menutup gap CRITICAL #3 ISO 27001 (A.6.5). |
+| `docs/security/nda-template.md` | Template NDA (ISP-004 v1.0) — Template A: NDA formal 11 pasal untuk Developer/Contributor/DevOps (definisi informasi rahasia, tabel lingkup akses per sistem, UU PDP Pasal 20+40+67, sanksi KUHPerdata + UU ITE, jangka waktu 5 tahun); Template B: klausul kerahasiaan singkat untuk staf NGO, siap diintegrasikan ke kontrak kerja. Menutup gap CRITICAL #4 ISO 27001 (A.6.6). |
 
 ---
 
@@ -221,6 +222,7 @@ Gap yang ditutup:
 | Governance: IS Policy formal (ISP-001) | Siap — `docs/security/is-policy.md`. **Menunggu tanda tangan Pimpinan (PO) untuk berlaku efektif.** |
 | Governance: ISMS Scope Document (ISP-002) | Siap — `docs/security/isms-scope.md`. **Menunggu tanda tangan Pimpinan (PO) untuk berlaku efektif.** |
 | Governance: Offboarding Checklist (ISP-003) | Siap — `docs/security/offboarding-checklist.md`. Dapat langsung digunakan saat ada offboarding. |
+| Governance: NDA Template (ISP-004) | Siap — `docs/security/nda-template.md`. Template A untuk developer/DevOps; Template B untuk staf NGO. |
 
 ---
 

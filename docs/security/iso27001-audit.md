@@ -458,32 +458,30 @@ Pendekatan proaktif: akses dicabut pada hari terakhir bekerja (D-0/D+1), bukan m
 
 ### A.6.6 Confidentiality or Non-Disclosure Agreements
 
-**Status:** ❌ **Belum Ada**
+**Status:** ✅ **Sesuai**
 
 **Deskripsi Kontrol:** NDA atau perjanjian kerahasiaan harus ditandatangani oleh pihak yang mendapat akses ke informasi rahasia.
 
 **Evidence Tersedia:**
-- Tidak ada NDA template atau ketentuan kerahasiaan formal di Fundara project
+- `docs/security/nda-template.md` (ISP-004 v1.0 — **BARU 2026-06-20**) — dua template:
+  - **Template A** (Developer / Contributor / DevOps): NDA formal 11 pasal — definisi Informasi Rahasia dan Lingkup Akses, kewajiban kerahasiaan, larangan khusus (unduhan data NGO, akses di luar scope), pengecualian, ketentuan data pribadi dan UU PDP Pasal 20 + 40, pengembalian/penghapusan informasi, jangka waktu (5 tahun pasca keterlibatan; tanpa batas untuk data pribadi NGO), konsekuensi pelanggaran (KUHPerdata, UU ITE, UU PDP), governing law Indonesia / PN Jakarta
+  - **Template B** (Klausul Staf NGO): klausul ringkas untuk diintegrasikan ke kontrak kerja NGO — kewajiban kerahasiaan, larangan berbagi credential/data, keamanan akun, dasar hukum UU PDP, pelaporan insiden
 
 **Penilaian:**
 
-Tidak ada NDA template, klausul kerahasiaan, atau perjanjian keamanan informasi yang tersedia — baik untuk developer/contributor Fundara, DevOps engineer, maupun staf NGO yang menggunakan sistem.
+**(Gap telah ditutup 2026-06-20)** NDA template tersedia dalam dua varian yang mencakup seluruh peran yang memiliki akses ke Fundara. Template A dirancang sebagai perjanjian berdiri sendiri yang ditandatangani sebelum akses diberikan. Template B dirancang sebagai klausul yang dapat langsung disalin ke kontrak kerja NGO yang sudah ada.
 
-Ini adalah gap yang signifikan mengingat Fundara menangani data sensitif: NPWP dan NIK donor, data keuangan NGO, data beneficiary termasuk data kesehatan.
+Dasar hukum yang dicakup:
+- **UU PDP No. 27 Tahun 2022 Pasal 20** — kewajiban Pengendali Data memastikan kerahasiaan
+- **UU PDP Pasal 40** — kewajiban Pemroses Data Pribadi
+- **UU PDP Pasal 67** — sanksi pidana penyalahgunaan data pribadi (pidana + denda Rp 4 M)
+- **KUHPerdata Pasal 1365** — ganti rugi perbuatan melanggar hukum
+- **UU ITE No. 11 Tahun 2008 Pasal 30 + 32** — akses tidak sah dan modifikasi sistem
 
-**Gap yang Teridentifikasi:**
-1. Tidak ada NDA untuk developer dan contributor Fundara yang memiliki akses ke source code dan mungkin ke data staging (yang mungkin berisi data anonim dari produksi)
-2. Tidak ada template konfidensialitas untuk DevOps engineer yang memiliki akses SSH ke server produksi
-3. Tidak ada panduan untuk NGO tentang dokumen kerahasiaan yang harus ditandatangani staf yang mengakses sistem Fundara
-4. Untuk staf NGO yang mengelola data donor (NPWP, NIK), ada kewajiban hukum di UU PDP yang mengharuskan pengelolaan data pribadi dilakukan oleh pihak yang terikat kewajiban kerahasiaan
-
-**Rekomendasi:**
-1. Buat template NDA sederhana untuk:
-   - **Contributor/Developer Fundara** yang mendapat akses ke staging environment atau data sensitif
-   - **DevOps/System Admin** yang mendapat akses SSH ke server produksi NGO
-   - **Staf NGO** yang mengakses data sensitif donor dan beneficiary (dapat diintegrasikan dalam kontrak kerja NGO)
-2. Simpan template di `docs/security/templates/nda-template.md` (atau dalam panduan deployment)
-3. Cantumkan referensi ke UU PDP No. 27 Tahun 2022 Pasal 20 (kewajiban Pengendali Data untuk memastikan kerahasiaan data oleh pihak yang mengaksesnya)
+**Kontrol yang Sudah Berfungsi:**
+- Template A: tabel Lingkup Akses dengan checkbox per sistem (GitHub, staging, production, database, vault, data NGO) — dokumentasi spesifik akses yang diberikan
+- Template A: kewajiban melaporkan insiden dalam 4 jam agar Pihak Pertama dapat memenuhi notifikasi 14 hari ke Kominfo/BSSN (UU PDP)
+- Template B: dapat langsung digunakan oleh NGO deployer tanpa modifikasi hukum signifikan
 
 ---
 
@@ -1666,7 +1664,7 @@ Perlindungan sistem selama audit testing sudah sangat well-defined. Prinsip utam
 | A.6.3 | Information Security Awareness, Education and Training | ⚠️ Sebagian |
 | A.6.4 | Disciplinary Process | N/A |
 | A.6.5 | Responsibilities after Termination or Change of Employment | ⚠️ Sebagian |
-| A.6.6 | Confidentiality or Non-Disclosure Agreements | ❌ Belum Ada |
+| A.6.6 | Confidentiality or Non-Disclosure Agreements | ✅ Sesuai |
 | A.6.7 | Remote Working | ⚠️ Sebagian |
 | A.6.8 | Information Security Event Reporting | ✅ Sesuai |
 
@@ -1927,7 +1925,7 @@ Tabel berikut mendaftar gap yang paling kritikal berdasarkan dampak keamanan. Ga
 | **1** | ~~Tidak ada Information Security Policy formal~~ **DITUTUP** | Klausul 5.2, A.5.1 | ~~**Sangat Tinggi.**~~ **RESOLVED 2026-06-20.** `docs/security/is-policy.md` (ISP-001 v1.0) dibuat — 350 baris, 12 area kebijakan, tujuan terukur, peran & tanggung jawab, jadwal review tahunan. | Menunggu tanda tangan Pimpinan (PO) untuk berlaku efektif. Setelah ditandatangani, IS Policy menjadi *parent policy* bagi seluruh dokumen keamanan turunan. | ~~**CRITICAL**~~ **CLOSED** |
 | **2** | ~~Tidak ada ISMS Scope Document~~ **DITUTUP** | Klausul 4.3, 4.4 | ~~**Sangat Tinggi.**~~ **RESOLVED 2026-06-20.** `docs/security/isms-scope.md` (ISP-002 v1.0) dibuat — pernyataan scope formal, 13 aset dalam lingkup, 7 komponen yang dikecualikan dengan justifikasi, 6 antarmuka eksternal dan kontrol di setiap antarmuka, gambaran PDCA. | Menunggu tanda tangan Pimpinan (PO). Revisi scope wajib dilakukan jika D-06 multi-tenancy diimplementasikan atau jika ada integrasi eksternal baru. | ~~**CRITICAL**~~ **CLOSED** |
 | **3** | ~~Tidak ada offboarding checklist staf/developer~~ **DITUTUP** | A.6.5 | ~~**Tinggi.**~~ **RESOLVED 2026-06-20.** `docs/security/offboarding-checklist.md` (ISP-003 v1.0) dibuat — inventarisasi akses D-2, pencabutan 11 kategori sistem dalam 24 jam (GitHub, Frappe dev/staging/prod, SSH keys, API keys, database, GPG backup key, monitoring, vault), verifikasi D+7, rekam jejak audit, tanda tangan PM + TL. | Siap digunakan. Eksekutor: PM. Verifikator: TL. Prosedur khusus tersedia untuk offboarding Tech Lead / DevOps. | ~~**CRITICAL**~~ **CLOSED** |
-| **4** | Tidak ada NDA/perjanjian kerahasiaan | A.6.6 | **Tinggi.** Tidak ada perlindungan hukum jika terjadi kebocoran data oleh developer atau DevOps yang punya akses ke data production (termasuk data donor dan keuangan NGO). UU PDP Pasal 40 mewajibkan pemroses data untuk menjaga kerahasiaan. | Buat template NDA 2 halaman untuk developer dan DevOps yang memiliki akses ke environment produksi atau data sensitif. Isi minimal: definisi informasi rahasia, kewajiban kerahasiaan, larangan penggunaan data di luar instruksi, durasi kewajiban (termasuk setelah kontrak berakhir), dan konsekuensi pelanggaran. Semua kontributor yang punya akses production harus menandatangani sebelum diberikan akses. | **CRITICAL** |
+| **4** | ~~Tidak ada NDA/perjanjian kerahasiaan~~ **DITUTUP** | A.6.6 | ~~**Tinggi.**~~ **RESOLVED 2026-06-20.** `docs/security/nda-template.md` (ISP-004 v1.0) dibuat — Template A (Developer/Contributor/DevOps): NDA formal 11 pasal dengan definisi informasi rahasia, tabel lingkup akses per sistem, kewajiban kerahasiaan, larangan spesifik, ketentuan UU PDP Pasal 20+40+67, jangka waktu 5 tahun (tanpa batas untuk data pribadi NGO), sanksi KUHPerdata + UU ITE; Template B (klausul staf NGO): siap diintegrasikan ke kontrak kerja NGO. | Wajib ditandatangani sebelum akses diberikan. PM menyimpan salinan di folder dokumentasi proyek. | ~~**CRITICAL**~~ **CLOSED** |
 | **5** | Tidak ada Information Classification Policy | A.5.12 | **Tinggi.** Tidak ada definisi yang jelas mana data yang Public, Internal, Confidential, atau Restricted. Tanpa klasifikasi, penanganan data donor (NIK, NPWP, kondisi kesehatan benefisiari) tidak konsisten antar staf dan developer. | Buat policy klasifikasi 4 level dengan contoh konkret per level: **Public** (siaran pers, laporan tahunan publik), **Internal** (dokumen proyek, spesifikasi teknis), **Confidential** (data donor, laporan keuangan, kredensial sistem), **Restricted** (NIK/NPWP donor, data kesehatan benefisiari, private keys). Sertakan aturan penanganan: penyimpanan, pengiriman, pencetakan, dan penghancuran per level. | **CRITICAL** |
 | **6** | Tidak ada internal audit program | Klausul 9.2 | **Tinggi.** Tidak bisa verifikasi apakah kontrol keamanan yang sudah didokumentasikan benar-benar dijalankan. Ini juga merupakan klausul wajib untuk sertifikasi ISO 27001 — tanpa audit program, sertifikasi tidak bisa dicapai. | Buat annual internal audit checklist dan jadwal. Checklist minimal mencakup: verifikasi implementasi kontrol di security-requirements.md, review akun user aktif (quarterly), verifikasi backup berhasil dan GPG integrity, review log akses anomali, dan verifikasi patch CVE HIGH/CRITICAL. Jadwalkan audit pertama 3 bulan setelah go-live. | **CRITICAL** |
 | **7** | Tidak ada Risk Treatment Plan formal | Klausul 6.1.3, 6.2 | **Tinggi.** risk-register.md sudah ada dan sangat komprehensif untuk risiko teknis dan delivery, tetapi tidak memiliki kolom formal untuk: kontrol mitigasi yang dipilih, status implementasi kontrol, owner kontrol, dan target tanggal penyelesaian. Tanpa RTP, progres mitigasi tidak dapat dipantau atau diaudit. | Buat RTP sebagai spreadsheet atau tabel Markdown dengan kolom: Risk ID → Kontrol Mitigasi (referensi ke A.x atau dokumen internal) → Perlakuan Risiko (mitigate/accept/transfer/avoid) → Owner → Target Date → Status (Open/In Progress/Closed). Hubungkan setiap risiko di risk-register.md ke RTP ini. | **CRITICAL** |
