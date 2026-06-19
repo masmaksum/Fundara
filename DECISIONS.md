@@ -212,6 +212,49 @@ Implikasi desain yang harus dijaga sejak MVP:
 
 ---
 
+## D-07: Scope Frontend — FE-04 Print Formats dan FE-05 Role Dashboards di MVP atau Post-MVP?
+
+**Status:** `OPEN — Keputusan diperlukan dari PM + PO sebelum Sprint 4`
+
+**Pertanyaan:**
+Apakah 7 print format Jinja2 (FE-04, ~14 hari) dan 7 role-specific dashboard (FE-05, ~14 hari) masuk ke MVP, atau sebagian/seluruhnya dipindahkan ke v0.2?
+
+**Konteks:**
+Berdasarkan audit `docs/pm/complexity.md` — Frontend & UX Track dan `docs/spec/frontend/`:
+- **FE-04** (7 print format Jinja2): ~14 hari. Ini adalah substantial Jinja2 development — conditional watermark, multi-currency block, terbilang, QR code, signature boxes — bukan UI polish.
+- **FE-05** (7 role-specific dashboard): ~14 hari. FG-15 memperkirakan "1 Basic Dashboard = 6 hari", namun `docs/spec/frontend/dashboard-spec.md` mendefinisikan 7 dashboard terpisah per role (Executive Director, Finance Manager, Program Manager, dst.), masing-masing dengan 10+ number cards, 6+ charts, alert banners, dan custom multi-DocType server scripts.
+
+Total FE-04 + FE-05: **~28 hari** yang tidak ada dalam estimasi 145 dev-days asli.
+
+**Implikasi UAT:** UAT Milestone 1 (Sprint 5 exit) tidak membutuhkan print format atau role dashboard. UAT Milestone 2 (Sprint 10 exit) dapat berjalan tanpa print format lengkap — staf NGO dapat menyetujui fungsi bisnis inti terlebih dahulu, dan print format dirilis di v0.2.
+
+**Opsi:**
+
+| Opsi | Deskripsi | Tambahan Dev-Days ke Baseline | Dampak pada Timeline |
+|---|---|---|---|
+| **A — Semua masuk MVP** | FE-04 full (7 format) + FE-05 full (7 dashboard) masuk Sprint 5–10 | +28 hari | Perpanjang ~2 sprint atau butuh Frontend Developer tambahan mulai Sprint 5 |
+| **B — Sebagian MVP** | 2 print format paling kritis (Bukti Pembayaran Uang Muka + Ringkasan Pertanggungjawaban) + FG-15 basic dashboard masuk MVP; sisanya post-MVP | +8 hari | Masih dalam 10 sprint dengan prioritas ulang Sprint 6–7 |
+| **C — FE-04 post-MVP, FE-05 dikurangi** | FE-04 semua print format → v0.2. FE-05: FG-15 Basic Dashboard (6 hari, sudah ada di Sprint 9) masuk MVP; 7 role-specific dashboard → v0.2 | +0 hari tambahan | Timeline 10 sprint tidak berubah |
+
+**Rekomendasi: Opsi C.**
+
+**Alasan rekomendasi:**
+1. Print format tidak memblokir UAT atau penggunaan harian — staf bisa menggunakan print browser standard Frappe sementara format NGO-branded dibuat di v0.2.
+2. Dashboard multi-DocType dengan 10+ number cards membutuhkan data historis (minimum 2–3 sprint operasional) agar bermakna — lebih baik dibangun setelah sistem dipakai, sehingga user bisa memberi feedback tentang metric mana yang paling dibutuhkan.
+3. FE-01 (status colors), FE-02 (validation messages), FE-03 (notifications kritis), FE-06 (Bahasa Indonesia labels) tetap masuk MVP dalam semua opsi — ini tidak dapat dinegosiasikan.
+4. Opsi C mempertahankan 10-sprint timeline tanpa mengorbankan fungsi bisnis inti dan tanpa menambah developer.
+
+**Keputusan:** _(belum diisi — PM + PO harus memutuskan dan mengisi bagian ini)_
+
+**Implikasi setelah keputusan:**
+- **Opsi A:** Revisi sprint breakdown secara eksplisit — alokasikan slot FE-04 (Sprint 5, 6–7, 8, 9) dan FE-05 (Sprint 9–10) ke Dev 2. Evaluasi apakah perlu Frontend Developer tambahan.
+- **Opsi B:** Tentukan 2 print format mana yang masuk MVP dan buat tiket spesifik. Cek apakah dapat diselipkan di Sprint 6–7 tanpa menggeser FG-09.
+- **Opsi C:** Tambahkan FE-04 dan FE-05 (role-specific) ke Post-MVP Feature Groups table di `docs/pm/complexity.md`. FG-15 "Basic Dashboard" tetap sebagai delivered MVP item.
+
+**Deadline keputusan: Sebelum Sprint 4 dimulai (Minggu 7).** Setelah Sprint 4 berjalan, TL tidak dapat menyesuaikan sprint plan tanpa disrupting delivery.
+
+---
+
 ## Ringkasan Status
 
 | ID | Topik | Status | Keputusan Singkat |
@@ -222,6 +265,7 @@ Implikasi desain yang harus dijaga sejak MVP:
 | D-04 | Multi-currency di MVP? | `DECIDED` | Ya, masuk MVP (Opsi B) |
 | D-05 | Source of truth accounting spec | `DECIDED` | Pisahkan by concern (Opsi C) |
 | D-06 | Multi-tenancy strategy | `DEFERRED` | One site per org (Opsi A direkomendasikan). Workflow = template default, bukan aturan baku — setiap org punya SOP sendiri |
+| D-07 | Frontend MVP scope — FE-04 print formats + FE-05 dashboards | `OPEN` | Rekomendasi Opsi C (post-MVP). Keputusan PM + PO diperlukan sebelum Sprint 4 |
 
 ---
 

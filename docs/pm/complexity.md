@@ -2,7 +2,7 @@
 
 **Audience:** Project Manager
 **Purpose:** T-shirt sizing for MVP sprint planning (~6-month timeline, 10 sprints of 2 weeks each)
-**Last Updated:** 2026-06-18
+**Last Updated:** 2026-06-20
 
 ---
 
@@ -18,7 +18,7 @@
 **Assumptions:**
 - One developer = one feature group at a time.
 - Sizes include: DocType creation, field configuration, server-side validation scripts, workflow setup, unit testing, and demo data.
-- Sizes do NOT include: UI polish, localization (Bahasa Indonesia labels), documentation, deployment.
+- Sizes do NOT include: UI polish, localization (Bahasa Indonesia labels), documentation, deployment, **atau client-side JavaScript** (Frappe Client Script DocType — `form.on()` event handler, `frm.add_custom_button()`, `frm.set_intro()` banner, dialog confirmation, `frappe.call()` server method call). Client Script overhead diestimasi terpisah di kolom "Client JS" pada Summary Table dan di section "Client Script Track" di bawah.
 - Multi-currency (Decision D-04) affects every transaction DocType — this adds 1–2 days to any DocType that carries currency + exchange rate + base currency equivalent fields.
 
 ---
@@ -93,6 +93,8 @@
 - Fund Restriction has its own submit/approval workflow with "only one active restriction per fund" rule.
 - Fixture data for Fund Types must be seeded correctly (8 types with correct defaults).
 
+**Client Script overhead (~1.5 hari, tidak termasuk 10 hari di atas):** Fund: 5 `form.on()` handler (validasi currency saat fund_type berubah, live balance update, restriction-type warning, conditional `grant` field mandatory check, lock saat status Closing/Closed) + 2 custom button ("Lihat Alokasi", "Ajukan Pembatasan"). Fund Allocation: 4 handler (live available-balance indicator via `frappe.call`, lock saat status Approved, restriction warning jika fund restricted, recompute total dari items) + 1 custom button.
+
 **Key dependencies:** Funding Source (FG-02) must exist. Grant DocType (FG-05) is optionally linked — Fund can be built before Grant, but the `grant` field should be in place from the start.
 
 **Recommended sprint:** Sprint 2
@@ -118,6 +120,8 @@
 - Project Fund Allocation child table requires logic to compute total_budget from child rows.
 - Activity links to Fund Budget Line — that DocType must exist at the same time (see FG-06).
 - Multi-currency: Project carries a base currency; Project Fund Allocation carries currency + exchange rate.
+
+**Client Script overhead (~2 hari, tidak termasuk 10 hari di atas):** Project: 3 handler (fund allocation total auto-compute, close-blocking check via `frappe.call` sebelum state transition, lock budget saat Completed) + 3 custom button ("Lihat Advance", "Tambah Fund Alokasi", "Tutup Proyek" dengan konfirmasi dialog). Activity: 4 handler (project+fund auto-fetch dari selection, date overlap validation, close-blocking jika ada advance terbuka, lock saat non-editable state) + 2 custom button ("Buat Advance" — enabled hanya saat status Approved/In Progress, "Tandai Selesai").
 
 **Key dependencies:** Program requires no Fundara dependencies. Project requires Program and Fund (FG-03). Activity requires Project and Fund Budget Line (FG-06 — build in the same sprint).
 
@@ -148,6 +152,8 @@
 - Cross-context integration: closing a Grant must validate that the corresponding Fund is in Closing/Closed status.
 - Multi-currency on every amount field: Grant currency (e.g., USD), base currency (IDR), exchange rates.
 
+**Client Script overhead (~1.5 hari, tidak termasuk 18 hari di atas):** Grant: 4 handler (status-locked field read-only enforcement, multi-currency conversion display preview, sidebar link builder ke Fund/Agreement, conditional mandatory fields per grant_type) + 3 custom button ("Ajukan ke Donor", "Buka Perjanjian Grant", "Tutup Grant" — terakhir memvalidasi Closeout Checklist via `frappe.call` sebelum mengizinkan transisi). Grant Budget Line: live utilization percentage dengan visual peringatan merah saat melampaui 80%.
+
 **Key dependencies:** Donor (FG-02) must exist. Fund (FG-03) must exist for the Grant Fund back-link. This is a bounded context that can be developed semi-independently after Sprint 2 (D-01 decision).
 
 **Recommended sprint:** Sprint 3–5 (run in parallel with FG-04 and FG-06 on a separate developer track)
@@ -173,6 +179,8 @@
 - Fund Allocation requires checking Fund's available_balance before approval.
 - Decision D-02 (Available = Approved − Actual paid only): `total_actual_amount` on Fund Budget must only increment when Cash Advance is Paid or Purchase Invoice is posted — this is a deferred hook that depends on Layer 4 transactions being built.
 - Multi-currency on all amount fields.
+
+**Client Script overhead (~1 hari, tidak termasuk 10 hari di atas):** Fund Budget: lock semua field saat status Approved/Active + custom button "Revisi Budget" yang hanya muncul saat status Active (memicu pembuatan dokumen Budget Revision via dialog). Budget Revision: auto-sum `revised_total` dari revision lines pada perubahan child table. Fund Allocation: live available-balance indicator (sama dengan FG-03, tapi sudah dikerjakan di sana).
 
 **Key dependencies:** Fund (FG-03) must exist. Project and Activity (FG-04) are needed for project-level budgets but not for org-level budgets. Build FG-06 in the same sprint as FG-04.
 
@@ -200,6 +208,8 @@
 - Multi-currency: if cash_bank_account is in USD and base currency is IDR, the system must compute both correctly.
 - Evidence status field: Cash Disbursement has `evidence_status` that the Evidence context will update — design the field now, wire the logic later.
 
+**Client Script overhead (~1 hari, tidak termasuk 10 hari di atas):** Cash Disbursement: budget availability badge via `frappe.call('fundara.api.get_budget_status')` yang menampilkan status hijau/kuning/merah + auto-fetch fund/project/activity dari Cost Center selection + conditional field visibility berdasarkan disbursement_type. Cash Receipt: fetch currency dan exchange_rate dari linked Campaign atau Fund + conditional field visibility (campaign-linked vs. standalone donation mode).
+
 **Key dependencies:** Fund (FG-03), Project/Activity (FG-04), Fund Budget (FG-06), Chart of Accounts (Layer 0) must all exist. Cash Receipt also links to Donor and Fundraising Campaign (FG-02, FG-08).
 
 **Recommended sprint:** Sprint 5
@@ -222,6 +232,8 @@
 - Anonymous donation logic (if is_anonymous = 1, donor field must be blank, display name used instead) requires careful validation.
 - Multi-currency: Donation carries currency + exchange rate.
 - Cash Receipt (FG-07) links to Fundraising Campaign — these two should be built in the same sprint.
+
+**Client Script overhead (~1.5 hari, tidak termasuk 7 hari di atas):** Fundraising Campaign: dynamic progress bar (`total_received / goal_amount`) sebagai custom HTML di form header + 2 custom button ("Aktifkan Campaign", "Tutup Campaign" dengan konfirmasi dialog). Donation: 5 handler — anonymous mode (clear `donor` field + tampilkan warning "Donasi anonim: nama donor tidak akan disimpan"), auto-fetch fund dari Campaign, blacklist check via `frappe.call` sebelum submit, `amount_base` auto-compute dari currency × exchange_rate, lock saat Approved — + 1 custom button "Buat Kuitansi".
 
 **Key dependencies:** Funding Source, Donor (FG-02), Fund (FG-03) must exist.
 
@@ -253,6 +265,8 @@
 - Cancellation after Paid state requires a reversal process — cannot simply cancel.
 - Advance Liquidation inherits dimensions from Cash Advance (fund, project, activity) as read-only fields.
 
+**Client Script overhead (~2.5 hari, tidak termasuk 16 hari di atas — kelompok client script terumit di seluruh MVP):** Cash Advance: D-02 budget banner "Budget Tersedia: Rp X" via `frappe.call('fundara.api.get_available_budget')` yang juga me-render color-coded live bar (hijau/kuning/merah berdasarkan % utilization terhadap budget line) + aging_category display + `pending_payment_flag` warning banner + lock/unlock behavior berbeda per state (11 state) + 2 custom button ("Bayar Advance", "Batalkan Pembayaran" — masing-masing dengan konfirmasi dialog dan server validation). Advance Liquidation: auto-compute `refund_amount` vs `reimbursement_amount` dari `total_expense_amount` vs `advance_amount` setiap kali child table berubah + color-coded settlement summary bar di form footer ("Lebih: Rp X — perlu dikembalikan" / "Kurang: Rp X — perlu reimbursement").
+
 **Key dependencies:** Fund (FG-03), Project/Activity (FG-04), Fund Budget (FG-06), Cash Disbursement GL setup (FG-07) must all exist. Activity must be in Approved or In Progress status.
 
 **Recommended sprint:** Sprint 6–7 (the most complex feature group in the MVP — allocate two sprints or two developers)
@@ -276,6 +290,8 @@
 - The blocking severity logic (Info / Warning / Blocking / Exception Allowed) requires different system behavior per severity level — moderate complexity.
 - Dynamic Link field on Evidence (linked_document_type + linked_document) allows linking to any DocType — Frappe handles this natively but testing against multiple DocTypes takes time.
 - Evidence verification workflow is simple (Pending → Verified → Rejected) but the constraint that Verified evidence cannot be deleted adds a server-side guard.
+
+**Client Script overhead (~0.5 hari, tidak termasuk 6 hari di atas):** Evidence: Dynamic Link auto-populate `linked_document_name` dari `linked_document_type` selection + visual severity indicator (ikon merah/kuning/biru berdasarkan `blocking_severity`) di form header via `frm.set_intro()`.
 
 **Key dependencies:** Evidence Type (L1 — can be built in Sprint 1). Evidence Requirement and Evidence need transaction DocTypes (FG-07, FG-09) to exist for meaningful testing, but the DocTypes themselves can be built earlier.
 
@@ -410,26 +426,27 @@
 
 ## Summary Table
 
-| ID | Feature Group | Size | Est. Days | Sprint | Parallelizable With |
-|---|---|---|---|---|---|
-| FG-01 | Organization Setup | M | 5 | 1 | FG-02 |
-| FG-02 | Funding Source & Donor | M | 5 | 1 | FG-01 |
-| FG-03 | Fund Master & Fund Type | L | 10 | 2 | FG-05 (separate dev) |
-| FG-04 | Program, Project & Activity | L | 10 | 3–4 | FG-05, FG-06 |
-| FG-05 | Grant Management | XL | 18 | 3–5 | FG-04, FG-06 |
-| FG-06 | Budget Layer | L | 10 | 3–4 | FG-04, FG-05 |
-| FG-07 | Cash Receipt & Disbursement | L | 10 | 5 | FG-08, FG-14 |
-| FG-08 | Campaign & Donation | M | 7 | 5 | FG-07, FG-14 |
-| FG-09 | Advance & Liquidation | XL | 16 | 6–7 | FG-10, FG-11 |
-| FG-10 | Evidence & Compliance | M | 6 | 5–6 | FG-07, FG-09 |
-| FG-11 | Fixed Asset & Depreciation | L | 12 | 7 | FG-12 |
-| FG-12 | Bank Reconciliation | L | 10 | 8 | FG-15 (partial) |
-| FG-13 | Opening Balance Assistant | M | 5 | 4 | FG-06 |
-| FG-14 | General Journal | M | 5 | 5 | FG-07, FG-08 |
-| FG-15 | Basic Reporting & Dashboard | XL | 16 | 8–9 | FG-12 |
-| | **TOTAL** | | **145 days** | | |
+| ID | Feature Group | Size | Est. Days | Client JS | Sprint | Parallelizable With |
+|---|---|---|---|---|---|---|
+| FG-01 | Organization Setup | M | 5 | — | 1 | FG-02 |
+| FG-02 | Funding Source & Donor | M | 5 | — | 1 | FG-01 |
+| FG-03 | Fund Master & Fund Type | L | 10 | 1.5 | 2 | FG-05 (separate dev) |
+| FG-04 | Program, Project & Activity | L | 10 | 2.0 | 3–4 | FG-05, FG-06 |
+| FG-05 | Grant Management | XL | 18 | 1.5 | 3–5 | FG-04, FG-06 |
+| FG-06 | Budget Layer | L | 10 | 1.0 | 3–4 | FG-04, FG-05 |
+| FG-07 | Cash Receipt & Disbursement | L | 10 | 1.0 | 5 | FG-08, FG-14 |
+| FG-08 | Campaign & Donation | M | 7 | 1.5 | 5 | FG-07, FG-14 |
+| FG-09 | Advance & Liquidation | XL | 16 | 2.5 | 6–7 | FG-10, FG-11 |
+| FG-10 | Evidence & Compliance | M | 6 | 0.5 | 5–6 | FG-07, FG-09 |
+| FG-11 | Fixed Asset & Depreciation | L | 12 | — | 7 | FG-12 |
+| FG-12 | Bank Reconciliation | L | 10 | — | 8 | FG-15 (partial) |
+| FG-13 | Opening Balance Assistant | M | 5 | — | 4 | FG-06 |
+| FG-14 | General Journal | M | 5 | — | 5 | FG-07, FG-08 |
+| FG-15 | Basic Reporting & Dashboard | XL | 16 | — | 8–9 | FG-12 |
+| + | Sprint 6–7 lainnya (Fund Transfer, Procurement, Field Report) | — | — | 2.5 | 6–7 | — |
+| | **TOTAL** | | **145 days** | **~14 hari** | | |
 
-> **145 developer-days** across 10 sprints (2 weeks each) = approximately **14.5 dev-days per sprint** with 1 developer. With 2 developers on parallel tracks, this is achievable in ~73 dev-days = 7–8 sprints, within a 6-month timeline.
+> **145 developer-days** backend (DocType + server script + workflow + unit test) + **~14 hari client-side JavaScript** (Client Script overhead — lihat kolom "Client JS" dan section "Client Script Track" di bawah) = **~159 dev-days** total sebelum Frontend & UX Track. Dengan 2 developer pada parallel tracks, backend 145 hari dapat diselesaikan dalam ~73 dev-days = 7–8 sprint dalam 6 bulan.
 
 ---
 
@@ -649,6 +666,58 @@ Semua form labels, button text ("Lihat Alokasi", "Liquidasi Advance"), dialog me
 
 ---
 
+## Client Script Track (~14 Hari — Di Luar 145 Dev-Days)
+
+Frappe Client Script adalah JavaScript yang berjalan di browser per DocType — berbeda dari server-side Python script yang sudah termasuk dalam estimasi FG. Client Script mencakup: `frappe.ui.form.on()` event handler, `frm.add_custom_button()`, `frm.set_intro()` banner, dialog confirmation, dan `frappe.call()` untuk server method call (misalnya menghitung available budget secara real-time).
+
+Client Script **dikerjakan oleh DEV** (bukan UX), bersamaan atau segera setelah DocType induk selesai diimplementasi. Tidak perlu sprint terpisah — overhead ini diselipkan dalam sprint yang sama dengan FG terkait.
+
+| Feature Group | DocType Utama | Kompleksitas Client Script | Overhead |
+|---|---|---|---|
+| FG-03: Fund Master | Fund (5 handler + 2 button), Fund Allocation (4 handler + 1 button) | Tinggi | ~1.5 hari |
+| FG-04: Project & Activity | Project (3 handler + 3 button termasuk close-blocking), Activity (4 handler + 2 button) | Tinggi | ~2.0 hari |
+| FG-05: Grant Management | Grant (4 handler + 3 button termasuk closeout validation), Grant Budget Line (utilization%) | Sedang | ~1.5 hari |
+| FG-06: Budget Layer | Fund Budget (lock + revision button), Budget Revision (auto-sum) | Sedang | ~1.0 hari |
+| FG-07: Cash Receipt & Disbursement | Disbursement (budget badge via `frappe.call`), Receipt (fetch currency + conditional) | Sedang | ~1.0 hari |
+| FG-08: Campaign & Donation | Campaign (progress bar HTML + 2 button), Donation (5 handler + blacklist check + anonymous mode) | Sedang | ~1.5 hari |
+| FG-09: Advance & Liquidation | Cash Advance (D-02 banner via `frappe.call` + color bar + 2 button), Liquidation (settlement auto-compute + summary bar) | **Tertinggi** | ~2.5 hari |
+| FG-10: Evidence | Dynamic Link auto-fill + blocking severity indicator | Rendah | ~0.5 hari |
+| Sprint 6–7 lainnya | Fund Transfer (same-fund check + restricted warning), Purchase Request (budget badge + threshold), Purchase Order (vendor check + total), Field Report (verified_by ≠ submitted_by), Workplan | Sedang | ~2.5 hari |
+| | | **Total** | **~14 hari** |
+
+### DocType Paling Kompleks: Cash Advance (FG-09)
+
+Cash Advance adalah DocType dengan client script terumit karena:
+1. D-02 budget banner memerlukan `frappe.call('fundara.api.get_available_budget')` — bukan computed field statik, tapi server call yang menghitung Available Budget = Approved Budget − Actual (paid only) setiap kali fund/activity berubah
+2. Color-coded live bar (hijau < 70% / kuning 70–90% / merah > 90% utilization) menggunakan custom HTML via `frm.set_intro()`
+3. 11 workflow state dengan lock/unlock behavior berbeda per state — requires conditional `frm.set_df_property('fieldname', 'read_only', ...)` per field per state transition
+
+### Catatan untuk PM
+
+Revised total setelah client script overhead:
+
+| Komponen | Est. Days |
+|---|---|
+| Backend (145 dev-days asli) | 145 |
+| Client Script overhead | +14 |
+| Frontend & UX Track (FE-01–FE-06) — lihat section sebelumnya | +41 |
+| **Total tanpa keputusan D-07** | **~200 dev-days** |
+| QA overhead (tersebar) | +20 |
+| **Grand total dengan QA** | **~220 hari** |
+
+Dengan keputusan D-07 Opsi C (FE-04 + FE-05 post-MVP), Frontend track berkurang dari ~41 menjadi ~13 hari (FE-01 + FE-02 + FE-03 + FE-06):
+
+| Komponen | Est. Days (Opsi C) |
+|---|---|
+| Backend | 145 |
+| Client Script | +14 |
+| Frontend MVP subset (FE-01 + FE-02 + FE-03 + FE-06) | +13 |
+| **Total dev** | **~172 dev-days** |
+| QA overhead | +20 |
+| **Grand total** | **~192 hari** |
+
+---
+
 ## QA Capacity — Alokasi yang Hilang dari Sprint Plan
 
 Sprint plan 145 dev-days tidak mengalokasikan **satu hari pun** untuk aktivitas QA. Berdasarkan `docs/qa/test-plan.md` dan `docs/qa/regression-checklist.md`, berikut QA effort yang wajib ada per sprint:
@@ -729,6 +798,8 @@ The following feature groups are in the roadmap but are explicitly out of MVP sc
 
 | Feature Group | Target Version | Rough Estimate |
 |---|---|---|
+| FE-04: 7 Print Format Jinja2 templates *(jika D-07 Opsi C dipilih)* | v0.2 | L (~14 days) |
+| FE-05: 7 Role-Specific Dashboards *(jika D-07 Opsi C dipilih)* | v0.2 | L (~14 days) |
 | Grant Donor Reporting Package | v0.2 | XL (20+ days) |
 | Advanced Procurement Rules + Bid Analysis | v0.4 | XL (20+ days) |
 | ISAK 35 Report Templates | v0.5 | XL (25+ days) |
