@@ -1,0 +1,911 @@
+<title>D-07 — Keputusan Frontend MVP Scope | Fundara</title>
+<style>
+  :root {
+    --ground:     #F4F0EA;
+    --ground-dim: #EBE6DE;
+    --text:       #1A3340;
+    --text-mid:   #4A6070;
+    --text-light: #7A90A0;
+    --accent:     #C8922A;
+    --accent-dim: #F0D8A8;
+    --teal:       #2A6E6B;
+    --teal-dim:   #D0E8E7;
+    --danger:     #A03020;
+    --danger-dim: #F0D8D0;
+    --mid:        #5A7A8E;
+    --mid-dim:    #D8E8F0;
+    --border:     #CEC8BE;
+    --serif: Georgia, 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --mono: 'Courier New', Courier, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ground);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 40px 16px 80px;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* ── HEADER ─────────────────────────────────── */
+  .doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--text);
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: slideDown 0.5s ease forwards;
+  }
+
+  .doc-id {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .doc-title {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 1.2;
+    color: var(--text);
+    max-width: 500px;
+  }
+
+  .doc-meta {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .doc-meta-item {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-mid);
+    margin-bottom: 4px;
+  }
+
+  .deadline-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    margin-top: 8px;
+  }
+
+  /* ── INTRO ───────────────────────────────────── */
+  .intro {
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: slideDown 0.5s 0.1s ease forwards;
+  }
+
+  .intro p {
+    color: var(--text-mid);
+    font-size: 15px;
+    max-width: 620px;
+    line-height: 1.7;
+  }
+
+  /* ── CONTEXT CARDS ───────────────────────────── */
+  .context-heading {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 14px;
+    opacity: 0;
+    animation: slideDown 0.5s 0.15s ease forwards;
+  }
+
+  .context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  @media (max-width: 560px) {
+    .context-grid { grid-template-columns: 1fr; }
+    .options-grid { grid-template-columns: 1fr !important; }
+  }
+
+  .context-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--text);
+    padding: 20px 22px;
+    opacity: 0;
+    animation: slideUp 0.5s ease forwards;
+  }
+
+  .context-card:nth-child(1) { animation-delay: 0.2s; }
+  .context-card:nth-child(2) { animation-delay: 0.3s; }
+
+  .context-card-code {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-light);
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  .context-card-name {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .context-card-desc {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  .days-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--text);
+    background: var(--accent-dim);
+    border: 1px solid var(--accent);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  .context-note {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ── SECTION HEADING ─────────────────────────── */
+  .section-heading {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: normal;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .section-sub {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 20px;
+  }
+
+  /* ── OPTIONS ─────────────────────────────────── */
+  .options-section {
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: slideDown 0.5s 0.35s ease forwards;
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.15fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  .option-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    padding: 20px;
+    cursor: pointer;
+    transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+    position: relative;
+    user-select: none;
+  }
+
+  .option-card:hover {
+    box-shadow: 0 4px 16px rgba(26,51,64,0.1);
+    transform: translateY(-2px);
+  }
+
+  .option-card.selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+
+  .option-card.recommended {
+    border-color: var(--teal);
+    border-width: 2px;
+  }
+
+  .option-card.recommended.selected {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px var(--teal-dim);
+  }
+
+  .option-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .badge-label {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: var(--serif);
+    color: var(--text);
+  }
+
+  .badge-rec {
+    background: var(--teal);
+    color: white;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+  }
+
+  .option-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .option-desc {
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  /* cost meter */
+  .cost-section {
+    margin-bottom: 12px;
+  }
+
+  .cost-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .cost-days {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: var(--mono);
+    color: var(--text);
+  }
+
+  .cost-days.zero { color: var(--teal); }
+  .cost-days.high { color: var(--danger); }
+  .cost-days.mid  { color: var(--mid); }
+
+  .cost-track {
+    height: 8px;
+    background: var(--ground-dim);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .cost-fill {
+    height: 100%;
+    border-radius: 1px;
+    width: 0;
+    transition: width 1s 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cost-fill.danger { background: var(--danger); }
+  .cost-fill.mid    { background: var(--mid); }
+  .cost-fill.zero   { background: var(--teal); width: 0 !important; }
+
+  .cost-track-zero {
+    height: 8px;
+    background: var(--teal-dim);
+    border: 1px solid var(--teal);
+    border-radius: 1px;
+  }
+
+  /* consequence pills */
+  .consequences {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 4px;
+  }
+
+  .consequence {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 2px;
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    line-height: 1.4;
+  }
+
+  .consequence.bad {
+    background: var(--danger-dim);
+    color: var(--danger);
+  }
+
+  .consequence.warn {
+    background: var(--mid-dim);
+    color: #3A5A6E;
+  }
+
+  .consequence.good {
+    background: var(--teal-dim);
+    color: var(--teal);
+  }
+
+  .consequence-icon { flex-shrink: 0; margin-top: 1px; }
+
+  /* ── RATIONALE ────────────────────────────────── */
+  .rationale-section {
+    background: var(--text);
+    color: white;
+    padding: 32px 36px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: slideUp 0.5s 0.5s ease forwards;
+  }
+
+  .rationale-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .rationale-heading {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: normal;
+    color: white;
+    margin-bottom: 24px;
+  }
+
+  .rationale-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .rationale-item {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  .rationale-num {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .rationale-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+  }
+
+  .rationale-text strong {
+    color: white;
+    font-weight: 600;
+  }
+
+  /* ── WHAT STAYS IN ────────────────────────────── */
+  .stays-section {
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: slideUp 0.5s 0.55s ease forwards;
+  }
+
+  .stays-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .stays-card {
+    background: var(--teal-dim);
+    border: 1px solid var(--teal);
+    border-left: 4px solid var(--teal);
+    padding: 14px 16px;
+  }
+
+  .stays-card-code {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .stays-card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .stays-card-note {
+    font-size: 12px;
+    color: var(--text-mid);
+  }
+
+  /* ── DECISION ACTION ──────────────────────────── */
+  .action-section {
+    border: 2px solid var(--text);
+    padding: 28px 32px;
+    opacity: 0;
+    animation: slideUp 0.5s 0.6s ease forwards;
+  }
+
+  .action-heading {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 20px;
+  }
+
+  .action-instructions {
+    font-size: 13px;
+    color: var(--text-mid);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .action-btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    padding: 10px 20px;
+    border: 1.5px solid var(--border);
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+  }
+
+  .action-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .action-btn.active-a { background: var(--danger); color: white; border-color: var(--danger); }
+  .action-btn.active-b { background: var(--mid); color: white; border-color: var(--mid); }
+  .action-btn.active-c { background: var(--teal); color: white; border-color: var(--teal); }
+
+  .decision-result {
+    display: none;
+    padding: 14px 16px;
+    border-radius: 2px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .decision-result.show { display: block; }
+  .decision-result.result-a { background: var(--danger-dim); color: var(--danger); }
+  .decision-result.result-b { background: var(--mid-dim); color: #2A4A5E; }
+  .decision-result.result-c { background: var(--teal-dim); color: var(--teal); }
+
+  .action-footer {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 12px;
+  }
+
+  .action-footer-note {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-light);
+  }
+
+  .action-footer-deadline {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── ANIMATIONS ────────────────────────────────── */
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  /* ── FOOTER ─────────────────────────────────────── */
+  .doc-footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .doc-footer-text {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-light);
+    letter-spacing: 0.06em;
+  }
+
+  /* Selected card from click */
+  .option-card.user-selected {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .option-card.recommended.user-selected {
+    outline-color: var(--teal);
+  }
+</style>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="doc-header">
+    <div>
+      <div class="doc-id">Fundara · DECISIONS.md · D-07</div>
+      <h1 class="doc-title">Seberapa jauh tampilan aplikasi harus diselesaikan sebelum go-live?</h1>
+    </div>
+    <div class="doc-meta">
+      <div class="doc-meta-item">20 Juni 2026</div>
+      <div class="doc-meta-item">Untuk: Product Owner</div>
+      <div class="doc-meta-item">Dari: Project Manager</div>
+      <div><span class="deadline-badge">Keputusan sebelum Sprint 4</span></div>
+    </div>
+  </header>
+
+  <!-- INTRO -->
+  <div class="intro">
+    <p>Dua deliverable frontend yang tidak ada dalam rencana awal ternyata membutuhkan waktu pengembangan yang signifikan — bukan sekedar "poles tampilan". Keputusan ini menentukan apakah keduanya dikerjakan sekarang (dalam 10 sprint yang sudah direncanakan), dikurangi, atau diselesaikan setelah versi pertama go-live.</p>
+  </div>
+
+  <!-- WHAT WE'RE DECIDING -->
+  <div class="context-heading">Yang perlu diputuskan</div>
+  <div class="context-grid">
+    <div class="context-card">
+      <div class="context-card-code">FE-04 · Print Formats</div>
+      <div class="context-card-name">7 Format Cetak Kustom NGO</div>
+      <div class="context-card-desc">Kuitansi donasi, bukti pembayaran uang muka, surat pesanan, laporan penggunaan dana, laporan donor, laporan campaign, dan ringkasan pertanggungjawaban uang muka — masing-masing dengan template Jinja2 terpisah, watermark status, blok multi-currency, dan kolom tanda tangan.</div>
+      <div class="days-tag">~14 hari pengembangan</div>
+      <div class="context-note">Bukan "ubah warna tombol" — ini pembuatan template dari nol.</div>
+    </div>
+    <div class="context-card">
+      <div class="context-card-code">FE-05 · Role Dashboards</div>
+      <div class="context-card-name">7 Dashboard Khusus Per Peran</div>
+      <div class="context-card-desc">Dashboard terpisah untuk Direktur Eksekutif, Finance Manager, Program Manager, Finance Staff, Program Staff, Auditor, dan Executive Viewer — masing-masing dengan 10+ number card, 6+ chart, alert banner, dan data agregat lintas banyak modul.</div>
+      <div class="days-tag">~14 hari pengembangan</div>
+      <div class="context-note">Rencana awal hanya menghitung "1 dashboard dasar" = 6 hari.</div>
+    </div>
+  </div>
+
+  <!-- OPTIONS -->
+  <div class="options-section">
+    <h2 class="section-heading">Tiga Pilihan</h2>
+    <p class="section-sub">Klik kartu untuk memilih. Rekomendasi kami ditandai.</p>
+
+    <div class="options-grid">
+
+      <!-- OPTION A -->
+      <div class="option-card" id="card-a" onclick="selectOption('a')" tabindex="0" role="button" aria-pressed="false">
+        <div class="option-badge">
+          <span class="badge-label">A</span>
+          <span style="font-size:10px;color:var(--text-light);">Semua masuk MVP</span>
+        </div>
+        <div class="option-title">FE-04 + FE-05 keduanya dikerjakan sebelum go-live</div>
+        <div class="option-desc">Tujuh print format dan tujuh dashboard role-specific selesai dalam 10 sprint yang sudah ada, atau dengan menambah sprint/developer.</div>
+
+        <div class="cost-section">
+          <div class="cost-label">
+            <span>Beban tambahan</span>
+            <span class="cost-days high">+28 hari</span>
+          </div>
+          <div class="cost-track">
+            <div class="cost-fill danger" id="fill-a" data-width="100"></div>
+          </div>
+        </div>
+
+        <div class="consequences">
+          <div class="consequence bad">
+            <span class="consequence-icon">✕</span>
+            <span>Sprint 6–9 penuh sesak — tidak ada ruang untuk bug dari sprint sebelumnya</span>
+          </div>
+          <div class="consequence bad">
+            <span class="consequence-icon">✕</span>
+            <span>Butuh developer frontend tambahan mulai Sprint 5, atau perpanjang 2 sprint</span>
+          </div>
+          <div class="consequence bad">
+            <span class="consequence-icon">✕</span>
+            <span>FG-09 (Advance & Liquidation, yang paling kompleks) berisiko digeser</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTION B -->
+      <div class="option-card" id="card-b" onclick="selectOption('b')" tabindex="0" role="button" aria-pressed="false">
+        <div class="option-badge">
+          <span class="badge-label">B</span>
+          <span style="font-size:10px;color:var(--text-light);">Sebagian masuk MVP</span>
+        </div>
+        <div class="option-title">2 format cetak paling kritis + 1 dashboard dasar</div>
+        <div class="option-desc">Hanya Bukti Pembayaran Uang Muka dan Ringkasan Pertanggungjawaban yang masuk MVP. Dashboard dasar tetap dari rencana awal. Sisanya ke v0.2.</div>
+
+        <div class="cost-section">
+          <div class="cost-label">
+            <span>Beban tambahan</span>
+            <span class="cost-days mid">+8 hari</span>
+          </div>
+          <div class="cost-track">
+            <div class="cost-fill mid" id="fill-b" data-width="29"></div>
+          </div>
+        </div>
+
+        <div class="consequences">
+          <div class="consequence warn">
+            <span class="consequence-icon">◑</span>
+            <span>Masih dalam 10 sprint jika prioritas Sprint 6–7 digeser</span>
+          </div>
+          <div class="consequence warn">
+            <span class="consequence-icon">◑</span>
+            <span>PM perlu memilih: format cetak mana yang paling dibutuhkan saat UAT?</span>
+          </div>
+          <div class="consequence warn">
+            <span class="consequence-icon">◑</span>
+            <span>Setengah jalan — staf NGO tetap perlu dijelaskan mana yang belum ada</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTION C — RECOMMENDED -->
+      <div class="option-card recommended" id="card-c" onclick="selectOption('c')" tabindex="0" role="button" aria-pressed="false">
+        <div class="option-badge">
+          <span class="badge-label">C</span>
+          <span class="badge-rec">★ Rekomendasi</span>
+        </div>
+        <div class="option-title">FE-04 + FE-05 diselesaikan di v0.2 — dashboard dasar tetap ada</div>
+        <div class="option-desc">Print format kustom dan 7 dashboard per-role digeser ke versi berikutnya. Dashboard dasar (FG-15, sudah direncanakan 6 hari di Sprint 9) tetap ada untuk go-live.</div>
+
+        <div class="cost-section">
+          <div class="cost-label">
+            <span>Beban tambahan ke timeline saat ini</span>
+            <span class="cost-days zero">+0 hari</span>
+          </div>
+          <div class="cost-track-zero"></div>
+        </div>
+
+        <div class="consequences" style="margin-top:12px;">
+          <div class="consequence good">
+            <span class="consequence-icon">✓</span>
+            <span>Timeline 10 sprint tidak berubah</span>
+          </div>
+          <div class="consequence good">
+            <span class="consequence-icon">✓</span>
+            <span>UAT bisa berjalan penuh tanpa print format — fungsi bisnis bisa divalidasi</span>
+          </div>
+          <div class="consequence good">
+            <span class="consequence-icon">✓</span>
+            <span>Dashboard role-specific lebih bermakna setelah ada data historis 2–3 sprint pemakaian nyata</span>
+          </div>
+          <div class="consequence good">
+            <span class="consequence-icon">✓</span>
+            <span>Staf NGO bisa mencetak via browser standar Frappe sambil menunggu format kustom</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RATIONALE -->
+  <div class="rationale-section">
+    <div class="rationale-eyebrow">Mengapa kami merekomendasikan Opsi C</div>
+    <div class="rationale-heading">Tiga alasan untuk menunda FE-04 dan FE-05</div>
+    <ul class="rationale-list">
+      <li class="rationale-item">
+        <div class="rationale-num">01</div>
+        <div class="rationale-text"><strong>Print format bukan prasyarat UAT.</strong> UAT Milestone 1 (Sprint 5) dan Milestone 2 (Sprint 10) menguji apakah alur kerja NGO berjalan benar — bukan apakah kuitansinya sudah berlogo. Staf pilot bisa menggunakan cetak standar Frappe untuk sesi UAT tanpa kehilangan kemampuan menguji fungsi bisnis inti.</div>
+      </li>
+      <li class="rationale-item">
+        <div class="rationale-num">02</div>
+        <div class="rationale-text"><strong>Dashboard yang baik butuh data nyata.</strong> Dashboard dengan 10 number card dan 6 chart hanya bermakna jika ada histori transaksi. Membangunnya sebelum go-live berarti membangun berdasarkan asumsi tentang apa yang penting — sementara 3 bulan pemakaian nyata akan memberi tahu apa yang sebenarnya sering dilihat staf.</div>
+      </li>
+      <li class="rationale-item">
+        <div class="rationale-num">03</div>
+        <div class="rationale-text"><strong>28 hari adalah risiko nyata terhadap fungsi inti.</strong> FG-09 (Advance & Liquidation) dan FG-12 (Rekonsiliasi Bank) — dua modul paling kompleks — dijadwalkan di sprint yang sama dengan FE-04 dan FE-05. Jika keduanya berjalan bersamaan, salah satunya akan dikompromikan. Rekonsiliasi Bank yang tidak sempurna lebih merusak go-live daripada tidak ada kuitansi berlogo.</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- WHAT STAYS IN MVP (FE tetap masuk MVP) -->
+  <div class="stays-section">
+    <div class="context-heading">Yang tetap masuk MVP dalam semua opsi</div>
+    <p style="font-size:13px;color:var(--text-mid);margin-bottom:14px;">Empat deliverable frontend ini bukan pilihan — mereka memengaruhi setiap pengguna setiap hari.</p>
+    <div class="stays-grid">
+      <div class="stays-card">
+        <div class="stays-card-code">FE-01 · ~5 hari</div>
+        <div class="stays-card-name">Status Colors & Indikator</div>
+        <div class="stays-card-note">Warna status di semua list view — tanpa ini daftar dokumen membingungkan</div>
+      </div>
+      <div class="stays-card">
+        <div class="stays-card-code">FE-02 · ~5 hari</div>
+        <div class="stays-card-name">65+ Pesan Validasi (Bahasa Indonesia)</div>
+        <div class="stays-card-note">Pesan error yang jelas saat aturan bisnis dilanggar — bukan opsional</div>
+      </div>
+      <div class="stays-card">
+        <div class="stays-card-code">FE-03 · ~8 hari</div>
+        <div class="stays-card-name">21 Notifikasi Email Kritis</div>
+        <div class="stays-card-note">Pemberitahuan persetujuan advance, tenggat liquidasi, overdue — operasional</div>
+      </div>
+      <div class="stays-card">
+        <div class="stays-card-code">FE-06 · ~3 hari</div>
+        <div class="stays-card-name">Label Bahasa Indonesia</div>
+        <div class="stays-card-note">Semua teks form dalam Bahasa Indonesia yang tepat — tidak bisa go-live tanpa ini</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DECISION ACTION -->
+  <div class="action-section">
+    <h2 class="action-heading">Keputusan Product Owner</h2>
+    <p class="action-instructions">Pilih opsi yang Anda setujui. Keputusan ini akan dicatat di <code style="font-size:12px;background:var(--ground-dim);padding:1px 5px;">DECISIONS.md</code> sebagai D-07 dan menjadi acuan sprint planning mulai Sprint 4.</p>
+
+    <div class="action-buttons">
+      <button class="action-btn" id="btn-a" onclick="chooseOption('a')">Opsi A — Semua masuk MVP</button>
+      <button class="action-btn" id="btn-b" onclick="chooseOption('b')">Opsi B — Sebagian MVP</button>
+      <button class="action-btn" id="btn-c" onclick="chooseOption('c')">Opsi C — Post-MVP (Rekomendasi)</button>
+    </div>
+
+    <div class="decision-result result-a" id="result-a">
+      <strong>Opsi A dipilih.</strong> PM akan merevisi sprint breakdown untuk mengalokasikan FE-04 dan FE-05 secara eksplisit ke Sprint 5–10. Evaluasi kebutuhan Frontend Developer tambahan mulai Sprint 5. TL akan menyesuaikan buffer untuk FG-09 dan FG-12 agar tidak terkompromikan.
+    </div>
+    <div class="decision-result result-b" id="result-b">
+      <strong>Opsi B dipilih.</strong> PM akan menentukan 2 print format prioritas (mana yang paling dibutuhkan saat UAT) dan membuat tiket spesifik. Format lainnya + dashboard role-specific masuk backlog v0.2. TL akan mengalokasikan ~8 hari di Sprint 6–7 untuk format yang dipilih.
+    </div>
+    <div class="decision-result result-c" id="result-c">
+      <strong>Opsi C dipilih.</strong> Sprint plan tidak berubah. PM akan menambahkan FE-04 dan FE-05 ke backlog v0.2 dengan estimasi masing-masing ~14 hari. Dashboard dasar FG-15 (6 hari, Sprint 9) tetap sebagai deliverable go-live. Dokumen DECISIONS.md akan diperbarui.
+    </div>
+
+    <div class="action-footer">
+      <span class="action-footer-note">Dokumen ini disiapkan oleh PM · Fundara v0.1 MVP Planning</span>
+      <span class="action-footer-deadline">Deadline: Sebelum Sprint 4 dimulai (Minggu 7)</span>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <span class="doc-footer-text">DECISIONS.MD · D-07 · OPEN</span>
+    <span class="doc-footer-text">Lihat detail teknis: docs/pm/complexity.md § Frontend &amp; UX Track</span>
+  </div>
+
+</div>
+
+<script>
+  // Animate cost bars on load
+  document.addEventListener('DOMContentLoaded', function () {
+    var fills = document.querySelectorAll('.cost-fill[data-width]');
+    fills.forEach(function (el) {
+      var target = el.getAttribute('data-width');
+      setTimeout(function () {
+        el.style.width = target + '%';
+      }, 200);
+    });
+  });
+
+  // Option card selection (visual only — from clicking the cards)
+  function selectOption(opt) {
+    var cards = document.querySelectorAll('.option-card');
+    cards.forEach(function (c) {
+      c.classList.remove('user-selected');
+      c.setAttribute('aria-pressed', 'false');
+    });
+    var card = document.getElementById('card-' + opt);
+    if (card) {
+      card.classList.add('user-selected');
+      card.setAttribute('aria-pressed', 'true');
+    }
+    // Also mirror to the action buttons
+    activateBtn(opt);
+  }
+
+  // Action button choice (the formal decision)
+  function chooseOption(opt) {
+    var btns = document.querySelectorAll('.action-btn');
+    btns.forEach(function (b) { b.className = 'action-btn'; });
+
+    var results = document.querySelectorAll('.decision-result');
+    results.forEach(function (r) { r.classList.remove('show'); });
+
+    document.getElementById('btn-' + opt).classList.add('active-' + opt);
+    var result = document.getElementById('result-' + opt);
+    if (result) { result.classList.add('show'); }
+
+    // Also highlight the card
+    selectOption(opt);
+  }
+
+  function activateBtn(opt) {
+    var btns = document.querySelectorAll('.action-btn');
+    btns.forEach(function (b) { b.className = 'action-btn'; });
+    var btn = document.getElementById('btn-' + opt);
+    if (btn) { btn.classList.add('active-' + opt); }
+
+    var results = document.querySelectorAll('.decision-result');
+    results.forEach(function (r) { r.classList.remove('show'); });
+    var result = document.getElementById('result-' + opt);
+    if (result) { result.classList.add('show'); }
+  }
+
+  // Keyboard support for option cards
+  document.querySelectorAll('.option-card').forEach(function (card) {
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
+</script>
