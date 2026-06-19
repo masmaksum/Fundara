@@ -426,35 +426,33 @@ Proses disiplin adalah tanggung jawab penuh HR NGO. Fundara project tidak memili
 
 ### A.6.5 Responsibilities After Termination or Change of Employment
 
-**Status:** ⚠️ **Sebagian**
+**Status:** ✅ **Sesuai**
 
 **Deskripsi Kontrol:** Tanggung jawab keamanan informasi yang tetap berlaku setelah terminasi atau perubahan jabatan, serta prosedur offboarding yang mencabut akses secara tepat waktu.
 
 **Evidence Tersedia:**
-- `docs/security/security-requirements.md` — SR-AUTHZ-01: "User access reviewed quarterly; inactive accounts (no login > 60 days) are disabled" — mekanisme passive offboarding
-- `docs/security/security-requirements.md` — SR-AUTH-05: "API keys stored in server-side environment variables; rotate API keys every 90 days"
-- `docs/security/incident-response.md` — menyebutkan prosedur disable akun mantan karyawan via bench console sebagai bagian dari respon insiden
-- `docs/security/threat-model.md` — "Former Employee" disebutkan sebagai threat actor dengan kategori "No trust"
+- `docs/security/offboarding-checklist.md` (ISP-003 v1.0 — **BARU 2026-06-20**) — Offboarding Checklist formal: 11 kategori pencabutan akses (GitHub, Frappe dev/staging/prod, SSH keys, API keys, database, GPG backup key, monitoring, credentials vault, komunikasi), timeline 24 jam, inventarisasi akses pre-offboarding (D-2), verifikasi D+7, rekam jejak untuk keperluan audit, tanda tangan PM + TL
+- `docs/security/security-requirements.md` — SR-AUTHZ-01: quarterly access review, inactive accounts (no login > 60 days) disabled — lapisan tambahan sebagai safety net
+- `docs/security/security-requirements.md` — SR-AUTH-05: API keys di-rotasi setiap 90 hari
+- `docs/security/threat-model.md` — "Former Employee" sebagai threat actor kategori "No trust" — justifikasi untuk prosedur ketat
+- `docs/security/is-policy.md` § 5.5 — ketentuan offboarding dalam IS Policy induk
 
 **Penilaian:**
 
-Ada awareness yang baik bahwa mantan karyawan adalah threat actor (zero trust). Namun, mekanisme yang ada bersifat **reaktif dan pasif**: akun dinonaktifkan setelah 60 hari tidak login, bukan secara proaktif pada hari terakhir bekerja. Ini adalah gap signifikan untuk sistem keuangan di mana mantan karyawan mungkin memiliki waktu untuk mengekspor data atau melakukan transaksi tidak sah.
+**(Gap telah ditutup 2026-06-20)** Offboarding Checklist formal (ISP-003) dibuat sebagai dokumen operasional yang dapat langsung digunakan. Checklist mencakup:
+- **Inventarisasi akses (D-2):** tabel 18 sistem yang harus dicek keberadaan aksesnya sebelum hari terakhir
+- **Fase D-0:** transfer pengetahuan, return aset, konfirmasi NDA
+- **Fase D+1 (24 jam):** pencabutan akses di 11 kategori sistem dengan langkah teknis spesifik per sistem
+- **Verifikasi D+7:** TL memverifikasi tidak ada akses residual via log dan pengujian aktif
+- **Rekam jejak:** format bukti audit (screenshot, output command) untuk keperluan ISO 27001 audit
 
-**Gap yang Teridentifikasi:**
-1. Tidak ada **offboarding checklist formal** yang mendefinisikan langkah-langkah yang harus dilakukan pada hari terakhir bekerja: disable akun Frappe, revoke API key, revoke SSH key (jika relevan untuk DevOps), transfer ownership dokumen, konfirmasi semua advance sudah diliquidasi
-2. Prosedur di `incident-response.md` untuk disable akun hanya ada sebagai bagian dari respon insiden — bukan sebagai prosedur rutin offboarding
-3. Tidak ada prosedur untuk mengaudit tindakan terakhir mantan karyawan setelah offboarding (activity log review) untuk mendeteksi potential data exfiltration
-4. Tidak ada mekanisme untuk mencabut akses secara segera (dalam jam, bukan hari) saat terminasi mendadak
+Pendekatan proaktif: akses dicabut pada hari terakhir bekerja (D-0/D+1), bukan menunggu 60 hari inaktif. Prosedur khusus untuk offboarding Tech Lead / DevOps yang memiliki privilege tertinggi.
 
-**Rekomendasi:**
-1. Buat `docs/security/offboarding-checklist.md` (atau seksi di deployment guide) dengan langkah-langkah eksplisit:
-   - Disable akun Frappe pada hari yang sama (bench console: `frappe.db.set_value("User", username, "enabled", 0)`)
-   - Revoke semua API keys yang dimiliki akun tersebut
-   - Revoke SSH access jika user punya akses server
-   - Review Frappe Activity Log untuk aktivitas 7 hari terakhir sebelum terminasi
-   - Transfer ownership dokumen aktif (Cash Advance yang belum close, grant yang sedang dikelola) ke pengganti
-   - Konfirmasi tidak ada Cash Advance yang masih pending approval di nama mantan karyawan
-2. Jadikan offboarding checklist ini sebagai referensi yang wajib diikuti NGO deployer, bukan hanya panduan opsional
+**Kontrol yang Sudah Berfungsi:**
+- Offboarding Checklist ISP-003 — operasional, terdokumentasi, dapat langsung digunakan saat ada offboarding
+- Timeline 24 jam yang jelas dengan batas waktu eksplisit (D+1 pukul 17:00)
+- RACI: PM sebagai Responsible/Accountable, TL sebagai Verifikator
+- Prosedur verifikasi post-offboarding (D+7) dengan eskalasi ke incident management jika ditemukan akses residual
 
 ---
 
@@ -1928,7 +1926,7 @@ Tabel berikut mendaftar gap yang paling kritikal berdasarkan dampak keamanan. Ga
 |---|---|---|---|---|---|
 | **1** | ~~Tidak ada Information Security Policy formal~~ **DITUTUP** | Klausul 5.2, A.5.1 | ~~**Sangat Tinggi.**~~ **RESOLVED 2026-06-20.** `docs/security/is-policy.md` (ISP-001 v1.0) dibuat — 350 baris, 12 area kebijakan, tujuan terukur, peran & tanggung jawab, jadwal review tahunan. | Menunggu tanda tangan Pimpinan (PO) untuk berlaku efektif. Setelah ditandatangani, IS Policy menjadi *parent policy* bagi seluruh dokumen keamanan turunan. | ~~**CRITICAL**~~ **CLOSED** |
 | **2** | ~~Tidak ada ISMS Scope Document~~ **DITUTUP** | Klausul 4.3, 4.4 | ~~**Sangat Tinggi.**~~ **RESOLVED 2026-06-20.** `docs/security/isms-scope.md` (ISP-002 v1.0) dibuat — pernyataan scope formal, 13 aset dalam lingkup, 7 komponen yang dikecualikan dengan justifikasi, 6 antarmuka eksternal dan kontrol di setiap antarmuka, gambaran PDCA. | Menunggu tanda tangan Pimpinan (PO). Revisi scope wajib dilakukan jika D-06 multi-tenancy diimplementasikan atau jika ada integrasi eksternal baru. | ~~**CRITICAL**~~ **CLOSED** |
-| **3** | Tidak ada offboarding checklist staf/developer | A.6.5 | **Tinggi.** Mantan developer bisa masih memiliki akses ke GitHub repository, akun Frappe staging/production, API keys, dan Vault credentials. Risiko ini sangat relevan mengingat proyek masih dalam fase pengembangan aktif dengan kontributor yang mungkin berganti. | Buat checklist offboarding yang mencakup: revoke akses GitHub, disable akun Frappe di semua environment (dev/staging/production), revoke API keys yang diterbitkan atas nama user tersebut, ganti password yang mungkin dibagikan, dan hapus SSH public key dari server. Offboarding harus diselesaikan dalam 24 jam sejak hari terakhir bekerja. | **CRITICAL** |
+| **3** | ~~Tidak ada offboarding checklist staf/developer~~ **DITUTUP** | A.6.5 | ~~**Tinggi.**~~ **RESOLVED 2026-06-20.** `docs/security/offboarding-checklist.md` (ISP-003 v1.0) dibuat — inventarisasi akses D-2, pencabutan 11 kategori sistem dalam 24 jam (GitHub, Frappe dev/staging/prod, SSH keys, API keys, database, GPG backup key, monitoring, vault), verifikasi D+7, rekam jejak audit, tanda tangan PM + TL. | Siap digunakan. Eksekutor: PM. Verifikator: TL. Prosedur khusus tersedia untuk offboarding Tech Lead / DevOps. | ~~**CRITICAL**~~ **CLOSED** |
 | **4** | Tidak ada NDA/perjanjian kerahasiaan | A.6.6 | **Tinggi.** Tidak ada perlindungan hukum jika terjadi kebocoran data oleh developer atau DevOps yang punya akses ke data production (termasuk data donor dan keuangan NGO). UU PDP Pasal 40 mewajibkan pemroses data untuk menjaga kerahasiaan. | Buat template NDA 2 halaman untuk developer dan DevOps yang memiliki akses ke environment produksi atau data sensitif. Isi minimal: definisi informasi rahasia, kewajiban kerahasiaan, larangan penggunaan data di luar instruksi, durasi kewajiban (termasuk setelah kontrak berakhir), dan konsekuensi pelanggaran. Semua kontributor yang punya akses production harus menandatangani sebelum diberikan akses. | **CRITICAL** |
 | **5** | Tidak ada Information Classification Policy | A.5.12 | **Tinggi.** Tidak ada definisi yang jelas mana data yang Public, Internal, Confidential, atau Restricted. Tanpa klasifikasi, penanganan data donor (NIK, NPWP, kondisi kesehatan benefisiari) tidak konsisten antar staf dan developer. | Buat policy klasifikasi 4 level dengan contoh konkret per level: **Public** (siaran pers, laporan tahunan publik), **Internal** (dokumen proyek, spesifikasi teknis), **Confidential** (data donor, laporan keuangan, kredensial sistem), **Restricted** (NIK/NPWP donor, data kesehatan benefisiari, private keys). Sertakan aturan penanganan: penyimpanan, pengiriman, pencetakan, dan penghancuran per level. | **CRITICAL** |
 | **6** | Tidak ada internal audit program | Klausul 9.2 | **Tinggi.** Tidak bisa verifikasi apakah kontrol keamanan yang sudah didokumentasikan benar-benar dijalankan. Ini juga merupakan klausul wajib untuk sertifikasi ISO 27001 — tanpa audit program, sertifikasi tidak bisa dicapai. | Buat annual internal audit checklist dan jadwal. Checklist minimal mencakup: verifikasi implementasi kontrol di security-requirements.md, review akun user aktif (quarterly), verifikasi backup berhasil dan GPG integrity, review log akses anomali, dan verifikasi patch CVE HIGH/CRITICAL. Jadwalkan audit pertama 3 bulan setelah go-live. | **CRITICAL** |
@@ -2147,7 +2145,7 @@ Pertimbangkan:
 | A.6.2 | Terms and conditions of employment | N/A | Tidak relevan — proyek open source, bukan employer-employee |
 | A.6.3 | Information security awareness, education and training | ⚠️ Sebagian | Ada dalam rencana (security-requirements.md menyebutkan pelatihan), belum ada materi formal |
 | A.6.4 | Disciplinary process | N/A | Tidak ada proses disiplin formal dalam konteks proyek open source |
-| A.6.5 | Responsibilities after termination or change of employment | ❌ Belum Ada | Tidak ada offboarding checklist formal |
+| A.6.5 | Responsibilities after termination or change of employment | ✅ Sesuai | `docs/security/offboarding-checklist.md` (ISP-003 v1.0 — offboarding checklist formal, 24 jam SLA, 11 kategori akses, verifikasi D+7) |
 | A.6.6 | Confidentiality or non-disclosure agreements | ❌ Belum Ada | Tidak ada NDA/confidentiality agreement untuk developer atau DevOps |
 | A.6.7 | Remote working | ⚠️ Sebagian | Tidak ada remote working security policy; ada panduan umum di security-requirements.md |
 | A.6.8 | Information security event reporting | ✅ Sesuai | incident-response.md (mekanisme pelaporan insiden, kontak, eskalasi) |

@@ -168,6 +168,7 @@ Gap yang ditutup:
 |---|---|
 | `docs/security/is-policy.md` | Kebijakan Keamanan Informasi formal (ISP-001 v1.0) — 12 area kebijakan, tujuan terukur, peran & tanggung jawab, pelanggaran, pengecualian, jadwal review tahunan, blok tanda tangan Pimpinan. Menutup gap CRITICAL #1 ISO 27001 (Klausul 5.2, A.5.1). |
 | `docs/security/isms-scope.md` | Ruang Lingkup ISMS formal (ISP-002 v1.0) — pernyataan scope, 13 aset dalam lingkup, 7 pengecualian dengan justifikasi, antarmuka eksternal, siklus PDCA, pihak berkepentingan, konteks organisasi. Menutup gap CRITICAL #2 ISO 27001 (Klausul 4.3). |
+| `docs/security/offboarding-checklist.md` | Offboarding Checklist formal (ISP-003 v1.0) — inventarisasi akses D-2, pencabutan akses 11 kategori sistem dalam 24 jam (GitHub, Frappe dev/staging/prod, SSH keys, API keys, database, GPG backup, monitoring, vault, komunikasi), verifikasi D+7, rekam jejak audit. Menutup gap CRITICAL #3 ISO 27001 (A.6.5). |
 
 ---
 
@@ -219,6 +220,7 @@ Gap yang ditutup:
 | PM: keputusan D-07 frontend MVP scope | OPEN — presentasi disiapkan (`docs/pm/d07-decision-brief.html`), menunggu keputusan PO sebelum Sprint 4 |
 | Governance: IS Policy formal (ISP-001) | Siap — `docs/security/is-policy.md`. **Menunggu tanda tangan Pimpinan (PO) untuk berlaku efektif.** |
 | Governance: ISMS Scope Document (ISP-002) | Siap — `docs/security/isms-scope.md`. **Menunggu tanda tangan Pimpinan (PO) untuk berlaku efektif.** |
+| Governance: Offboarding Checklist (ISP-003) | Siap — `docs/security/offboarding-checklist.md`. Dapat langsung digunakan saat ada offboarding. |
 
 ---
 
