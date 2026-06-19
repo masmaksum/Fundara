@@ -1,0 +1,174 @@
+# =============================================================================
+# deploy-vars.example — Template Variabel Deployment Fundara
+# =============================================================================
+#
+# CARA PENGGUNAAN:
+#   1. Salin file ini:
+#        cp deploy-vars.example deploy-vars.sh
+#
+#   2. Edit deploy-vars.sh dan isi semua nilai yang diperlukan.
+#      File ini TIDAK boleh di-commit ke git karena berisi password.
+#
+#   3. Source sebelum menjalankan deploy.sh:
+#        source deploy-vars.sh && sudo bash deploy.sh
+#
+# KEAMANAN:
+#   - Tambahkan deploy-vars.sh ke .gitignore sebelum commit apapun.
+#   - Simpan password di password manager (Bitwarden, 1Password, dll.)
+#   - Jangan pernah share file ini via chat atau email.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# IDENTITAS SITE
+# -----------------------------------------------------------------------------
+
+# Nama Frappe site. Harus cocok persis dengan hostname DNS yang mengarah
+# ke server ini. Script akan membuat site dengan nama ini di bench.
+#
+# Format:
+#   Development : fundara-[orgname].local
+#   Staging     : staging-[orgname].fundara.id
+#   Production  : [orgname].fundara.id
+#
+# Contoh:
+#   SITE_NAME="yayasanabc.fundara.id"
+SITE_NAME=""
+
+# -----------------------------------------------------------------------------
+# CREDENTIAL
+# -----------------------------------------------------------------------------
+
+# Password untuk akun Administrator Frappe.
+# Digunakan untuk login pertama kali ke UI Frappe.
+# Gunakan password kuat: minimal 16 karakter, campuran huruf, angka, simbol.
+# Contoh: ADMIN_PASSWORD="Sup3r$3cur3Pas$w0rd!"
+ADMIN_PASSWORD=""
+
+# Password root MariaDB.
+# Digunakan oleh bench saat membuat database baru.
+# Gunakan password kuat yang berbeda dari ADMIN_PASSWORD.
+# Contoh: DB_ROOT_PASSWORD="AnotherStr0ng!DBPass"
+DB_ROOT_PASSWORD=""
+
+# -----------------------------------------------------------------------------
+# DIREKTORI DAN USER
+# -----------------------------------------------------------------------------
+
+# Direktori tempat bench Frappe akan diinstall.
+# Sebaiknya di home directory user frappe.
+# Default: /home/frappe/frappe-bench
+BENCH_DIR="/home/frappe/frappe-bench"
+
+# User OS yang akan menjalankan bench dan proses Frappe.
+# Script akan membuat user ini jika belum ada.
+# Default: frappe
+FRAPPE_USER="frappe"
+
+# -----------------------------------------------------------------------------
+# VERSI FRAPPE DAN ERPNEXT
+# -----------------------------------------------------------------------------
+
+# Branch Frappe yang akan digunakan.
+# Untuk ERPNext v16: version-16
+# Jangan ganti ke main/develop di production tanpa testing di staging dulu.
+FRAPPE_BRANCH="version-16"
+
+# Branch ERPNext yang akan digunakan.
+# Harus konsisten dengan FRAPPE_BRANCH.
+ERPNEXT_BRANCH="version-16"
+
+# -----------------------------------------------------------------------------
+# FUNDARA CUSTOM APP
+# -----------------------------------------------------------------------------
+
+# Nama app Frappe untuk Fundara. Harus sesuai dengan nama folder di bench/apps/.
+# Default: fundara
+APP_NAME="fundara"
+
+# URL repository GitHub Fundara.
+# Gunakan HTTPS untuk server yang tidak punya SSH key ke GitHub.
+APP_REPO="https://github.com/masmaksum/Fundara"
+
+# Branch Fundara yang akan diinstall.
+# Untuk deployment production, gunakan branch stabil (main atau tag rilis).
+# Contoh: APP_BRANCH="main" atau APP_BRANCH="v1.0.0"
+APP_BRANCH="main"
+
+# -----------------------------------------------------------------------------
+# NODE.JS
+# -----------------------------------------------------------------------------
+
+# Major version Node.js LTS yang akan diinstall via NodeSource.
+# Frappe v16 didukung pada Node.js 18.x LTS.
+# Jangan gunakan versi ganjil (17, 19) — itu bukan versi LTS.
+NODE_VERSION="18"
+
+# -----------------------------------------------------------------------------
+# PERFORMA
+# -----------------------------------------------------------------------------
+
+# Jumlah gunicorn worker processes.
+# Formula yang direkomendasikan: max(2, RAM_GB / 2)
+#
+# Contoh:
+#   4 GB RAM  → 2 workers
+#   8 GB RAM  → 4 workers
+#   16 GB RAM → 8 workers
+#
+# Terlalu banyak worker akan menghabiskan RAM dan justru memperlambat server.
+GUNICORN_WORKERS="2"
+
+# -----------------------------------------------------------------------------
+# SSL / TLS
+# -----------------------------------------------------------------------------
+
+# Aktifkan SSL via Let's Encrypt.
+# Syarat: SITE_NAME harus berupa domain publik yang sudah diarahkan ke
+# IP server ini. Port 80 harus terbuka dari internet untuk verifikasi ACME.
+#
+# Nilai: yes | no
+# Default: no (aman untuk staging internal atau development)
+ENABLE_SSL="no"
+
+# Alamat email untuk registrasi sertifikat Let's Encrypt.
+# Let's Encrypt akan mengirim notifikasi ke email ini jika sertifikat
+# hampir kedaluwarsa dan renewal gagal.
+# Wajib diisi jika ENABLE_SSL=yes.
+# Contoh: SSL_EMAIL="devops@organisasianda.org"
+SSL_EMAIL=""
+
+# -----------------------------------------------------------------------------
+# CATATAN UNTUK OPERATOR
+# -----------------------------------------------------------------------------
+#
+# Setelah instalasi selesai:
+#
+# 1. Login ke https://<SITE_NAME> dengan user "Administrator" dan
+#    password yang diset di ADMIN_PASSWORD.
+#
+# 2. Jalankan Setup Wizard ERPNext untuk konfigurasi awal:
+#    - Nama organisasi
+#    - Mata uang (IDR untuk Indonesia)
+#    - Chart of Accounts (pilih template Nonprofit / buat sendiri)
+#    - Fiscal year
+#
+# 3. Aktifkan modul Fundara dari Settings > Apps.
+#
+# 4. Konfigurasi email (Settings > Email Domain / Email Account).
+#
+# 5. Setup monitoring:
+#    - Uptime Kuma: https://<monitoring-server>
+#    - Atau Netdata: sudo apt install netdata
+#
+# 6. Verifikasi backup berjalan:
+#    sudo -u frappe crontab -l
+#    # Tunggu jam 02:00 atau trigger manual:
+#    sudo -u frappe bash ~/fundara-backup.sh
+#
+# 7. Simpan credentials berikut di password manager tim:
+#    - SITE_NAME
+#    - ADMIN_PASSWORD
+#    - DB_ROOT_PASSWORD
+#    - SSH key untuk server
+#    - SSL_EMAIL
+# =============================================================================
