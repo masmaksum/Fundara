@@ -125,6 +125,88 @@
 
 ---
 
+## Phase 6: Security Governance & Compliance
+
+Fase ini mencakup deliverable **governance dan keamanan** yang diidentifikasi melalui gap analysis ISO 27001:2022 (lihat `docs/security/iso27001-audit.md`). Deliverable ini bukan fitur software — melainkan dokumen kebijakan, prosedur, dan proses yang menjadi prasyarat go-live dan sertifikasi keamanan.
+
+**Catatan peran:** Untuk tim kecil (2 developer), PM memimpin semua dokumen governance; TL memimpin semua dokumen teknis-governance. QA berperan sebagai pelaksana audit internal. Kolom FE/PE/UX tidak relevan untuk fase ini dan dihilangkan.
+
+---
+
+### 6.1 Dokumen Governance Kritis (sebelum go-live)
+
+| Deliverable | PO | PM | TL | DEV | QA | Target |
+|---|---|---|---|---|---|---|
+| Information Security Policy | **A** | R | C | I | I | Sprint 1 |
+| ISMS Scope Document | C | **A/R** | C | I | I | Sprint 1 |
+| Risk Treatment Plan (RTP) | C | R | **A/R** | I | I | Sprint 1 |
+| Information Security Objectives | **A** | R | C | I | I | Sprint 1 |
+| Offboarding Checklist (developer/DevOps) | C | **A/R** | C | I | I | Sprint 1 |
+| NDA Template (developer & DevOps) | **A** | R | C | I | I | Sprint 1 |
+
+**Notes:**
+- Information Security Policy adalah dokumen tertinggi dalam hierarki keamanan — harus disetujui PO (pimpinan) secara formal, bukan hanya direview teknis.
+- RTP memetakan 27 risiko dari `risk-register.md` dan 16 ancaman dari `threat-model.md` ke kontrol ISO 27001, PIC, dan timeline. Accountable ke TL karena konten teknis; PM yang koordinasi.
+- NDA harus ditandatangani semua developer dan DevOps yang punya akses ke production **sebelum** staging environment diaktifkan.
+- Offboarding checklist mencakup: revoke GitHub access, disable akun Frappe, revoke API key, transfer credentials ke vault baru, notifikasi ke PM.
+
+---
+
+### 6.2 Dokumen Governance High Priority (Sprint 2–3)
+
+| Deliverable | PO | PM | TL | DEV | QA | Target |
+|---|---|---|---|---|---|---|
+| Internal Audit ISMS Checklist | **A** | R | C | I | R | Sprint 2 |
+| Management Review Template | **A** | R | C | I | I | Sprint 2 |
+| Information Classification Policy | C | R | **A** | I | I | Sprint 2 |
+| Acceptable Use Policy (AUP) | **A** | R | C | I | I | Sprint 2 |
+| Asset Register (data & infrastructure) | I | R | **A/R** | C | I | Sprint 2 |
+| Security Awareness Guide (user PDF) | C | R | C | I | **A** | Sprint 3 |
+| Contact with Authorities List | C | **A/R** | I | I | I | Sprint 3 |
+| Remote Working Security Policy | C | **A/R** | C | I | I | Sprint 3 |
+| License & IP Rights Policy | **A** | R | C | I | I | Sprint 3 |
+
+**Notes:**
+- Internal Audit Checklist dibuat PM, dieksekusi QA sebagai auditor internal. QA adalah satu-satunya peran yang cukup netral untuk menjalankan audit internal tanpa conflict of interest.
+- Asset Register mencakup: data donor/benefisiari/keuangan, backup, credentials, server, API keys — dengan owner dan sensitivity classification per row.
+- Security Awareness Guide adalah dokumen satu halaman (PDF) untuk staf NGO, bukan untuk developer. QA yang paling memahami failure mode pengguna, sehingga cocok sebagai accountable untuk konten-nya.
+- AUP harus muncul saat onboarding pengguna baru (ditampilkan saat login pertama atau sesi training).
+
+---
+
+### 6.3 Dokumen Governance Medium Priority (Sprint 3–4)
+
+| Deliverable | PO | PM | TL | DEV | QA | Target |
+|---|---|---|---|---|---|---|
+| Supplier Security Register | C | R | **A** | I | I | Sprint 4 |
+| Business Continuity Plan | **A** | R | **A/R** | C | I | Sprint 4 |
+
+**Notes:**
+- BCP bersifat co-owned antara PM (proses bisnis) dan TL (aspek teknis/infrastruktur). Keduanya Accountable untuk bagian masing-masing; PO sebagai final approver.
+- Supplier Security Register mencakup: ERPNext upstream, hosting provider, library kritis, payment gateway (jika ada). TL paling tahu risk landscape teknis.
+
+---
+
+### 6.4 Aktivitas Keamanan Berkelanjutan
+
+| Aktivitas | PO | PM | TL | DEV | QA | Frekuensi |
+|---|---|---|---|---|---|---|
+| Quarterly access rights review | C | **A** | R | I | I | Per kuartal |
+| Penetration testing (eksternal) | **A** | R | C | I | R | Sebelum go-live & tahunan |
+| pip audit + npm audit | I | I | **A** | R | I | Bulanan / saat upgrade |
+| CVE patching (Critical: 7 hari) | I | C | **A/R** | R | I | On-demand |
+| ISMS management review | **A** | R | C | I | I | Per kuartal |
+| Internal audit ISMS | **A** | R | I | I | **R** | Tahunan |
+| Incident response drill / tabletop | C | **A** | R | C | R | Tahunan |
+| Update DECISIONS.md untuk security decisions | I | I | **A/R** | C | I | Per keputusan |
+
+**Notes:**
+- Quarterly access rights review memastikan akun mantan developer/staf sudah dinonaktifkan dan permission setiap user masih sesuai perannya.
+- Penetration testing dilakukan oleh pihak eksternal per `docs/security/pentest-scope.md`. QA berperan sebagai liaison dan mendokumentasikan temuan.
+- CVE patching: TL memutuskan patch schedule; DEV mengeksekusi. Untuk Critical CVE, SLA 7 hari tidak bisa dinegosiasikan (per SR-DEP).
+
+---
+
 ## Decision Authority
 
 For decisions that arise during the project, the following table defines who has **final say** and who must be consulted.
@@ -143,5 +225,11 @@ For decisions that arise during the project, the following table defines who has
 | Merge to main branch | **TL** | DEV | PM, QA |
 | Go-live decision | **PO** | PM, TL, FE | All |
 | Deprioritize or defer a bug | **PM** | PO (for high severity) | QA, DEV |
+| Approve Information Security Policy | **PO** | PM, TL | All |
+| Approve Risk Treatment Plan | **TL + PO jointly** | PM | All |
+| Accept security risk (risk treatment = accept) | **PO** | TL, PM | DEV, QA |
+| Authorize penetration test (target, scope, timing) | **PO** | PM, TL | All |
+| Declare security incident (escalation level) | **TL** | PM | PO, All |
+| Approve go-live despite open Medium security gap | **PO** | TL, PM | All |
 
 **Key principle:** No design decision that contradicts an existing DECISIONS.md entry may be implemented without a formal update to that document, signed off by TL. The PM is responsible for surfacing contested decisions as blockers in the sprint board, not resolving them unilaterally.

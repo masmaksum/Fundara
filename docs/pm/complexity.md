@@ -535,18 +535,19 @@
 
 ---
 
-### Sprint 10 (Weeks 19–20) — Hardening & Demo Dataset
-**Goal:** MVP is stable, documented, and demo-ready.
+### Sprint 10 (Weeks 19–20) — Hardening, Security & Demo Dataset
+**Goal:** MVP stable, security governance complete, demo-ready. Semua Level 3 DoD terpenuhi.
 
 | Work Item | Who | Days |
 |---|---|---|
-| Bug fixes from Sprint 9 testing | Dev 1 + Dev 2 | 5 |
-| Demo dataset: 1 org, 2 funds (1 grant, 1 unrestricted), 1 project, 3 activities, 5 transactions, 1 advance cycle, sample reports | Dev 1 | 3 |
+| Bug fixes dari Sprint 9 testing | Dev 1 + Dev 2 | 5 |
+| Demo dataset: 1 org, 2 fund (1 grant, 1 unrestricted), 1 project, 3 activity, 5 transaksi, 1 advance cycle, sample reports | Dev 1 | 3 |
 | Installation documentation baseline | Dev 2 | 3 |
-| Role permission matrix review | Dev 1 | 2 |
-| MVP Definition of Done checklist review | Both | 2 |
+| Role permission matrix review (termasuk 2FA verification per role) | Dev 1 | 2 |
+| Security technical checks: `ignore_permissions` grep audit, `developer_mode` off, UFW rules verify, pip/npm audit | TL | 1 |
+| MVP Level 3 DoD checklist review (software + governance) | PM + TL | 1 |
 
-**Sprint 10 Exit Criteria:** All 15 MVP Definition of Done items verified. Demo dataset loads cleanly. Installation guide tested on Ubuntu 24.04.4.
+**Sprint 10 Exit Criteria:** Semua 15 MVP DoD items verified. Semua 7 Critical security governance deliverable ada dan disetujui. Demo dataset loads cleanly. Installation guide tested on Ubuntu 24.04.4.
 
 ---
 
@@ -584,6 +585,54 @@ If multi-currency is not tested early, fixing it later will require changes to e
 
 ---
 
+## Governance & Compliance Track (PM/TL Overhead — Di Luar Dev Capacity)
+
+Track ini berjalan **paralel** dengan sprint development. Deliverable ini bukan fitur software — dikerjakan oleh PM dan TL sebagai overhead terpisah dari developer capacity. Diidentifikasi melalui gap analysis ISO 27001:2022 (`docs/security/iso27001-audit.md`).
+
+**Total estimasi effort governance: ~15 PM/TL-hari** (tersebar sepanjang 10 sprint — rata-rata 1.5 hari/sprint overhead).
+
+### Governance Sprint 1 (paralel Sprint 1–2 dev) — Critical Deliverable
+
+| Deliverable | Siapa | Est. Jam | Target |
+|---|---|---|---|
+| Information Security Policy | PM (draft) + PO (approve) | 4 jam | Minggu 2 |
+| ISMS Scope Document | PM | 2 jam | Minggu 2 |
+| Risk Treatment Plan (RTP) | TL (draft) + PM (koordinasi) | 6 jam | Minggu 4 |
+| Information Security Objectives | PM + PO | 2 jam | Minggu 4 |
+| Offboarding Checklist | PM + TL | 2 jam | Minggu 2 |
+| NDA Template | PM | 3 jam (+ legal review jika ada) | Minggu 1 — **sebelum dev mulai** |
+
+**Catatan kritis:** NDA harus ditandatangani semua developer **sebelum** mereka mendapat akses ke staging. Ini tidak bisa ditunda.
+
+### Governance Sprint 2 (paralel Sprint 3–5 dev) — High Priority
+
+| Deliverable | Siapa | Est. Jam | Target |
+|---|---|---|---|
+| Information Classification Policy | TL (draft) + PM | 3 jam | Minggu 6 |
+| Acceptable Use Policy (AUP) | PM + PO | 3 jam | Minggu 6 |
+| Asset Register | TL (infrastruktur) + PM (proses) | 4 jam | Minggu 8 |
+| Internal Audit ISMS Checklist | PM (draft) + QA | 3 jam | Minggu 8 |
+| Management Review Template | PM | 2 jam | Minggu 8 |
+
+### Governance Sprint 3 (paralel Sprint 6–8 dev) — Medium Priority
+
+| Deliverable | Siapa | Est. Jam | Target |
+|---|---|---|---|
+| Security Awareness Guide (PDF untuk user NGO) | PM + QA | 4 jam | Minggu 12 |
+| Contact with Authorities List | PM | 1 jam | Minggu 12 |
+| Remote Working Security Policy | PM | 2 jam | Minggu 14 |
+| License & IP Rights Policy | PM | 2 jam | Minggu 14 |
+
+### Governance Sprint 4 (paralel Sprint 9–10 dev) — Medium Priority
+
+| Deliverable | Siapa | Est. Jam | Target |
+|---|---|---|---|
+| Business Continuity Plan | TL + PM | 6 jam | Minggu 18 |
+| Supplier Security Register | TL | 3 jam | Minggu 18 |
+| Penetration test (koordinasi eksternal) | PM (koordinasi) + TL (briefing) | 4 jam | Minggu 18–20 |
+
+---
+
 ## Post-MVP Feature Groups (Not In This Estimate)
 
 The following feature groups are in the roadmap but are explicitly out of MVP scope:
@@ -596,4 +645,5 @@ The following feature groups are in the roadmap but are explicitly out of MVP sc
 | Impact Framework + Indicators | v0.6 | L (14 days) |
 | Report Package + Audit Pack | v0.7 | L (12 days) |
 | Integration / Import/Export | v0.8 | XL (20+ days) |
-| Security Hardening + Deployment | v0.9 | M–L (10–14 days) |
+
+**Catatan:** "Security Hardening + Deployment" yang sebelumnya ada di daftar post-MVP (v0.9) telah **dipindahkan ke dalam MVP scope** berdasarkan gap analysis ISO 27001:2022. Technical security hardening (2FA enforcement, UFW, `developer_mode` off, CVE scanning) masuk Sprint 10; governance documents masuk Governance Track di atas.

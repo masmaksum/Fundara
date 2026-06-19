@@ -132,6 +132,30 @@ MVP is **ready for go-live** only after all items below are checked. The PM and 
 - [ ] Permission matrix verified: each of the 7 MVP roles (System Manager, Finance Manager, Finance Officer, Program Manager, Project Officer, Executive Viewer, Auditor Viewer) has been tested to confirm correct read/write/submit/cancel access on each relevant DocType
 - [ ] Fund and project-level visibility restrictions are working (users see only the funds and projects they are permitted to access)
 - [ ] Audit trail is active: every status change, approval action, and GL posting leaves a timestamped log entry in the document's comment/timeline
+- [ ] 2FA (TOTP) is active and enforced for all Finance Manager, Executive Director, and System Manager accounts (per SR-AUTH-03)
+- [ ] `developer_mode` is disabled in production (per `docs/security/owasp-checklist.md` A05)
+- [ ] UFW rules verified: only ports 80, 443, 22 are publicly accessible; internal ports (8000, 8002) are blocked from public access
+- [ ] `pip audit` and `npm audit` have been run; no known Critical CVE in production dependencies (per SR-DEP)
+- [ ] No `ignore_permissions=True` in production server scripts (automated grep check on codebase before merge to main)
+
+### Security Governance (ISO 27001 Compliance)
+
+Deliverable ini dikelola PM dan TL, bukan developer. Cek dilakukan oleh PM sebelum mengajukan go-live approval ke PO. Lihat `docs/security/iso27001-audit.md` untuk konteks lengkap gap analysis.
+
+**Dokumen Kebijakan (Critical — wajib ada sebelum go-live):**
+- [ ] Information Security Policy telah dibuat dan disetujui secara tertulis oleh PO
+- [ ] Risk Treatment Plan (RTP) telah dibuat dan direview oleh TL — memetakan risiko dari `docs/pm/risk-register.md` dan `docs/security/threat-model.md` ke kontrol ISO 27001
+- [ ] Acceptable Use Policy (AUP) telah dibuat dan akan ditampilkan ke pengguna NGO saat onboarding
+- [ ] NDA / Confidentiality Agreement telah ditandatangani oleh seluruh developer dan DevOps yang punya akses ke staging atau production
+
+**Prosedur Operasional (Critical — wajib ada sebelum go-live):**
+- [ ] Offboarding checklist (revoke GitHub, disable Frappe account, revoke API key) telah dibuat dan direview TL
+- [ ] Backup telah diuji: prosedur restore dari backup berhasil dieksekusi minimal satu kali di staging (per `docs/infra/backup-recovery.md`)
+- [ ] Penetration test telah dilakukan atau dijadwalkan secara formal per `docs/security/pentest-scope.md`; temuan Critical dan High telah ditangani
+
+**Dokumen Pendukung (High — sangat dianjurkan, bisa jadi post-go-live jika didokumentasikan sebagai accepted risk):**
+- [ ] Information Classification Policy telah dibuat ATAU keputusan eksplisit untuk menunda telah dicatat sebagai accepted risk oleh PO
+- [ ] Asset Register (inventaris aset informasi) telah dibuat ATAU ditunda dengan dokumentasi
 
 ### Quality Gates
 
