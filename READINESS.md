@@ -1,6 +1,6 @@
 # Development Readiness
 
-## Status: Siap untuk Coding — 85%
+## Status: Siap untuk Coding — 93%
 
 Dokumen ini mencatat hasil audit kesiapan dokumen Fundara sebelum development dimulai, dan apa yang sudah dilengkapi.
 
@@ -23,9 +23,21 @@ Semua Tier 1 blocker ditemukan:
 5. Multi-currency posting algorithm — tidak ada
 6. Cost-sharing GL formula — tidak ada
 
-### Setelah Pelengkapan Dokumen
+### Setelah Pelengkapan Dokumen — Sesi 1
 
-Hasil: **85% siap. Semua Tier 1 blocker sudah tertutup.**
+Hasil: **85% siap. Semua Tier 1 blocker backend sudah tertutup.**
+
+### Setelah Pelengkapan Dokumen Frontend — Sesi 2
+
+Hasil: **93% siap. Frontend spec lengkap ditambahkan.**
+
+Gap yang ditutup:
+1. Form layout & `depends_on` rules — tidak ada → Siap
+2. Dashboard spec per role — tidak ada → Siap
+3. Status color coding — tidak ada → Siap
+4. Client-side validation messages — tidak ada → Siap
+5. Print format specifications — tidak ada → Siap
+6. Notification templates — tidak ada → Siap
 
 ---
 
@@ -50,6 +62,27 @@ Hasil: **85% siap. Semua Tier 1 blocker sudah tertutup.**
 | `docs/spec/cost-sharing.md` | Formula split-fund GL, indirect cost allocation |
 | `docs/spec/test-scenarios.md` | 34 skenario BDD test (Given/When/Then) |
 
+**Dokumen PM (sesi 1):**
+
+| File | Isi |
+|---|---|
+| `docs/pm/dependency-map.md` | 5-layer build order ~55 DocType + critical path |
+| `docs/pm/complexity.md` | T-shirt sizing per feature group, 145 dev-days, breakdown 10 sprint |
+| `docs/pm/risk-register.md` | 27 risiko (Technical/Domain/Scope/Delivery/Quality) |
+| `docs/pm/raci.md` | Matriks 25 aktivitas × 8 role + decision authority |
+| `docs/pm/definition-of-done.md` | DoD 3 level (Story/Sprint/MVP) + agenda sprint review |
+
+**Dokumen Frontend (sesi 2):**
+
+| File | Isi |
+|---|---|
+| `docs/spec/frontend/form-layout.md` | Layout, `depends_on`, `read_only`, `fetch_from` untuk 21 DocType MVP |
+| `docs/spec/frontend/dashboard-spec.md` | Dashboard 7 role: number cards, charts, list views, alert banners |
+| `docs/spec/frontend/status-colors.md` | Warna indicator semua status, list view row highlight rules |
+| `docs/spec/frontend/validation-messages.md` | 60+ validation rule (Error/Warning) + D-02 UI messages |
+| `docs/spec/frontend/print-formats.md` | 7 print format: layout, field mapping, tanda tangan, watermark |
+| `docs/spec/frontend/notifications.md` | 21 notifikasi: subject, body Bahasa Indonesia, in-app message |
+
 ---
 
 ## Status per Area
@@ -66,6 +99,14 @@ Hasil: **85% siap. Semua Tier 1 blocker sudah tertutup.**
 | Multi-currency algorithm | Siap |
 | Cost-sharing & split-fund | Siap |
 | Test scenarios (BDD) | Siap |
+| Form layout & depends_on rules | Siap |
+| Dashboard spec per role | Siap |
+| Status color coding | Siap |
+| Client-side validation messages | Siap |
+| Print format specifications | Siap |
+| Notification templates | Siap |
+| PM: dependency map & complexity | Siap |
+| PM: risk register & RACI & DoD | Siap |
 | Deployment automation script | Belum — dibutuhkan sebelum staging/UAT |
 | Demo data fixtures (JSON aktual) | Belum — dibutuhkan di sprint QA pertama |
 | API contracts integrasi eksternal | Belum — post-MVP (payment gateway, KoboToolbox, bank API) |
@@ -74,14 +115,14 @@ Hasil: **85% siap. Semua Tier 1 blocker sudah tertutup.**
 
 ---
 
-## Sisa 15% — Tidak Memblokir MVP
+## Sisa 7% — Tidak Memblokir MVP
 
-Gap yang tersisa tidak akan menghentikan developer di sprint pertama:
+Gap yang tersisa tidak akan menghentikan developer atau frontend dev di sprint pertama:
 
-- **Deployment script** — concern DevOps, bisa dikerjakan paralel
-- **Demo data fixtures** — concern QA, dibutuhkan saat sprint testing pertama
+- **Deployment script** — concern DevOps, bisa dikerjakan paralel saat sprint 1-2
+- **Demo data fixtures** — concern QA, dibutuhkan saat sprint testing pertama (sprint 4-5)
 - **External API contracts** — semua integrasi eksternal ada di post-MVP scope
-- **ER diagram formal** — DocType specs sudah cukup sebagai substitusi; ER diagram bisa di-generate otomatis dari schema ERPNext setelah DocType dibuat
+- **ER diagram formal** — DocType specs sudah cukup sebagai substitusi; bisa di-generate otomatis dari schema ERPNext setelah DocType dibuat
 
 ---
 
