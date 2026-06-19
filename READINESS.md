@@ -126,6 +126,45 @@ Gap yang tersisa tidak akan menghentikan developer atau frontend dev di sprint p
 
 ---
 
+## Dokumen yang Belum Ada — Perlu Dibuat
+
+Tiga area berikut belum memiliki dokumen sama sekali. Perlu dibuat sebelum staging/UAT dan sebelum go-live.
+
+### QA (Quality Assurance)
+
+| Dokumen | Isi yang Dibutuhkan | Prioritas |
+|---|---|---|
+| Test plan | Strategi testing keseluruhan: unit, integration, UAT, regression | Sebelum sprint QA pertama |
+| Test case catalog | Test case lengkap per fitur di luar 34 skenario BDD yang sudah ada | Sebelum sprint QA pertama |
+| Demo data fixtures | Dataset JSON realistis untuk setiap bounded context | Sprint 4–5 |
+| UAT script | Skrip sesi UAT untuk end-user (staf NGO), bukan developer | Sebelum UAT |
+| Bug severity matrix | Definisi Critical/High/Medium/Low + SLA fix per level | Awal proyek |
+| Regression checklist | Daftar fitur yang harus ditest ulang setiap sprint | Sprint 2 |
+
+### Security / Pentest
+
+| Dokumen | Isi yang Dibutuhkan | Prioritas |
+|---|---|---|
+| Security requirements | Daftar kebutuhan keamanan: autentikasi, enkripsi data, session management, audit log | Sebelum coding dimulai |
+| Threat model | Identifikasi aset sensitif (data donor, data benefisiari, data keuangan), attack surface, dan mitigasi | Sebelum coding dimulai |
+| Pentest scope | Ruang lingkup penetration testing: endpoint, role, data sensitivity, exclusion | Sebelum staging |
+| OWASP checklist | Checklist OWASP Top 10 yang relevan untuk Frappe/ERPNext custom app | Sebelum go-live |
+| Data privacy spec | Perlakuan data PII: donor, benefisiari, staf — termasuk masking, retention, deletion policy | Sebelum go-live |
+| Incident response plan | Langkah-langkah jika terjadi breach atau kebocoran data | Sebelum go-live |
+
+### Infrastruktur
+
+| Dokumen | Isi yang Dibutuhkan | Prioritas |
+|---|---|---|
+| Deployment script | Shell script atau Ansible playbook untuk setup Ubuntu 24.04 + Frappe bench + Fundara | Sprint 1–2 |
+| Environment spec | Spesifikasi server dev, staging, production (CPU, RAM, disk, OS) | Sprint 1 |
+| Backup & recovery plan | Jadwal backup, lokasi, prosedur restore, RTO/RPO target | Sebelum staging |
+| Monitoring spec | Metric yang dipantau, alert threshold, tool (Grafana/Prometheus/Netdata) | Sebelum staging |
+| Upgrade runbook | Prosedur upgrade ERPNext versi minor/major tanpa downtime | Sebelum go-live |
+| Multi-site setup guide | Cara setup per-org site di Frappe bench (D-06 prerequisite) | Sebelum v1.0 |
+
+---
+
 ## Keputusan Arsitektur yang Sudah Dikunci
 
 Lihat `DECISIONS.md` untuk detail. Ringkasan:
