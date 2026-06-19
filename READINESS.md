@@ -1,6 +1,6 @@
 # Development Readiness
 
-## Status: Siap untuk Coding — 93%
+## Status: Siap untuk Coding — 97%
 
 Dokumen ini mencatat hasil audit kesiapan dokumen Fundara sebelum development dimulai, dan apa yang sudah dilengkapi.
 
@@ -38,6 +38,16 @@ Gap yang ditutup:
 4. Client-side validation messages — tidak ada → Siap
 5. Print format specifications — tidak ada → Siap
 6. Notification templates — tidak ada → Siap
+
+### Setelah Pelengkapan Dokumen Developer Process — Sesi 3
+
+Hasil: **97% siap. Dokumen pre-development dan development process lengkap ditambahkan.**
+
+Gap yang ditutup:
+1. Local development environment setup — tidak ada → Siap (`docs/dev/local-setup.md`)
+2. Feature development lifecycle (spec → code → test → staging) — tidak ada → Siap (`docs/dev/dev-workflow.md`)
+3. Frappe patterns & recipes for Fundara developer — tidak ada → Siap (`docs/dev/frappe-cookbook.md`)
+4. Git branching strategy & PR process — tidak ada → Siap (`docs/dev/git-branching.md`)
 
 ---
 
@@ -83,6 +93,15 @@ Gap yang ditutup:
 | `docs/spec/frontend/print-formats.md` | 7 print format: layout, field mapping, tanda tangan, watermark |
 | `docs/spec/frontend/notifications.md` | 21 notifikasi: subject, body Bahasa Indonesia, in-app message |
 
+**Dokumen Developer Process (sesi 3):**
+
+| File | Isi |
+|---|---|
+| `docs/dev/local-setup.md` | Setup dev environment di Ubuntu/macOS/WSL2: bench, ERPNext, Fundara, IDE, troubleshooting |
+| `docs/dev/dev-workflow.md` | Lifecycle implementasi fitur: story → DocType → server script → test → PR → staging (contoh: Cash Advance) |
+| `docs/dev/frappe-cookbook.md` | Resep Frappe siap pakai: console, controller, GL posting, client script, API, scheduler, fixtures, debugging |
+| `docs/dev/git-branching.md` | Branching strategy, commit convention, PR template, release process, version tagging |
+
 ---
 
 ## Status per Area
@@ -107,6 +126,10 @@ Gap yang ditutup:
 | Notification templates | Siap |
 | PM: dependency map & complexity | Siap |
 | PM: risk register & RACI & DoD | Siap |
+| Dev: local environment setup guide | Siap |
+| Dev: feature development lifecycle | Siap |
+| Dev: Frappe patterns & cookbook | Siap |
+| Dev: git branching & PR process | Siap |
 | Deployment automation script | Belum — dibutuhkan sebelum staging/UAT |
 | Demo data fixtures (JSON aktual) | Belum — dibutuhkan di sprint QA pertama |
 | API contracts integrasi eksternal | Belum — post-MVP (payment gateway, KoboToolbox, bank API) |
@@ -115,7 +138,7 @@ Gap yang ditutup:
 
 ---
 
-## Sisa 7% — Tidak Memblokir MVP
+## Sisa 3% — Tidak Memblokir MVP
 
 Gap yang tersisa tidak akan menghentikan developer atau frontend dev di sprint pertama:
 
