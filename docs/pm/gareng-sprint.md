@@ -76,12 +76,12 @@ pip3 install frappe-bench
 ```bash
 # Hapus isi dulu jika ada (direktori harus kosong untuk bench init)
 cd /opt
-sudo bench init --frappe-branch version-16 fundara
+sudo bench init --frappe-branch version-16 --python python3.14 fundara
 
 # Install apps
 cd /opt/fundara
 bench get-app --branch version-16 erpnext
-bench get-app fundara https://github.com/masmaksum/Fundara
+bench new-app fundara   # masmaksum/Fundara adalah repo DOKUMENTASI, bukan Frappe app
 bench new-site fundara-dev.local --install-app erpnext --install-app fundara
 bench --site fundara-dev.local set-config developer_mode 1
 ```
