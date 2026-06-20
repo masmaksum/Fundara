@@ -401,7 +401,7 @@ Minggu 17–20   → Sprint 9–10: Production server + hardening + go-live
 
 | # | Item | PIC | Deadline |
 |---|---|---|---|
-| AI-G1 | Domain production dan staging sudah ditetapkan? (`[org].fundara.id`) | Banas (PO) | Sebelum Sprint 1 |
+| AI-G1 | Domain production dan staging sudah ditetapkan? (`[org].fundara.id`) | Banas (PO) | ✅ `fundara-dev.lokava.cloud` |
 | AI-G2 | Offsite backup storage: Wasabi / Backblaze / lainnya — siapa yang buka akun? | Bagong (PM) | Sebelum Sprint 2 |
 | AI-G3 | SMTP relay untuk email notifikasi production — siapa yang setup? | Bagong (PM) | Sebelum Sprint 9 |
 | AI-G4 | Server production: cloud provider mana, siapa yang bayar? | Banas (PO) | Sebelum Sprint 8 |
