@@ -171,6 +171,7 @@ Gap yang ditutup:
 | `docs/security/offboarding-checklist.md` | Offboarding Checklist formal (ISP-003 v1.0) — inventarisasi akses D-2, pencabutan akses 11 kategori sistem dalam 24 jam (GitHub, Frappe dev/staging/prod, SSH keys, API keys, database, GPG backup, monitoring, vault, komunikasi), verifikasi D+7, rekam jejak audit. Menutup gap CRITICAL #3 ISO 27001 (A.6.5). |
 | `docs/security/nda-template.md` | Template NDA (ISP-004 v1.0) — Template A: NDA formal 11 pasal untuk Developer/Contributor/DevOps (definisi informasi rahasia, tabel lingkup akses per sistem, UU PDP Pasal 20+40+67, sanksi KUHPerdata + UU ITE, jangka waktu 5 tahun); Template B: klausul kerahasiaan singkat untuk staf NGO, siap diintegrasikan ke kontrak kerja. Menutup gap CRITICAL #4 ISO 27001 (A.6.6). |
 | `docs/security/information-classification.md` | Kebijakan Klasifikasi Informasi (ISP-005 v1.0) — skema 4 tingkat L4 Terbatas / L3 Rahasia / L2 Internal / L1 Publik; tabel 20+ komponen Fundara; pemetaan dari skema sensitivitas lama (Kritis/Sangat Tinggi/Tinggi); aturan penanganan per tingkat (storage, transmisi, akses, cetak, pemusnahan); decision tree klasifikasi data baru; panduan pelabelan dokumen. Menutup gap CRITICAL #5 ISO 27001 (A.5.12). |
+| `docs/security/internal-audit-checklist.md` | Program dan Checklist Internal Audit ISMS (ISP-006 v1.0) — program audit (tahunan + quarterly akses + trigger-based), persyaratan independensi auditor, siklus 6 langkah; checklist 50 item dalam 8 domain (Governance, Akses, Backup, Patch, Server, Kode, Insiden, Privasi) dengan cara verifikasi CLI spesifik per item; template temuan; skor ringkasan; jadwal audit; riwayat antar edisi. Menutup gap CRITICAL #6 ISO 27001 (Klausul 9.2). |
 
 ---
 
@@ -225,6 +226,7 @@ Gap yang ditutup:
 | Governance: Offboarding Checklist (ISP-003) | Siap — `docs/security/offboarding-checklist.md`. Dapat langsung digunakan saat ada offboarding. |
 | Governance: NDA Template (ISP-004) | Siap — `docs/security/nda-template.md`. Template A untuk developer/DevOps; Template B untuk staf NGO. |
 | Governance: Information Classification Policy (ISP-005) | Siap — `docs/security/information-classification.md`. Skema L4/L3/L2/L1 dengan aturan handling per tingkat. |
+| Governance: Internal Audit Checklist (ISP-006) | Siap — `docs/security/internal-audit-checklist.md`. 50 item dalam 8 domain; audit pertama 3 bulan post go-live. |
 
 ---
 
