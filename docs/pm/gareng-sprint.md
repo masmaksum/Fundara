@@ -2,6 +2,7 @@
 
 **Role:** DevOps & Infrastruktur  
 **Akun:** gareng  
+**Server dev:** server ini (`/opt/fundara/`) — Semar dan Petruk bekerja simultan di sini  
 **Dokumen ini:** rencana kerja Gareng per sprint, terpisah dari complexity.md yang fokus ke Dev 1 & Dev 2 (Semar & Petruk).  
 **Last updated:** 2026-06-20
 
@@ -32,55 +33,94 @@
 
 ## Sprint 0 — Minggu 0 (Sebelum Sprint 1 Dev Mulai)
 
-**Tujuan:** Dev server hidup. Semar dan Petruk bisa mulai coding di hari pertama Sprint 1.
+**Tujuan:** `/opt/fundara/` hidup sebagai shared dev bench. Semar dan Petruk bisa mulai coding di hari pertama Sprint 1.
+
+**Konteks server:**
+- Server ini IS the dev server — Semar, Petruk, Gareng bekerja simultan di sini
+- Working directory: `/opt/fundara/` (sudah ada, permission `2775`, group `fundara`)
+- Semua tim sudah dalam group `fundara`: `bagong, semar, petruk, gareng`
+- Python 3.12.3 sudah ada. Yang belum: Node.js, MariaDB, Redis, bench
 
 ### Tugas
 
-**0-A. Base install di dev server / shared VM**
+**0-A. Install base dependencies (sudo)**
 
 Referensi versi: `docs/infra/environment-spec.md` section 1.3
 
-```
-Ubuntu 24.04.4 LTS
-Python 3.12.x
-Node.js 18.x LTS + npm + Yarn 1.22.x
-MariaDB 10.11.x  (charset utf8mb4)
-Redis 7.x
-wkhtmltopdf 0.12.6 patched Qt  ← VERSI SPESIFIK, versi lain merusak PDF
-Frappe bench (pip install frappe-bench)
+```bash
+# Node.js 18.x LTS
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs
+sudo npm install -g yarn
+
+# MariaDB 10.11 + konfigurasi charset utf8mb4
+sudo apt install -y mariadb-server mariadb-client
+
+# Redis 7
+sudo apt install -y redis-server
+
+# wkhtmltopdf 0.12.6 patched Qt  ← VERSI SPESIFIK, versi lain merusak PDF
+# (download manual dari github.com/wkhtmltopdf/packaging/releases)
+
+# Dependencies bench
+sudo apt install -y git xvfb libfontconfig supervisor nginx
+
+# frappe-bench
+pip3 install frappe-bench
 ```
 
-**0-B. Inisialisasi bench + install aplikasi**
+**0-B. Inisialisasi bench di `/opt/fundara/`**
+
+`/opt/fundara/` IS the bench — bukan subdirektori di dalamnya.
 
 ```bash
-bench init --frappe-branch version-16 fundara-bench
-cd fundara-bench
+# Hapus isi dulu jika ada (direktori harus kosong untuk bench init)
+cd /opt
+sudo bench init --frappe-branch version-16 fundara
+
+# Install apps
+cd /opt/fundara
 bench get-app --branch version-16 erpnext
-bench get-app fundara https://github.com/masmaksum/Fundara  # atau path lokal
+bench get-app fundara https://github.com/masmaksum/Fundara
 bench new-site fundara-dev.local --install-app erpnext --install-app fundara
 bench --site fundara-dev.local set-config developer_mode 1
-bench start
 ```
 
-**0-C. Konfigurasi developer mode**
+**0-C. Permission untuk kerja simultan**
 
-- `developer_mode = 1` di `common_site_config.json`
-- Edit `/etc/hosts`: `127.0.0.1  fundara-dev.local`
-- Pastikan Semar dan Petruk bisa akses via LAN (UFW: allow port 8000 dari subnet tim)
-- SSH key Semar dan Petruk terdaftar di server dev
+```bash
+# Semua file bisa ditulis group fundara
+sudo chown -R bagong:fundara /opt/fundara/
+sudo chmod -R g+w /opt/fundara/
+sudo find /opt/fundara/ -type d -exec chmod g+s {} \;
 
-**0-D. Verifikasi**
+# Supervisor: bench dikelola Gareng — tim tidak perlu start sendiri
+bench setup supervisor
+sudo supervisorctl reread && sudo supervisorctl update
+```
+
+**0-D. Akses tim**
+
+- `/etc/hosts` di server: `127.0.0.1  fundara-dev.local`
+- Semar dan Petruk akses Frappe via browser (SSH tunnel atau satu jaringan)
+- Buat akun Frappe untuk Semar dan Petruk (bukan akun Linux)
+- Git: masing-masing checkout branch sendiri di `/opt/fundara/apps/fundara/`
+
+**0-E. Verifikasi**
 
 ```
-[ ] bench start tidak error
+[ ] supervisor / bench berjalan tanpa error
 [ ] http://fundara-dev.local:8000 bisa diakses
-[ ] Login berhasil sebagai Administrator
-[ ] ERPNext module terinstall
-[ ] Fundara app terinstall (cek di Installed Apps)
+[ ] Login Administrator berhasil
+[ ] ERPNext terinstall (cek Installed Apps)
+[ ] Fundara app terinstall
 [ ] Developer mode aktif (DocType bisa di-export)
+[ ] Semar bisa login dengan akun Frappe-nya
+[ ] Petruk bisa login dengan akun Frappe-nya
+[ ] File baru di /opt/fundara/ group-nya fundara (touch /opt/fundara/test && ls -la)
 ```
 
-**Exit criteria Sprint 0:** Semar dan Petruk bisa buka browser, login, dan mulai buat DocType.
+**Exit criteria Sprint 0:** Semar dan Petruk bisa buka browser, login, dan mulai buat DocType di hari pertama Sprint 1.
 
 ---
 
