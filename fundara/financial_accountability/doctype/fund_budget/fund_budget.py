@@ -2,6 +2,23 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 
+# FE-01: status colors — spec docs/spec/frontend/status-colors.md
+_BUDGET_INDICATORS = {
+    "Draft": "grey",
+    "Submitted": "blue",
+    "Review by Program": "orange",
+    "Review by Finance": "orange",
+    "Approved": "green",
+    "Active": "blue",
+    "Revised": "yellow",
+    "Closed": "darkgrey",
+}
+
+
+def get_indicator(doc, all_data=False):
+    color = _BUDGET_INDICATORS.get(doc.status, "grey")
+    return [doc.status, color, f"status,=,{doc.status}"]
+
 
 class FundBudget(Document):
 	def validate(self):
