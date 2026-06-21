@@ -1,0 +1,106 @@
+{
+ "actions": [],
+ "autoname": "field:fund_type_name",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "fund_type_name",
+  "description",
+  "default_restriction_type",
+  "requires_grant",
+  "requires_donor",
+  "has_end_date",
+  "is_active",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "fund_type_name",
+   "fieldtype": "Data",
+   "label": "Fund Type Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "default_restriction_type",
+   "fieldtype": "Select",
+   "label": "Default Restriction Type",
+   "options": "\nRestricted\nTemporarily Restricted\nUnrestricted\nBoard-designated"
+  },
+  {
+   "default": "0",
+   "fieldname": "requires_grant",
+   "fieldtype": "Check",
+   "label": "Requires Grant"
+  },
+  {
+   "default": "0",
+   "fieldname": "requires_donor",
+   "fieldtype": "Check",
+   "label": "Requires Donor"
+  },
+  {
+   "default": "0",
+   "fieldname": "has_end_date",
+   "fieldtype": "Check",
+   "label": "Has End Date (Mandatory)"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fund Stewardship",
+ "name": "Fund Type",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Program Manager"
+  }
+ ],
+ "search_fields": "fund_type_name",
+ "sort_field": "fund_type_name",
+ "sort_order": "ASC",
+ "states": [],
+ "track_changes": 0
+}

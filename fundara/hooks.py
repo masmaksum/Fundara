@@ -16,6 +16,11 @@ fixtures = [
         "Finance Officer",
     ]]]},
     {"dt": "Custom Field", "filters": [["module", "=", "Organization"]]},
+    {"dt": "Fund Type", "filters": []},
+    {"dt": "Activity Type", "filters": [["activity_type", "in", [
+        "Training", "Advocacy", "Service Delivery", "Research",
+        "Community Engagement", "Coordination", "Monitoring and Evaluation",
+    ]]]},
 ]
 
 # Apps

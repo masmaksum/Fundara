@@ -1,0 +1,90 @@
+[
+ {
+  "doctype": "Fund Type",
+  "name": "Grant Fund",
+  "fund_type_name": "Grant Fund",
+  "description": "Fund sourced from an external grant agreement. Requires a linked Grant record.",
+  "default_restriction_type": "Restricted",
+  "requires_grant": 1,
+  "requires_donor": 1,
+  "has_end_date": 1,
+  "is_active": 1
+ },
+ {
+  "doctype": "Fund Type",
+  "name": "Campaign Fund",
+  "fund_type_name": "Campaign Fund",
+  "description": "Fund raised through a fundraising campaign.",
+  "default_restriction_type": "Restricted",
+  "requires_grant": 0,
+  "requires_donor": 1,
+  "has_end_date": 0,
+  "is_active": 1
+ },
+ {
+  "doctype": "Fund Type",
+  "name": "Unrestricted Fund",
+  "fund_type_name": "Unrestricted Fund",
+  "description": "General operating funds with no donor-imposed restrictions.",
+  "default_restriction_type": "Unrestricted",
+  "requires_grant": 0,
+  "requires_donor": 0,
+  "has_end_date": 0,
+  "is_active": 1
+ },
+ {
+  "doctype": "Fund Type",
+  "name": "Business Surplus Fund",
+  "fund_type_name": "Business Surplus Fund",
+  "description": "Surplus generated from business/social enterprise activities.",
+  "default_restriction_type": "Unrestricted",
+  "requires_grant": 0,
+  "requires_donor": 0,
+  "has_end_date": 0,
+  "is_active": 1
+ },
+ {
+  "doctype": "Fund Type",
+  "name": "Reserve Fund",
+  "fund_type_name": "Reserve Fund",
+  "description": "Board-designated reserve for emergency or strategic use.",
+  "default_restriction_type": "Board-designated",
+  "requires_grant": 0,
+  "requires_donor": 0,
+  "has_end_date": 0,
+  "is_active": 1
+ },
+ {
+  "doctype": "Fund Type",
+  "name": "Co-funding Fund",
+  "fund_type_name": "Co-funding Fund",
+  "description": "Fund contributed jointly by multiple donors or matching partners.",
+  "default_restriction_type": "Restricted",
+  "requires_grant": 1,
+  "requires_donor": 1,
+  "has_end_date": 1,
+  "is_active": 1
+ },
+ {
+  "doctype": "Fund Type",
+  "name": "Bridging Fund",
+  "fund_type_name": "Bridging Fund",
+  "description": "Temporary talangan fund to cover expenses pending reimbursement.",
+  "default_restriction_type": "Unrestricted",
+  "requires_grant": 0,
+  "requires_donor": 0,
+  "has_end_date": 0,
+  "is_active": 1
+ },
+ {
+  "doctype": "Fund Type",
+  "name": "Board-designated Fund",
+  "fund_type_name": "Board-designated Fund",
+  "description": "Fund set aside by board resolution for a specific purpose.",
+  "default_restriction_type": "Board-designated",
+  "requires_grant": 0,
+  "requires_donor": 0,
+  "has_end_date": 0,
+  "is_active": 1
+ }
+]

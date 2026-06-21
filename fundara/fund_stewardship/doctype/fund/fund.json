@@ -1,0 +1,344 @@
+{
+ "actions": [],
+ "allow_amend": 1,
+ "allow_rename": 0,
+ "autoname": "naming_series:",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "fund_name",
+  "fund_code",
+  "fund_type",
+  "sb_restriction",
+  "restriction_type",
+  "purpose",
+  "sb_source",
+  "funding_source",
+  "grant",
+  "fund_owner",
+  "approval_authority",
+  "sb_period",
+  "start_date",
+  "end_date",
+  "sb_currency",
+  "currency",
+  "exchange_rate_on_creation",
+  "opening_balance",
+  "opening_balance_base",
+  "base_currency",
+  "sb_status",
+  "status",
+  "workflow_state",
+  "sb_bridging",
+  "is_bridging_fund",
+  "recoverable_from_fund",
+  "sb_restriction_rules",
+  "allowed_cost_categories",
+  "disallowed_cost_categories",
+  "allowed_programs",
+  "allowed_projects",
+  "procurement_requirement",
+  "reporting_requirement",
+  "exception_rule",
+  "sb_notes",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "FUND-.YYYY.-.####",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "fund_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Fund Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "fund_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Fund Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "fund_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Fund Type",
+   "options": "Fund Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_restriction",
+   "fieldtype": "Section Break",
+   "label": "Restriction & Purpose"
+  },
+  {
+   "fieldname": "restriction_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Restriction Type",
+   "options": "Restricted\nTemporarily Restricted\nUnrestricted\nBoard-designated",
+   "reqd": 1
+  },
+  {
+   "fieldname": "purpose",
+   "fieldtype": "Small Text",
+   "label": "Purpose"
+  },
+  {
+   "fieldname": "sb_source",
+   "fieldtype": "Section Break",
+   "label": "Source & Ownership"
+  },
+  {
+   "fieldname": "funding_source",
+   "fieldtype": "Link",
+   "label": "Funding Source",
+   "options": "Funding Source",
+   "reqd": 1
+  },
+  {
+   "fieldname": "grant",
+   "fieldtype": "Link",
+   "label": "Grant",
+   "options": "Grant"
+  },
+  {
+   "fieldname": "fund_owner",
+   "fieldtype": "Link",
+   "label": "Fund Owner",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "approval_authority",
+   "fieldtype": "Link",
+   "label": "Approval Authority",
+   "options": "User"
+  },
+  {
+   "fieldname": "sb_period",
+   "fieldtype": "Section Break",
+   "label": "Period"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "sb_currency",
+   "fieldtype": "Section Break",
+   "label": "Currency & Opening Balance"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "exchange_rate_on_creation",
+   "fieldtype": "Float",
+   "label": "Exchange Rate on Creation",
+   "precision": "6"
+  },
+  {
+   "fieldname": "opening_balance",
+   "fieldtype": "Currency",
+   "label": "Opening Balance",
+   "options": "currency"
+  },
+  {
+   "fieldname": "opening_balance_base",
+   "fieldtype": "Currency",
+   "label": "Opening Balance (Base IDR)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "base_currency",
+   "fieldtype": "Link",
+   "label": "Base Currency",
+   "options": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_status",
+   "fieldtype": "Section Break",
+   "label": "Status"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Draft\nActive\nSuspended\nClosing\nClosed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Workflow State",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_bridging",
+   "fieldtype": "Section Break",
+   "label": "Bridging Fund"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_bridging_fund",
+   "fieldtype": "Check",
+   "label": "Is Bridging Fund"
+  },
+  {
+   "fieldname": "recoverable_from_fund",
+   "fieldtype": "Link",
+   "label": "Recoverable From Fund",
+   "options": "Fund"
+  },
+  {
+   "fieldname": "sb_restriction_rules",
+   "fieldtype": "Section Break",
+   "label": "Restriction Rules"
+  },
+  {
+   "fieldname": "allowed_cost_categories",
+   "fieldtype": "Small Text",
+   "label": "Allowed Cost Categories"
+  },
+  {
+   "fieldname": "disallowed_cost_categories",
+   "fieldtype": "Small Text",
+   "label": "Disallowed Cost Categories"
+  },
+  {
+   "fieldname": "allowed_programs",
+   "fieldtype": "Small Text",
+   "label": "Allowed Programs"
+  },
+  {
+   "fieldname": "allowed_projects",
+   "fieldtype": "Small Text",
+   "label": "Allowed Projects"
+  },
+  {
+   "fieldname": "procurement_requirement",
+   "fieldtype": "Small Text",
+   "label": "Procurement Requirement"
+  },
+  {
+   "fieldname": "reporting_requirement",
+   "fieldtype": "Small Text",
+   "label": "Reporting Requirement"
+  },
+  {
+   "fieldname": "exception_rule",
+   "fieldtype": "Small Text",
+   "label": "Exception Rule"
+  },
+  {
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fund Stewardship",
+ "name": "Fund",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Program Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Finance Officer"
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Auditor Viewer"
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Executive Viewer"
+  }
+ ],
+ "search_fields": "fund_name,fund_code,fund_type",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

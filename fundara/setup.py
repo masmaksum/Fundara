@@ -419,3 +419,252 @@ def _setup_workspace():
         ],
     }).insert(ignore_permissions=True)
     print("  Fundara Workspace created.")
+
+
+# ===========================================================================
+# Sprint 2 — FG-03 Fund Master Setup
+# Run: bench --site <site> execute fundara.setup.setup_fund_master
+# ===========================================================================
+
+def setup_fund_master():
+    """
+    Idempotent Sprint 2 setup: Fund workflow states, workflows, and demo data.
+    Requires setup_layer_0() to have been run first.
+    """
+    frappe.set_user("Administrator")
+    _setup_fund_workflow_states()
+    frappe.db.commit()
+    _setup_fund_workflow()
+    _setup_fund_restriction_workflow()
+    frappe.db.commit()
+    _setup_net_asset_classes()
+    _setup_accounting_standard_profile()
+    frappe.db.commit()
+    _setup_demo_organization()
+    frappe.db.commit()
+    _setup_demo_fund()
+    frappe.db.commit()
+    print("Fund Master setup complete.")
+
+
+# ---------------------------------------------------------------------------
+# Fund-specific Workflow States
+# ---------------------------------------------------------------------------
+
+_FUND_WORKFLOW_STATES = [
+    ("Active", "Success"),
+    ("Suspended", "Warning"),
+    ("Closing", "Warning"),
+    ("Closed", "Inverse"),
+]
+
+
+def _setup_fund_workflow_states():
+    for state_name, style in _FUND_WORKFLOW_STATES:
+        if not frappe.db.exists("Workflow State", state_name):
+            frappe.get_doc({
+                "doctype": "Workflow State",
+                "workflow_state_name": state_name,
+                "style": style,
+            }).insert(ignore_permissions=True)
+    print("  Fund Workflow States verified/created.")
+
+
+# ---------------------------------------------------------------------------
+# Fund Workflow (Draft → Active → Suspended → Closing → Closed)
+# ---------------------------------------------------------------------------
+
+_FUND_WORKFLOW_ACTIONS = ["Activate", "Suspend", "Reactivate", "Initiate Closing", "Close Fund"]
+
+
+def _setup_fund_workflow():
+    if frappe.db.exists("Workflow", "Fund"):
+        print("  Fund Workflow already exists, skipping.")
+        return
+
+    for action in _FUND_WORKFLOW_ACTIONS:
+        if not frappe.db.exists("Workflow Action Master", action):
+            frappe.get_doc({
+                "doctype": "Workflow Action Master",
+                "workflow_action_name": action,
+            }).insert(ignore_permissions=True)
+
+    frappe.get_doc({
+        "doctype": "Workflow",
+        "workflow_name": "Fund",
+        "document_type": "Fund",
+        "workflow_state_field": "workflow_state",
+        "is_active": 1,
+        "states": [
+            {"doctype": "Workflow Document State", "state": "Draft", "doc_status": "0", "allow_edit": "Program Manager"},
+            {"doctype": "Workflow Document State", "state": "Active", "doc_status": "1", "allow_edit": "Finance Manager"},
+            {"doctype": "Workflow Document State", "state": "Suspended", "doc_status": "1", "allow_edit": "Finance Manager"},
+            {"doctype": "Workflow Document State", "state": "Closing", "doc_status": "1", "allow_edit": "Finance Manager"},
+            {"doctype": "Workflow Document State", "state": "Closed", "doc_status": "2", "allow_edit": "Finance Manager"},
+        ],
+        "transitions": [
+            {"doctype": "Workflow Transition", "state": "Draft", "action": "Activate", "next_state": "Active", "allowed": "Finance Manager"},
+            {"doctype": "Workflow Transition", "state": "Active", "action": "Suspend", "next_state": "Suspended", "allowed": "Finance Manager"},
+            {"doctype": "Workflow Transition", "state": "Suspended", "action": "Reactivate", "next_state": "Active", "allowed": "Finance Manager"},
+            {"doctype": "Workflow Transition", "state": "Active", "action": "Initiate Closing", "next_state": "Closing", "allowed": "Finance Manager"},
+            {"doctype": "Workflow Transition", "state": "Closing", "action": "Close Fund", "next_state": "Closed", "allowed": "Finance Manager"},
+        ],
+    }).insert(ignore_permissions=True)
+    print("  Fund Workflow created.")
+
+
+# ---------------------------------------------------------------------------
+# Fund Restriction Workflow (Draft → Under Review → Approved)
+# ---------------------------------------------------------------------------
+
+def _setup_fund_restriction_workflow():
+    if frappe.db.exists("Workflow", "Fund Restriction"):
+        print("  Fund Restriction Workflow already exists, skipping.")
+        return
+
+    frappe.get_doc({
+        "doctype": "Workflow",
+        "workflow_name": "Fund Restriction",
+        "document_type": "Fund Restriction",
+        "workflow_state_field": "workflow_state",
+        "is_active": 1,
+        "states": [
+            {"doctype": "Workflow Document State", "state": "Draft", "doc_status": "0", "allow_edit": "Program Manager"},
+            {"doctype": "Workflow Document State", "state": "Under Review", "doc_status": "0", "allow_edit": "Finance Manager"},
+            {"doctype": "Workflow Document State", "state": "Approved", "doc_status": "1", "allow_edit": "Finance Manager"},
+            {"doctype": "Workflow Document State", "state": "Rejected", "doc_status": "0", "allow_edit": "Finance Manager"},
+        ],
+        "transitions": [
+            {"doctype": "Workflow Transition", "state": "Draft", "action": "Submit for Review", "next_state": "Under Review", "allowed": "Program Manager"},
+            {"doctype": "Workflow Transition", "state": "Under Review", "action": "Approve", "next_state": "Approved", "allowed": "Finance Manager"},
+            {"doctype": "Workflow Transition", "state": "Under Review", "action": "Reject", "next_state": "Rejected", "allowed": "Finance Manager"},
+            {"doctype": "Workflow Transition", "state": "Rejected", "action": "Revise", "next_state": "Draft", "allowed": "Program Manager"},
+        ],
+    }).insert(ignore_permissions=True)
+    print("  Fund Restriction Workflow created.")
+
+
+# ---------------------------------------------------------------------------
+# Net Asset Classes (ISAK 35)
+# ---------------------------------------------------------------------------
+
+_NET_ASSET_CLASSES = [
+    ("Tanpa Pembatasan", "Aset Neto Tanpa Pembatasan", "Net Assets Without Donor Restrictions"),
+    ("Dengan Pembatasan", "Aset Neto Dengan Pembatasan", "Net Assets With Donor Restrictions"),
+    ("Board-Designated", "Aset Neto yang Ditetapkan Pengurus", "Board-Designated Net Assets"),
+]
+
+
+def _setup_net_asset_classes():
+    for class_name, isak35_label, fasb_label in _NET_ASSET_CLASSES:
+        if not frappe.db.exists("Net Asset Class", class_name):
+            frappe.get_doc({
+                "doctype": "Net Asset Class",
+                "class_name": class_name,
+                "isak35_label": isak35_label,
+                "fasb_label": fasb_label,
+                "is_active": 1,
+            }).insert(ignore_permissions=True)
+    print("  Net Asset Classes verified/created.")
+
+
+# ---------------------------------------------------------------------------
+# Accounting Standard Profile
+# ---------------------------------------------------------------------------
+
+def _setup_accounting_standard_profile():
+    existing = frappe.db.get_value(
+        "Accounting Standard Profile",
+        {"company": COMPANY_NAME, "is_active": 1},
+        "name",
+    )
+    if existing:
+        print("  Accounting Standard Profile already exists, skipping.")
+        return
+
+    unrestricted = frappe.db.get_value("Net Asset Class", "Tanpa Pembatasan", "name")
+    restricted = frappe.db.get_value("Net Asset Class", "Dengan Pembatasan", "name")
+    board_designated = frappe.db.get_value("Net Asset Class", "Board-Designated", "name")
+
+    frappe.get_doc({
+        "doctype": "Accounting Standard Profile",
+        "profile_name": f"{COMPANY_NAME} — ISAK 35",
+        "company": COMPANY_NAME,
+        "standard": "Indonesia-ISAK35",
+        "enable_isak35_reports": 1,
+        "net_asset_class_unrestricted": unrestricted,
+        "net_asset_class_restricted": restricted,
+        "net_asset_class_board_designated": board_designated,
+        "is_active": 1,
+    }).insert(ignore_permissions=True)
+    print("  Accounting Standard Profile created.")
+
+
+# ---------------------------------------------------------------------------
+# Demo Data (2-C): one Funding Source + one Fund (Active)
+# ---------------------------------------------------------------------------
+
+def _setup_demo_organization():
+    if frappe.db.exists("Organization", {"organization_name": "Demo Organization"}):
+        return
+    frappe.get_doc({
+        "doctype": "Organization",
+        "naming_series": "ORG-.YYYY.-.####",
+        "organization_name": "Demo Organization",
+        "organization_type": "Yayasan",
+        "country": "Indonesia",
+        "base_currency": "IDR",
+        "fiscal_year_start_month": "January",
+        "is_active": 1,
+    }).insert(ignore_permissions=True)
+    print("  Demo Organization created.")
+
+
+def _setup_demo_fund():
+    _setup_demo_funding_source()
+    _setup_demo_fund_record()
+
+
+def _setup_demo_funding_source():
+    if frappe.db.exists("Funding Source", {"source_code": "DEMO-FS-001"}):
+        return
+    org = frappe.db.get_value("Organization", {"organization_name": "Demo Organization"}, "name")
+    if not org:
+        print("  Demo Organization not found, skipping Demo Funding Source.")
+        return
+    frappe.get_doc({
+        "doctype": "Funding Source",
+        "source_name": "Demo Funding Source",
+        "source_code": "DEMO-FS-001",
+        "source_type": "Internal Reserve",
+        "organization": org,
+        "is_active": 1,
+    }).insert(ignore_permissions=True)
+    print("  Demo Funding Source created.")
+
+
+def _setup_demo_fund_record():
+    if frappe.db.exists("Fund", {"fund_code": "DEMO-FUND-001"}):
+        print("  Demo Fund already exists, skipping.")
+        return
+
+    fs = frappe.db.get_value("Funding Source", {"source_code": "DEMO-FS-001"}, "name")
+    if not fs:
+        print("  Demo Funding Source not found, skipping Demo Fund.")
+        return
+
+    frappe.get_doc({
+        "doctype": "Fund",
+        "fund_name": "Demo Unrestricted Fund",
+        "fund_code": "DEMO-FUND-001",
+        "fund_type": "Unrestricted Fund",
+        "restriction_type": "Unrestricted",
+        "funding_source": fs,
+        "fund_owner": "Administrator",
+        "start_date": "2026-01-01",
+        "currency": "IDR",
+        "exchange_rate_on_creation": 1,
+        "opening_balance": 0,
+        "status": "Draft",
+    }).insert(ignore_permissions=True)
+    print("  Demo Fund created (status: Draft — activate via workflow).")

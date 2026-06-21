@@ -1,0 +1,233 @@
+{
+ "actions": [],
+ "allow_amend": 1,
+ "allow_rename": 0,
+ "autoname": "naming_series:",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "fund",
+  "restriction_type",
+  "effective_date",
+  "sb_usage",
+  "allowed_cost_categories",
+  "disallowed_cost_categories",
+  "allowed_programs",
+  "allowed_projects",
+  "allowed_locations",
+  "allowed_period_start",
+  "allowed_period_end",
+  "sb_requirements",
+  "procurement_requirement",
+  "reporting_requirement",
+  "exception_rule",
+  "sb_approval",
+  "approved_by",
+  "approval_date",
+  "change_reason",
+  "amendment_reference",
+  "workflow_state",
+  "sb_notes",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "FRESTR-.YYYY.-.####",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "fund",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Fund",
+   "options": "Fund",
+   "reqd": 1
+  },
+  {
+   "fieldname": "restriction_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Restriction Type",
+   "options": "Restricted\nTemporarily Restricted\nUnrestricted\nBoard-designated",
+   "reqd": 1
+  },
+  {
+   "fieldname": "effective_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Effective Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_usage",
+   "fieldtype": "Section Break",
+   "label": "Allowed Usage"
+  },
+  {
+   "fieldname": "allowed_cost_categories",
+   "fieldtype": "Long Text",
+   "label": "Allowed Cost Categories"
+  },
+  {
+   "fieldname": "disallowed_cost_categories",
+   "fieldtype": "Long Text",
+   "label": "Disallowed Cost Categories"
+  },
+  {
+   "fieldname": "allowed_programs",
+   "fieldtype": "Long Text",
+   "label": "Allowed Programs"
+  },
+  {
+   "fieldname": "allowed_projects",
+   "fieldtype": "Long Text",
+   "label": "Allowed Projects"
+  },
+  {
+   "fieldname": "allowed_locations",
+   "fieldtype": "Long Text",
+   "label": "Allowed Locations"
+  },
+  {
+   "fieldname": "allowed_period_start",
+   "fieldtype": "Date",
+   "label": "Allowed Period Start"
+  },
+  {
+   "fieldname": "allowed_period_end",
+   "fieldtype": "Date",
+   "label": "Allowed Period End"
+  },
+  {
+   "fieldname": "sb_requirements",
+   "fieldtype": "Section Break",
+   "label": "Requirements"
+  },
+  {
+   "fieldname": "procurement_requirement",
+   "fieldtype": "Long Text",
+   "label": "Procurement Requirement"
+  },
+  {
+   "fieldname": "reporting_requirement",
+   "fieldtype": "Long Text",
+   "label": "Reporting Requirement"
+  },
+  {
+   "fieldname": "exception_rule",
+   "fieldtype": "Long Text",
+   "label": "Exception Rule"
+  },
+  {
+   "fieldname": "sb_approval",
+   "fieldtype": "Section Break",
+   "label": "Approval & Audit"
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User"
+  },
+  {
+   "fieldname": "approval_date",
+   "fieldtype": "Date",
+   "label": "Approval Date"
+  },
+  {
+   "fieldname": "change_reason",
+   "fieldtype": "Small Text",
+   "label": "Change Reason"
+  },
+  {
+   "fieldname": "amendment_reference",
+   "fieldtype": "Data",
+   "label": "Amendment Reference"
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Workflow State",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fund Stewardship",
+ "name": "Fund Restriction",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Program Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Auditor Viewer"
+  }
+ ],
+ "search_fields": "fund,restriction_type,effective_date",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
