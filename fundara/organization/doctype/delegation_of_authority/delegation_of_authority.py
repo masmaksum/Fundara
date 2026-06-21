@@ -27,7 +27,7 @@ class DelegationofAuthority(Document):
 			frappe.throw(_("Valid To cannot be earlier than Valid From."))
 
 	def _validate_document_types_unique(self):
-		seen = []
+		seen = set()
 		for row in self.applicable_document_types:
 			if row.document_type in seen:
 				frappe.throw(
@@ -35,4 +35,4 @@ class DelegationofAuthority(Document):
 						row.document_type
 					)
 				)
-			seen.append(row.document_type)
+			seen.add(row.document_type)

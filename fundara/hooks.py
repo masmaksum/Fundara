@@ -7,7 +7,7 @@ app_license = "mit"
 
 # Fundara Modules
 # ---------------
-app_include_icons = "fundara/public/icons.svg"
+# app_include_icons = "fundara/public/icons.svg"  # file belum dibuat
 
 # Fixtures
 fixtures = [
