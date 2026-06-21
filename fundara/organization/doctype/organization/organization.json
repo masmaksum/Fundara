@@ -1,0 +1,221 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "organization_name",
+  "legal_name",
+  "organization_type",
+  "registration_number",
+  "legal_status",
+  "sb1",
+  "country",
+  "base_currency",
+  "default_language",
+  "fiscal_year_start_month",
+  "sb2",
+  "website",
+  "email",
+  "phone",
+  "address",
+  "sb3",
+  "mission_statement",
+  "vision_statement",
+  "sb4",
+  "tax_profile",
+  "sb5",
+  "is_active",
+  "logo",
+  "contact_persons",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "ORG-.YYYY.-.####",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "organization_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Organization Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "legal_name",
+   "fieldtype": "Data",
+   "label": "Legal Name"
+  },
+  {
+   "fieldname": "organization_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Organization Type",
+   "options": "NGO\nYayasan\nKomunitas\nSocial Enterprise\nLembaga Filantropi\nFaith-based Organization\nKoperasi Sosial\nProgram CSR",
+   "reqd": 1
+  },
+  {
+   "fieldname": "registration_number",
+   "fieldtype": "Data",
+   "label": "Registration Number"
+  },
+  {
+   "fieldname": "legal_status",
+   "fieldtype": "Data",
+   "label": "Legal Status"
+  },
+  {
+   "fieldname": "sb1",
+   "fieldtype": "Section Break",
+   "label": "Location & Currency"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "base_currency",
+   "fieldtype": "Link",
+   "label": "Base Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "default_language",
+   "fieldtype": "Data",
+   "label": "Default Language"
+  },
+  {
+   "fieldname": "fiscal_year_start_month",
+   "fieldtype": "Select",
+   "label": "Fiscal Year Start Month",
+   "options": "January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb2",
+   "fieldtype": "Section Break",
+   "label": "Contact & Online"
+  },
+  {
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website",
+   "options": "URL"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "sb3",
+   "fieldtype": "Section Break",
+   "label": "Mission & Identity"
+  },
+  {
+   "fieldname": "mission_statement",
+   "fieldtype": "Long Text",
+   "label": "Mission Statement"
+  },
+  {
+   "fieldname": "vision_statement",
+   "fieldtype": "Long Text",
+   "label": "Vision Statement"
+  },
+  {
+   "fieldname": "sb4",
+   "fieldtype": "Section Break",
+   "label": "Tax & Compliance"
+  },
+  {
+   "fieldname": "tax_profile",
+   "fieldtype": "Small Text",
+   "label": "Tax Profile"
+  },
+  {
+   "fieldname": "sb5",
+   "fieldtype": "Section Break",
+   "label": "Status"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Logo"
+  },
+  {
+   "fieldname": "contact_persons",
+   "fieldtype": "Table",
+   "label": "Contact Persons",
+   "options": "Organization Contact Item"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Organization",
+ "name": "Organization",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1
+  }
+ ],
+ "search_fields": "organization_name,organization_type",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

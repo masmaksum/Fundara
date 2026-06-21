@@ -1,0 +1,205 @@
+{
+ "actions": [],
+ "allow_amend": 1,
+ "allow_rename": 0,
+ "autoname": "naming_series:",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "authority_name",
+  "organization",
+  "sb1",
+  "approver_role",
+  "approval_level",
+  "sb2",
+  "applicable_document_types",
+  "sb3",
+  "currency",
+  "minimum_amount",
+  "maximum_amount",
+  "sb4",
+  "applicable_department",
+  "applicable_office",
+  "sb5",
+  "valid_from",
+  "valid_to",
+  "is_active",
+  "sb6",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "DOA-.YYYY.-.####",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "authority_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Authority Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Organization",
+   "options": "Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb1",
+   "fieldtype": "Section Break",
+   "label": "Approval Principal"
+  },
+  {
+   "fieldname": "approver_role",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Approver Role",
+   "options": "Role",
+   "reqd": 1
+  },
+  {
+   "fieldname": "approval_level",
+   "fieldtype": "Int",
+   "label": "Approval Level",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb2",
+   "fieldtype": "Section Break",
+   "label": "Document Scope"
+  },
+  {
+   "fieldname": "applicable_document_types",
+   "fieldtype": "Table",
+   "label": "Applicable Document Types",
+   "options": "Delegation of Authority Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb3",
+   "fieldtype": "Section Break",
+   "label": "Amount Threshold"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "minimum_amount",
+   "fieldtype": "Currency",
+   "label": "Minimum Amount",
+   "options": "currency"
+  },
+  {
+   "fieldname": "maximum_amount",
+   "fieldtype": "Currency",
+   "label": "Maximum Amount",
+   "options": "currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb4",
+   "fieldtype": "Section Break",
+   "label": "Organizational Scope"
+  },
+  {
+   "fieldname": "applicable_department",
+   "fieldtype": "Link",
+   "label": "Applicable Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "applicable_office",
+   "fieldtype": "Link",
+   "label": "Applicable Office",
+   "options": "Office"
+  },
+  {
+   "fieldname": "sb5",
+   "fieldtype": "Section Break",
+   "label": "Validity"
+  },
+  {
+   "fieldname": "valid_from",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Valid From",
+   "reqd": 1
+  },
+  {
+   "fieldname": "valid_to",
+   "fieldtype": "Date",
+   "label": "Valid To"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb6",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Organization",
+ "name": "Delegation of Authority",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "authority_name,approver_role",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
