@@ -26,5 +26,13 @@ class FundAllocation(Document):
 		if not self.fund:
 			return
 		opening = frappe.db.get_value("Fund", self.fund, "opening_balance_base") or 0
-		self.fund_available_balance = opening
+		allocated = frappe.db.sql(
+			"""
+			SELECT COALESCE(SUM(amount), 0)
+			FROM `tabFund Allocation`
+			WHERE fund = %s AND docstatus = 1 AND name != %s
+			""",
+			(self.fund, self.name or ""),
+		)[0][0]
+		self.fund_available_balance = opening - allocated
 		self.fund_restriction_ok = 1

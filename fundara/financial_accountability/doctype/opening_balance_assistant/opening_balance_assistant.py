@@ -42,7 +42,7 @@ class OpeningBalanceAssistant(Document):
 		self.difference = total_debit - total_credit
 
 	def _check_balance(self):
-		self.validation_status = "Balanced" if self.difference == 0 else "Out of Balance"
+		self.validation_status = "Balanced" if abs(self.difference) < 0.01 else "Out of Balance"
 
 	def _check_duplicate_fiscal_year(self):
 		existing = frappe.db.get_value(
@@ -82,6 +82,10 @@ class OpeningBalanceAssistant(Document):
 			"remark": f"Opening Balance as of {self.as_of_date}",
 		})
 		je.insert(ignore_permissions=True)
-		je.submit()
+		try:
+			je.submit()
+		except Exception as e:
+			frappe.log_error(message=str(e), title=f"Opening Balance JE submit failed: {je.name}")
+			frappe.throw(_("Failed to submit Opening Journal Entry {0}: {1}").format(je.name, str(e)))
 		self.db_set("opening_journal_entry", je.name)
 		self.db_set("validation_status", "Posted")

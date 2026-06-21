@@ -53,3 +53,5 @@ class BudgetRevision(Document):
 					"Fund Budget Line", row.budget_line, "revised_amount", row.revised_amount
 				)
 		frappe.db.set_value("Fund Budget", self.budget, "status", "Revised")
+		budget_doc = frappe.get_doc("Fund Budget", self.budget)
+		budget_doc.save(ignore_permissions=True)
