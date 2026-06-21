@@ -49,5 +49,15 @@ class FundRestriction(Document):
 			pluck="name",
 		)
 		for name in previous:
-			doc = frappe.get_doc("Fund Restriction", name)
-			doc.cancel()
+			try:
+				doc = frappe.get_doc("Fund Restriction", name)
+				doc.cancel()
+			except Exception as e:
+				frappe.log_error(
+					message=str(e),
+					title=f"Fund Restriction supersede failed: {name}",
+				)
+				frappe.msgprint(
+					_("Could not cancel previous restriction {0}: {1}").format(name, str(e)),
+					alert=True,
+				)

@@ -4,17 +4,15 @@ from frappe.model.document import Document
 
 
 class Fund(Document):
+	def before_insert(self):
+		self._set_base_currency()
+
 	def validate(self):
 		self._validate_grant_required()
 		self._validate_dates()
 		self._validate_bridging_fund()
 		self._validate_end_date_required()
 		self._compute_opening_balance_base()
-		self._set_base_currency()
-
-	def before_submit(self):
-		if self.status not in ("Active",):
-			frappe.throw(_("Fund must be set to 'Active' before submission."))
 
 	def _validate_grant_required(self):
 		fund_type = frappe.db.get_value("Fund Type", self.fund_type, "requires_grant")
@@ -37,7 +35,7 @@ class Fund(Document):
 			)
 
 	def _validate_bridging_fund(self):
-		if self.recoverable_from_fund and self.recoverable_from_fund == self.name:
+		if not self.is_new() and self.recoverable_from_fund and self.recoverable_from_fund == self.name:
 			frappe.throw(_("A Fund cannot be set as recoverable from itself."))
 
 	def _compute_opening_balance_base(self):
