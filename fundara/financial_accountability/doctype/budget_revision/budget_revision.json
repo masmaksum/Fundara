@@ -1,0 +1,183 @@
+{
+ "actions": [],
+ "allow_amend": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series", "budget", "revision_number",
+  "sb_dim", "fund", "project", "cost_center", "posting_date",
+  "sb_currency", "currency", "exchange_rate",
+  "sb_lines", "revision_lines",
+  "sb_approval", "status", "workflow_state", "approved_by", "approved_on", "revision_justification",
+  "sb_notes", "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "BDGR-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "budget",
+   "fieldtype": "Link",
+   "label": "Budget",
+   "options": "Fund Budget",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "revision_number",
+   "fieldtype": "Int",
+   "label": "Revision Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_dim",
+   "fieldtype": "Section Break",
+   "label": "Fund & Period"
+  },
+  {
+   "fieldname": "fund",
+   "fieldtype": "Link",
+   "label": "Fund",
+   "options": "Fund",
+   "read_only": 1,
+   "fetch_from": "budget.fund"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project",
+   "read_only": 1,
+   "fetch_from": "budget.project"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_currency",
+   "fieldtype": "Section Break",
+   "label": "Currency"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Exchange Rate",
+   "default": "1.0"
+  },
+  {
+   "fieldname": "sb_lines",
+   "fieldtype": "Section Break",
+   "label": "Revision Lines"
+  },
+  {
+   "fieldname": "revision_lines",
+   "fieldtype": "Table",
+   "label": "Revision Lines",
+   "options": "Budget Revision Line",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_approval",
+   "fieldtype": "Section Break",
+   "label": "Approval"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nSubmitted\nApproved\nRejected",
+   "reqd": 1,
+   "default": "Draft",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Data",
+   "label": "Workflow State",
+   "hidden": 1,
+   "read_only": 1,
+   "no_copy": 1,
+   "print_hide": 1
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User"
+  },
+  {
+   "fieldname": "approved_on",
+   "fieldtype": "Date",
+   "label": "Approved On"
+  },
+  {
+   "fieldname": "revision_justification",
+   "fieldtype": "Long Text",
+   "label": "Revision Justification"
+  },
+  {
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Financial Accountability",
+ "name": "Budget Revision",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1, "cancel": 1, "create": 1, "delete": 1, "email": 1, "export": 1,
+   "print": 1, "read": 1, "report": 1, "role": "System Manager", "share": 1,
+   "submit": 1, "write": 1
+  },
+  {
+   "amend": 1, "cancel": 1, "create": 1, "email": 1, "export": 1, "print": 1,
+   "read": 1, "report": 1, "role": "Finance Manager", "share": 1, "submit": 1, "write": 1
+  },
+  {
+   "create": 1, "email": 1, "export": 1, "print": 1,
+   "read": 1, "report": 1, "role": "Program Manager", "share": 1, "write": 1
+  },
+  {
+   "read": 1, "report": 1, "role": "Finance Officer"
+  },
+  {
+   "read": 1, "report": 1, "role": "Auditor Viewer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,245 @@
+{
+ "actions": [],
+ "allow_amend": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series", "activity_name", "activity_code", "activity_type",
+  "sb_project", "project", "program", "fund", "budget_line", "cost_center",
+  "sb_responsibility", "responsible_person", "status", "workflow_state",
+  "sb_schedule", "planned_date", "actual_date", "posting_date", "col_schedule", "location",
+  "sb_budget", "currency", "exchange_rate", "planned_cost", "actual_cost",
+  "sb_output", "target_output", "actual_output",
+  "sb_notes", "description", "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "ACT-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "activity_name",
+   "fieldtype": "Data",
+   "label": "Activity Name",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "activity_code",
+   "fieldtype": "Data",
+   "label": "Activity Code"
+  },
+  {
+   "fieldname": "activity_type",
+   "fieldtype": "Link",
+   "label": "Activity Type",
+   "options": "Activity Type",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sb_project",
+   "fieldtype": "Section Break",
+   "label": "Project & Fund"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "program",
+   "fieldtype": "Link",
+   "label": "Program",
+   "options": "Program",
+   "read_only": 1,
+   "fetch_from": "project.program"
+  },
+  {
+   "fieldname": "fund",
+   "fieldtype": "Link",
+   "label": "Fund",
+   "options": "Fund",
+   "reqd": 1
+  },
+  {
+   "fieldname": "budget_line",
+   "fieldtype": "Link",
+   "label": "Budget Line",
+   "options": "Fund Budget Line",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "sb_responsibility",
+   "fieldtype": "Section Break",
+   "label": "Responsibility"
+  },
+  {
+   "fieldname": "responsible_person",
+   "fieldtype": "Link",
+   "label": "Responsible Person",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Planned\nApproved\nIn Progress\nCompleted\nReported\nVerified\nClosed",
+   "reqd": 1,
+   "default": "Planned",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Data",
+   "label": "Workflow State",
+   "hidden": 1,
+   "read_only": 1,
+   "no_copy": 1,
+   "print_hide": 1
+  },
+  {
+   "fieldname": "sb_schedule",
+   "fieldtype": "Section Break",
+   "label": "Schedule"
+  },
+  {
+   "fieldname": "planned_date",
+   "fieldtype": "Date",
+   "label": "Planned Date",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "actual_date",
+   "fieldtype": "Date",
+   "label": "Actual Date"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "col_schedule",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location"
+  },
+  {
+   "fieldname": "sb_budget",
+   "fieldtype": "Section Break",
+   "label": "Budget & Cost"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Exchange Rate",
+   "default": "1.0"
+  },
+  {
+   "fieldname": "planned_cost",
+   "fieldtype": "Currency",
+   "label": "Planned Cost",
+   "options": "currency"
+  },
+  {
+   "fieldname": "actual_cost",
+   "fieldtype": "Currency",
+   "label": "Actual Cost",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_output",
+   "fieldtype": "Section Break",
+   "label": "Output"
+  },
+  {
+   "fieldname": "target_output",
+   "fieldtype": "Small Text",
+   "label": "Target Output"
+  },
+  {
+   "fieldname": "actual_output",
+   "fieldtype": "Small Text",
+   "label": "Actual Output"
+  },
+  {
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Long Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Mission Delivery",
+ "name": "Activity",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1, "cancel": 1, "create": 1, "delete": 1, "email": 1, "export": 1,
+   "print": 1, "read": 1, "report": 1, "role": "System Manager", "share": 1,
+   "submit": 1, "write": 1
+  },
+  {
+   "create": 1, "email": 1, "export": 1, "print": 1,
+   "read": 1, "report": 1, "role": "Program Manager", "share": 1, "write": 1
+  },
+  {
+   "create": 1, "email": 1, "export": 1, "print": 1,
+   "read": 1, "report": 1, "role": "Project Officer", "share": 1, "write": 1
+  },
+  {
+   "read": 1, "report": 1, "role": "Finance Officer"
+  },
+  {
+   "read": 1, "report": 1, "role": "Auditor Viewer"
+  },
+  {
+   "read": 1, "report": 1, "role": "Executive Viewer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
