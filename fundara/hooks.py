@@ -5,6 +5,15 @@ app_description = "Fund-centric ERP for Indonesian NGOs"
 app_email = "bagong@combine.id"
 app_license = "mit"
 
+# FE-01: Status indicator colors for listview
+# Spec: docs/spec/frontend/status-colors.md
+get_indicators = [
+    "fundara.fund_stewardship.doctype.fund.fund.get_indicator",
+    "fundara.mission_delivery.doctype.project.project.get_indicator",
+    "fundara.mission_delivery.doctype.activity.activity.get_indicator",
+    "fundara.financial_accountability.doctype.fund_budget.fund_budget.get_indicator",
+]
+
 # Fundara Modules
 # ---------------
 # app_include_icons = "fundara/public/icons.svg"  # file belum dibuat

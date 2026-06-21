@@ -2,6 +2,22 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 
+# FE-01: status colors — spec docs/spec/frontend/status-colors.md
+_ACTIVITY_INDICATORS = {
+    "Planned": "grey",
+    "Approved": "blue",
+    "In Progress": "blue",
+    "Completed": "green",
+    "Reported": "green",
+    "Verified": "green",
+    "Closed": "darkgrey",
+}
+
+
+def get_indicator(doc, all_data=False):
+    color = _ACTIVITY_INDICATORS.get(doc.status, "grey")
+    return [doc.status, color, f"status,=,{doc.status}"]
+
 
 class Activity(Document):
 	def validate(self):
