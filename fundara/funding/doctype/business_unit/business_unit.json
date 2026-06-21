@@ -1,0 +1,209 @@
+{
+ "actions": [],
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "business_unit_name",
+  "business_unit_code",
+  "organization",
+  "sb1",
+  "revenue_model",
+  "manager",
+  "office",
+  "linked_cost_center",
+  "linked_department",
+  "sb2",
+  "currency",
+  "tax_profile",
+  "sb3",
+  "surplus_allocation_policy",
+  "surplus_allocation_description",
+  "sb4",
+  "linked_funding_source",
+  "sb5",
+  "is_active",
+  "opening_date",
+  "closing_date",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "BU-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "business_unit_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Business Unit Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "business_unit_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Business Unit Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Organization",
+   "options": "Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb1",
+   "fieldtype": "Section Break",
+   "label": "Operations"
+  },
+  {
+   "fieldname": "revenue_model",
+   "fieldtype": "Select",
+   "label": "Revenue Model",
+   "options": "Training / Education\nFood & Beverage\nConsulting / Professional Services\nProduct Sales\nEvent Management\nMembership\nRental\nPublication\nOther",
+   "reqd": 1
+  },
+  {
+   "fieldname": "manager",
+   "fieldtype": "Link",
+   "label": "Manager",
+   "options": "User"
+  },
+  {
+   "fieldname": "office",
+   "fieldtype": "Link",
+   "label": "Office",
+   "options": "Office"
+  },
+  {
+   "fieldname": "linked_cost_center",
+   "fieldtype": "Link",
+   "label": "Linked Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "linked_department",
+   "fieldtype": "Link",
+   "label": "Linked Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "sb2",
+   "fieldtype": "Section Break",
+   "label": "Financial"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tax_profile",
+   "fieldtype": "Small Text",
+   "label": "Tax Profile"
+  },
+  {
+   "fieldname": "sb3",
+   "fieldtype": "Section Break",
+   "label": "Surplus Policy"
+  },
+  {
+   "fieldname": "surplus_allocation_policy",
+   "fieldtype": "Link",
+   "label": "Surplus Allocation Policy",
+   "options": "Surplus Allocation Policy"
+  },
+  {
+   "fieldname": "surplus_allocation_description",
+   "fieldtype": "Small Text",
+   "label": "Surplus Allocation Description"
+  },
+  {
+   "fieldname": "sb4",
+   "fieldtype": "Section Break",
+   "label": "Funding Source"
+  },
+  {
+   "fieldname": "linked_funding_source",
+   "fieldtype": "Link",
+   "label": "Linked Funding Source",
+   "options": "Funding Source"
+  },
+  {
+   "fieldname": "sb5",
+   "fieldtype": "Section Break",
+   "label": "Status"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "opening_date",
+   "fieldtype": "Date",
+   "label": "Opening Date"
+  },
+  {
+   "fieldname": "closing_date",
+   "fieldtype": "Date",
+   "label": "Closing Date"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Funding",
+ "name": "Business Unit",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "All"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "business_unit_name"
+}

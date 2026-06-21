@@ -1,0 +1,215 @@
+{
+ "actions": [],
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "source_name",
+  "source_code",
+  "source_type",
+  "organization",
+  "sb1",
+  "country",
+  "relationship_owner",
+  "responsible_department",
+  "sb2",
+  "default_restriction_type",
+  "reporting_expectation",
+  "risk_profile",
+  "sb3",
+  "linked_donor",
+  "linked_campaign",
+  "linked_business_unit",
+  "sb4",
+  "is_active",
+  "activation_date",
+  "deactivation_date",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "FS-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Source Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Source Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "source_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Source Type",
+   "options": "Institutional Donor\nIndividual Donor\nCorporate Donor\nPublic Fundraising\nFundraising Campaign\nSocial Enterprise Revenue\nService Revenue\nMembership Fee\nGovernment Contract\nInternal Reserve\nInvestment Income\nZakat / Infaq / Wakaf",
+   "reqd": 1
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Organization",
+   "options": "Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb1",
+   "fieldtype": "Section Break",
+   "label": "Contact & Ownership"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "relationship_owner",
+   "fieldtype": "Link",
+   "label": "Relationship Owner",
+   "options": "User"
+  },
+  {
+   "fieldname": "responsible_department",
+   "fieldtype": "Link",
+   "label": "Responsible Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "sb2",
+   "fieldtype": "Section Break",
+   "label": "Fund Character"
+  },
+  {
+   "fieldname": "default_restriction_type",
+   "fieldtype": "Select",
+   "label": "Default Restriction Type",
+   "options": "Restricted\nUnrestricted\nDesignated",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reporting_expectation",
+   "fieldtype": "Select",
+   "label": "Reporting Expectation",
+   "options": "None\nBasic Receipt\nNarrative Report\nFull Financial Report\nAudit Required",
+   "reqd": 1
+  },
+  {
+   "fieldname": "risk_profile",
+   "fieldtype": "Select",
+   "label": "Risk Profile",
+   "options": "\nLow\nMedium\nHigh"
+  },
+  {
+   "fieldname": "sb3",
+   "fieldtype": "Section Break",
+   "label": "Links to Sub-records"
+  },
+  {
+   "fieldname": "linked_donor",
+   "fieldtype": "Link",
+   "label": "Linked Donor",
+   "options": "Donor"
+  },
+  {
+   "fieldname": "linked_campaign",
+   "fieldtype": "Link",
+   "label": "Linked Campaign",
+   "options": "Fundraising Campaign"
+  },
+  {
+   "fieldname": "linked_business_unit",
+   "fieldtype": "Link",
+   "label": "Linked Business Unit",
+   "options": "Business Unit"
+  },
+  {
+   "fieldname": "sb4",
+   "fieldtype": "Section Break",
+   "label": "Status"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "activation_date",
+   "fieldtype": "Date",
+   "label": "Activation Date"
+  },
+  {
+   "fieldname": "deactivation_date",
+   "fieldtype": "Date",
+   "label": "Deactivation Date"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Funding",
+ "name": "Funding Source",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Officer"
+  },
+  {
+   "read": 1,
+   "role": "All"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "source_name"
+}

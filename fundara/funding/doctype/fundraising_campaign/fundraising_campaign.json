@@ -1,0 +1,278 @@
+{
+ "actions": [],
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "campaign_name",
+  "campaign_code",
+  "organization",
+  "sb1",
+  "purpose",
+  "restricted_purpose",
+  "restriction_type",
+  "sb2",
+  "currency",
+  "target_amount",
+  "start_date",
+  "end_date",
+  "sb3",
+  "campaign_manager",
+  "responsible_department",
+  "sb4",
+  "campaign_channels",
+  "sb5",
+  "public_reporting_required",
+  "public_reporting_commitment",
+  "sb6",
+  "status",
+  "linked_funding_source",
+  "sb7",
+  "total_donations_received",
+  "total_donors",
+  "achievement_percent",
+  "sb8",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "CAMP-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "campaign_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Campaign Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "campaign_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Campaign Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Organization",
+   "options": "Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb1",
+   "fieldtype": "Section Break",
+   "label": "Purpose"
+  },
+  {
+   "fieldname": "purpose",
+   "fieldtype": "Small Text",
+   "label": "Purpose",
+   "reqd": 1
+  },
+  {
+   "fieldname": "restricted_purpose",
+   "fieldtype": "Small Text",
+   "label": "Restricted Purpose"
+  },
+  {
+   "fieldname": "restriction_type",
+   "fieldtype": "Select",
+   "label": "Restriction Type",
+   "options": "Restricted\nUnrestricted\nDesignated",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb2",
+   "fieldtype": "Section Break",
+   "label": "Target & Timeline"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "target_amount",
+   "fieldtype": "Currency",
+   "label": "Target Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb3",
+   "fieldtype": "Section Break",
+   "label": "Management"
+  },
+  {
+   "fieldname": "campaign_manager",
+   "fieldtype": "Link",
+   "label": "Campaign Manager",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "responsible_department",
+   "fieldtype": "Link",
+   "label": "Responsible Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "sb4",
+   "fieldtype": "Section Break",
+   "label": "Channels"
+  },
+  {
+   "fieldname": "campaign_channels",
+   "fieldtype": "Table",
+   "label": "Campaign Channels",
+   "options": "Campaign Channel Item"
+  },
+  {
+   "fieldname": "sb5",
+   "fieldtype": "Section Break",
+   "label": "Reporting & Transparency"
+  },
+  {
+   "fieldname": "public_reporting_required",
+   "fieldtype": "Check",
+   "label": "Public Reporting Required"
+  },
+  {
+   "fieldname": "public_reporting_commitment",
+   "fieldtype": "Small Text",
+   "label": "Public Reporting Commitment"
+  },
+  {
+   "fieldname": "sb6",
+   "fieldtype": "Section Break",
+   "label": "Status"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Draft\nUnder Review\nApproved\nActive\nPaused\nCompleted\nReporting\nClosed\nCancelled",
+   "reqd": 1
+  },
+  {
+   "fieldname": "linked_funding_source",
+   "fieldtype": "Link",
+   "label": "Linked Funding Source",
+   "options": "Funding Source"
+  },
+  {
+   "fieldname": "sb7",
+   "fieldtype": "Section Break",
+   "label": "Financials"
+  },
+  {
+   "fieldname": "total_donations_received",
+   "fieldtype": "Currency",
+   "label": "Total Donations Received",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_donors",
+   "fieldtype": "Int",
+   "label": "Total Donors",
+   "read_only": 1
+  },
+  {
+   "fieldname": "achievement_percent",
+   "fieldtype": "Percent",
+   "label": "Achievement %",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb8",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Funding",
+ "name": "Fundraising Campaign",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Officer",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "All"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "campaign_name"
+}
