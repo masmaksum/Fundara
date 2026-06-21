@@ -1,0 +1,172 @@
+{
+ "actions": [],
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "donor_legal_name",
+  "donor_short_name",
+  "linked_donor",
+  "sb1",
+  "compliance_requirements",
+  "audit_requirement",
+  "procurement_preference",
+  "branding_requirement",
+  "sb2",
+  "financial_reporting_format",
+  "narrative_reporting_format",
+  "reporting_frequency",
+  "sb3",
+  "allowed_currency",
+  "sb4",
+  "special_conditions",
+  "attachments"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "IDP-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "donor_legal_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Donor Legal Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "donor_short_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Donor Short Name"
+  },
+  {
+   "fieldname": "linked_donor",
+   "fieldtype": "Link",
+   "label": "Donor",
+   "options": "Donor",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb1",
+   "fieldtype": "Section Break",
+   "label": "Compliance Requirements"
+  },
+  {
+   "fieldname": "compliance_requirements",
+   "fieldtype": "Long Text",
+   "label": "Compliance Requirements"
+  },
+  {
+   "fieldname": "audit_requirement",
+   "fieldtype": "Select",
+   "label": "Audit Requirement",
+   "options": "\nNone\nInternal Audit\nExternal Audit\nDonor-Commissioned Audit"
+  },
+  {
+   "fieldname": "procurement_preference",
+   "fieldtype": "Select",
+   "label": "Procurement Preference",
+   "options": "\nNo Restriction\nDonor Procurement Rules\nLocal Procurement Priority\nCompetitive Bidding Required"
+  },
+  {
+   "fieldname": "branding_requirement",
+   "fieldtype": "Small Text",
+   "label": "Branding Requirement"
+  },
+  {
+   "fieldname": "sb2",
+   "fieldtype": "Section Break",
+   "label": "Reporting Format"
+  },
+  {
+   "fieldname": "financial_reporting_format",
+   "fieldtype": "Select",
+   "label": "Financial Reporting Format",
+   "options": "\nStandard Fundara\nDonor Template\nIFRS\nLocal GAAP\nCustom"
+  },
+  {
+   "fieldname": "narrative_reporting_format",
+   "fieldtype": "Select",
+   "label": "Narrative Reporting Format",
+   "options": "\nStandard Fundara\nDonor Template\nCustom"
+  },
+  {
+   "fieldname": "reporting_frequency",
+   "fieldtype": "Select",
+   "label": "Reporting Frequency",
+   "options": "\nMonthly\nQuarterly\nSemi-annual\nAnnual\nMilestone-based"
+  },
+  {
+   "fieldname": "sb3",
+   "fieldtype": "Section Break",
+   "label": "Currency & Financial"
+  },
+  {
+   "fieldname": "allowed_currency",
+   "fieldtype": "Table MultiSelect",
+   "label": "Allowed Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "sb4",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "special_conditions",
+   "fieldtype": "Long Text",
+   "label": "Special Conditions"
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Attach",
+   "label": "Attachments"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Funding",
+ "name": "Institutional Donor Profile",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "All"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "donor_legal_name"
+}

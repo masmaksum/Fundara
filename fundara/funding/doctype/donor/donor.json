@@ -1,0 +1,217 @@
+{
+ "actions": [],
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "donor_name",
+  "donor_type",
+  "organization",
+  "sb1",
+  "contact_person",
+  "email",
+  "phone",
+  "country",
+  "preferred_language",
+  "donor_contacts",
+  "sb2",
+  "reporting_preference",
+  "acknowledgment_preference",
+  "sb3",
+  "relationship_owner",
+  "linked_funding_source",
+  "sb4",
+  "institutional_profile",
+  "sb5",
+  "donor_status",
+  "is_anonymous_allowed",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "DNR-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "donor_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Donor Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "donor_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Donor Type",
+   "options": "Individual\nInstitutional\nCorporate\nPhilanthropic Foundation\nMultilateral Agency\nGovernment\nCommunity",
+   "reqd": 1
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Organization",
+   "options": "Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb1",
+   "fieldtype": "Section Break",
+   "label": "Contact"
+  },
+  {
+   "fieldname": "contact_person",
+   "fieldtype": "Data",
+   "label": "Contact Person"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "preferred_language",
+   "fieldtype": "Data",
+   "label": "Preferred Language"
+  },
+  {
+   "fieldname": "donor_contacts",
+   "fieldtype": "Table",
+   "label": "Contacts",
+   "options": "Donor Contact Item"
+  },
+  {
+   "fieldname": "sb2",
+   "fieldtype": "Section Break",
+   "label": "Preferences"
+  },
+  {
+   "fieldname": "reporting_preference",
+   "fieldtype": "Select",
+   "label": "Reporting Preference",
+   "options": "\nEmail\nPost\nPortal\nNo Preference"
+  },
+  {
+   "fieldname": "acknowledgment_preference",
+   "fieldtype": "Select",
+   "label": "Acknowledgment Preference",
+   "options": "\nEmail\nLetter\nCall\nCertificate\nNone"
+  },
+  {
+   "fieldname": "sb3",
+   "fieldtype": "Section Break",
+   "label": "Relationship"
+  },
+  {
+   "fieldname": "relationship_owner",
+   "fieldtype": "Link",
+   "label": "Relationship Owner",
+   "options": "User"
+  },
+  {
+   "fieldname": "linked_funding_source",
+   "fieldtype": "Link",
+   "label": "Linked Funding Source",
+   "options": "Funding Source"
+  },
+  {
+   "fieldname": "sb4",
+   "fieldtype": "Section Break",
+   "label": "Institutional Profile"
+  },
+  {
+   "fieldname": "institutional_profile",
+   "fieldtype": "Link",
+   "label": "Institutional Profile",
+   "options": "Institutional Donor Profile"
+  },
+  {
+   "fieldname": "sb5",
+   "fieldtype": "Section Break",
+   "label": "Status"
+  },
+  {
+   "fieldname": "donor_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Donor Status",
+   "options": "Prospect\nActive\nLapsed\nFormer\nBlacklisted",
+   "reqd": 1
+  },
+  {
+   "fieldname": "is_anonymous_allowed",
+   "fieldtype": "Check",
+   "label": "Allow Anonymous Donations"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Funding",
+ "name": "Donor",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Officer"
+  },
+  {
+   "read": 1,
+   "role": "All"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "donor_name"
+}

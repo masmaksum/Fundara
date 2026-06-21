@@ -1,0 +1,271 @@
+{
+ "actions": [],
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "donation_number",
+  "organization",
+  "sb1",
+  "is_anonymous",
+  "donor",
+  "donor_display_name",
+  "sb2",
+  "fundraising_campaign",
+  "funding_source",
+  "sb3",
+  "currency",
+  "amount",
+  "exchange_rate",
+  "amount_in_base_currency",
+  "sb4",
+  "date_received",
+  "payment_channel",
+  "payment_reference",
+  "sb5",
+  "restriction_type",
+  "restriction_purpose",
+  "sb6",
+  "receipt_number",
+  "receipt_issued",
+  "receipt_date",
+  "acknowledgment_status",
+  "acknowledgment_date",
+  "sb7",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "DON-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "donation_number",
+   "fieldtype": "Data",
+   "label": "Donation Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Organization",
+   "options": "Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb1",
+   "fieldtype": "Section Break",
+   "label": "Donor"
+  },
+  {
+   "fieldname": "is_anonymous",
+   "fieldtype": "Check",
+   "label": "Anonymous Donation"
+  },
+  {
+   "fieldname": "donor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Donor",
+   "options": "Donor"
+  },
+  {
+   "fieldname": "donor_display_name",
+   "fieldtype": "Data",
+   "label": "Donor Display Name"
+  },
+  {
+   "fieldname": "sb2",
+   "fieldtype": "Section Break",
+   "label": "Campaign"
+  },
+  {
+   "fieldname": "fundraising_campaign",
+   "fieldtype": "Link",
+   "label": "Fundraising Campaign",
+   "options": "Fundraising Campaign"
+  },
+  {
+   "fieldname": "funding_source",
+   "fieldtype": "Link",
+   "label": "Funding Source",
+   "options": "Funding Source"
+  },
+  {
+   "fieldname": "sb3",
+   "fieldtype": "Section Break",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Exchange Rate"
+  },
+  {
+   "fieldname": "amount_in_base_currency",
+   "fieldtype": "Currency",
+   "label": "Amount in Base Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb4",
+   "fieldtype": "Section Break",
+   "label": "Payment"
+  },
+  {
+   "fieldname": "date_received",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date Received",
+   "reqd": 1
+  },
+  {
+   "fieldname": "payment_channel",
+   "fieldtype": "Select",
+   "label": "Payment Channel",
+   "options": "Bank Transfer\nCash\nCredit Card\nDigital Wallet\nCheque\nZakat Platform\nOnline Platform\nOther",
+   "reqd": 1
+  },
+  {
+   "fieldname": "payment_reference",
+   "fieldtype": "Data",
+   "label": "Payment Reference"
+  },
+  {
+   "fieldname": "sb5",
+   "fieldtype": "Section Break",
+   "label": "Restriction"
+  },
+  {
+   "fieldname": "restriction_type",
+   "fieldtype": "Select",
+   "label": "Restriction Type",
+   "options": "Restricted\nUnrestricted\nDesignated",
+   "reqd": 1
+  },
+  {
+   "fieldname": "restriction_purpose",
+   "fieldtype": "Small Text",
+   "label": "Restriction Purpose"
+  },
+  {
+   "fieldname": "sb6",
+   "fieldtype": "Section Break",
+   "label": "Receipt & Acknowledgment"
+  },
+  {
+   "fieldname": "receipt_number",
+   "fieldtype": "Data",
+   "label": "Receipt Number"
+  },
+  {
+   "fieldname": "receipt_issued",
+   "fieldtype": "Check",
+   "label": "Receipt Issued"
+  },
+  {
+   "fieldname": "receipt_date",
+   "fieldtype": "Date",
+   "label": "Receipt Date"
+  },
+  {
+   "fieldname": "acknowledgment_status",
+   "fieldtype": "Select",
+   "label": "Acknowledgment Status",
+   "options": "Pending\nSent\nConfirmed\nNot Required",
+   "reqd": 1
+  },
+  {
+   "fieldname": "acknowledgment_date",
+   "fieldtype": "Date",
+   "label": "Acknowledgment Date"
+  },
+  {
+   "fieldname": "sb7",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Funding",
+ "name": "Donation",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Officer",
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "All"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
