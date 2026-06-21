@@ -13,7 +13,7 @@ app_license = "mit"
 fixtures = [
     {"dt": "Role", "filters": [["role_name", "in", [
         "Program Manager", "Project Officer", "Executive Viewer", "Auditor Viewer",
-        "Finance Officer",
+        "Finance Officer", "Finance Manager",
     ]]]},
     {"dt": "Custom Field", "filters": [["module", "=", "Organization"]]},
     {"dt": "Fund Type", "filters": []},
