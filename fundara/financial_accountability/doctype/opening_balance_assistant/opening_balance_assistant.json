@@ -1,0 +1,160 @@
+{
+ "actions": [],
+ "allow_amend": 0,
+ "autoname": "naming_series:",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series", "fiscal_year", "as_of_date", "posting_date",
+  "sb_currency", "currency", "exchange_rate",
+  "sb_balances", "balance_lines", "total_debit", "total_credit",
+  "sb_validation", "validation_status", "difference",
+  "sb_journal", "opening_journal_entry",
+  "sb_notes", "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "OBA-.YYYY.-####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "fiscal_year",
+   "fieldtype": "Link",
+   "label": "Fiscal Year",
+   "options": "Fiscal Year",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "as_of_date",
+   "fieldtype": "Date",
+   "label": "As of Date",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_currency",
+   "fieldtype": "Section Break",
+   "label": "Currency"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Exchange Rate",
+   "default": "1.0"
+  },
+  {
+   "fieldname": "sb_balances",
+   "fieldtype": "Section Break",
+   "label": "Balance Lines"
+  },
+  {
+   "fieldname": "balance_lines",
+   "fieldtype": "Table",
+   "label": "Balance Lines",
+   "options": "Opening Balance Line",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_debit",
+   "fieldtype": "Currency",
+   "label": "Total Debit",
+   "read_only": 1,
+   "options": "currency"
+  },
+  {
+   "fieldname": "total_credit",
+   "fieldtype": "Currency",
+   "label": "Total Credit",
+   "read_only": 1,
+   "options": "currency"
+  },
+  {
+   "fieldname": "sb_validation",
+   "fieldtype": "Section Break",
+   "label": "Validation"
+  },
+  {
+   "fieldname": "validation_status",
+   "fieldtype": "Select",
+   "label": "Validation Status",
+   "options": "Pending\nBalanced\nOut of Balance\nPosted",
+   "default": "Pending",
+   "read_only": 1
+  },
+  {
+   "fieldname": "difference",
+   "fieldtype": "Currency",
+   "label": "Difference",
+   "read_only": 1,
+   "options": "currency"
+  },
+  {
+   "fieldname": "sb_journal",
+   "fieldtype": "Section Break",
+   "label": "Journal Entry"
+  },
+  {
+   "fieldname": "opening_journal_entry",
+   "fieldtype": "Link",
+   "label": "Opening Journal Entry",
+   "options": "Journal Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Financial Accountability",
+ "name": "Opening Balance Assistant",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "cancel": 1, "create": 1, "delete": 1, "email": 1, "export": 1,
+   "print": 1, "read": 1, "report": 1, "role": "System Manager", "share": 1,
+   "submit": 1, "write": 1
+  },
+  {
+   "cancel": 1, "create": 1, "email": 1, "export": 1, "print": 1,
+   "read": 1, "report": 1, "role": "Finance Manager", "share": 1, "submit": 1, "write": 1
+  },
+  {
+   "read": 1, "report": 1, "role": "Auditor Viewer"
+  },
+  {
+   "read": 1, "report": 1, "role": "Executive Viewer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

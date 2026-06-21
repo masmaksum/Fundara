@@ -1,0 +1,231 @@
+{
+ "actions": [],
+ "allow_amend": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series", "budget_name", "budget_type",
+  "sb_dimensions", "fund", "project", "activity", "cost_center",
+  "sb_period", "fiscal_year", "start_date", "end_date", "posting_date",
+  "sb_currency", "currency", "exchange_rate", "total_approved_amount", "total_actual_amount", "total_available_amount",
+  "sb_lines", "budget_lines",
+  "sb_approval", "status", "workflow_state", "approved_by", "approved_on",
+  "sb_notes", "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "BDG-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "budget_name",
+   "fieldtype": "Data",
+   "label": "Budget Name",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "budget_type",
+   "fieldtype": "Select",
+   "label": "Budget Type",
+   "options": "Organizational\nProgram\nProject\nGrant\nCampaign\nBusiness Unit\nActivity",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sb_dimensions",
+   "fieldtype": "Section Break",
+   "label": "Fund & Dimensions"
+  },
+  {
+   "fieldname": "fund",
+   "fieldtype": "Link",
+   "label": "Fund",
+   "options": "Fund",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "activity",
+   "fieldtype": "Link",
+   "label": "Activity",
+   "options": "Activity"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "sb_period",
+   "fieldtype": "Section Break",
+   "label": "Period"
+  },
+  {
+   "fieldname": "fiscal_year",
+   "fieldtype": "Link",
+   "label": "Fiscal Year",
+   "options": "Fiscal Year",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "sb_currency",
+   "fieldtype": "Section Break",
+   "label": "Currency & Totals"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Exchange Rate",
+   "default": "1.0"
+  },
+  {
+   "fieldname": "total_approved_amount",
+   "fieldtype": "Currency",
+   "label": "Total Approved Amount",
+   "read_only": 1,
+   "options": "currency"
+  },
+  {
+   "fieldname": "total_actual_amount",
+   "fieldtype": "Currency",
+   "label": "Total Actual Amount",
+   "read_only": 1,
+   "options": "currency"
+  },
+  {
+   "fieldname": "total_available_amount",
+   "fieldtype": "Currency",
+   "label": "Total Available Amount",
+   "read_only": 1,
+   "options": "currency"
+  },
+  {
+   "fieldname": "sb_lines",
+   "fieldtype": "Section Break",
+   "label": "Budget Lines"
+  },
+  {
+   "fieldname": "budget_lines",
+   "fieldtype": "Table",
+   "label": "Budget Lines",
+   "options": "Fund Budget Line",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_approval",
+   "fieldtype": "Section Break",
+   "label": "Approval"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nSubmitted\nReview by Program\nReview by Finance\nApproved\nActive\nRevised\nClosed",
+   "reqd": 1,
+   "default": "Draft",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Data",
+   "label": "Workflow State",
+   "hidden": 1,
+   "read_only": 1,
+   "no_copy": 1,
+   "print_hide": 1
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User"
+  },
+  {
+   "fieldname": "approved_on",
+   "fieldtype": "Date",
+   "label": "Approved On"
+  },
+  {
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Financial Accountability",
+ "name": "Fund Budget",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1, "cancel": 1, "create": 1, "delete": 1, "email": 1, "export": 1,
+   "print": 1, "read": 1, "report": 1, "role": "System Manager", "share": 1,
+   "submit": 1, "write": 1
+  },
+  {
+   "amend": 1, "cancel": 1, "create": 1, "email": 1, "export": 1, "print": 1,
+   "read": 1, "report": 1, "role": "Finance Manager", "share": 1, "submit": 1, "write": 1
+  },
+  {
+   "create": 1, "email": 1, "export": 1, "print": 1,
+   "read": 1, "report": 1, "role": "Program Manager", "share": 1, "write": 1
+  },
+  {
+   "read": 1, "report": 1, "role": "Finance Officer"
+  },
+  {
+   "read": 1, "report": 1, "role": "Auditor Viewer"
+  },
+  {
+   "read": 1, "report": 1, "role": "Executive Viewer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

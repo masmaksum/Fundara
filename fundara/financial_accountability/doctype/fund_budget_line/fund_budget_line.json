@@ -1,0 +1,101 @@
+{
+ "actions": [],
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "budget_line_name", "budget_code", "parent_budget_line",
+  "sb_amount", "approved_amount", "revised_amount", "actual_amount",
+  "sb_mapping", "allowed_accounts", "donor_report_category", "fund_restriction", "is_active", "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "budget_line_name",
+   "fieldtype": "Data",
+   "label": "Budget Line Name",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "budget_code",
+   "fieldtype": "Data",
+   "label": "Budget Code",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "parent_budget_line",
+   "fieldtype": "Link",
+   "label": "Parent Budget Line",
+   "options": "Fund Budget Line"
+  },
+  {
+   "fieldname": "sb_amount",
+   "fieldtype": "Section Break",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "approved_amount",
+   "fieldtype": "Currency",
+   "label": "Approved Amount",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "revised_amount",
+   "fieldtype": "Currency",
+   "label": "Revised Amount"
+  },
+  {
+   "fieldname": "actual_amount",
+   "fieldtype": "Currency",
+   "label": "Actual Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_mapping",
+   "fieldtype": "Section Break",
+   "label": "Mapping"
+  },
+  {
+   "fieldname": "allowed_accounts",
+   "fieldtype": "Small Text",
+   "label": "Allowed Accounts"
+  },
+  {
+   "fieldname": "donor_report_category",
+   "fieldtype": "Data",
+   "label": "Donor Report Category"
+  },
+  {
+   "fieldname": "fund_restriction",
+   "fieldtype": "Select",
+   "label": "Fund Restriction",
+   "options": "\nUnrestricted\nTemporarily Restricted\nPermanently Restricted"
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active",
+   "default": "1"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Financial Accountability",
+ "name": "Fund Budget Line",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}

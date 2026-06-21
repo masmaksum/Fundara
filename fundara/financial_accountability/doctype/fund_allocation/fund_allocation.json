@@ -1,0 +1,191 @@
+{
+ "actions": [],
+ "allow_amend": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series", "fund", "allocation_type", "allocated_to_reference",
+  "sb_dim", "project", "activity", "cost_center",
+  "sb_currency", "currency", "exchange_rate", "amount",
+  "sb_balance", "fund_available_balance", "fund_restriction_ok", "outstanding_commitments",
+  "sb_approval", "status", "workflow_state", "revision_justification",
+  "sb_notes", "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "FALC-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "fund",
+   "fieldtype": "Link",
+   "label": "Fund",
+   "options": "Fund",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "allocation_type",
+   "fieldtype": "Select",
+   "label": "Allocation Type",
+   "options": "Project\nActivity\nBudget Line\nGeneral",
+   "reqd": 1
+  },
+  {
+   "fieldname": "allocated_to_reference",
+   "fieldtype": "Data",
+   "label": "Allocated To (Reference)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_dim",
+   "fieldtype": "Section Break",
+   "label": "Dimensions"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "activity",
+   "fieldtype": "Link",
+   "label": "Activity",
+   "options": "Activity"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "sb_currency",
+   "fieldtype": "Section Break",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Exchange Rate",
+   "default": "1.0"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "reqd": 1,
+   "options": "currency",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sb_balance",
+   "fieldtype": "Section Break",
+   "label": "Fund Balance Check"
+  },
+  {
+   "fieldname": "fund_available_balance",
+   "fieldtype": "Currency",
+   "label": "Fund Available Balance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fund_restriction_ok",
+   "fieldtype": "Check",
+   "label": "Fund Restriction OK",
+   "read_only": 1
+  },
+  {
+   "fieldname": "outstanding_commitments",
+   "fieldtype": "Currency",
+   "label": "Outstanding Commitments",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_approval",
+   "fieldtype": "Section Break",
+   "label": "Approval"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nSubmitted\nApproved\nActive\nRevised\nClosed",
+   "reqd": 1,
+   "default": "Draft",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Data",
+   "label": "Workflow State",
+   "hidden": 1,
+   "read_only": 1,
+   "no_copy": 1,
+   "print_hide": 1
+  },
+  {
+   "fieldname": "revision_justification",
+   "fieldtype": "Small Text",
+   "label": "Revision Justification"
+  },
+  {
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Financial Accountability",
+ "name": "Fund Allocation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1, "cancel": 1, "create": 1, "delete": 1, "email": 1, "export": 1,
+   "print": 1, "read": 1, "report": 1, "role": "System Manager", "share": 1,
+   "submit": 1, "write": 1
+  },
+  {
+   "amend": 1, "cancel": 1, "create": 1, "email": 1, "export": 1, "print": 1,
+   "read": 1, "report": 1, "role": "Finance Manager", "share": 1, "submit": 1, "write": 1
+  },
+  {
+   "create": 1, "email": 1, "export": 1, "print": 1,
+   "read": 1, "report": 1, "role": "Program Manager", "share": 1, "write": 1
+  },
+  {
+   "create": 1, "read": 1, "report": 1, "role": "Finance Officer"
+  },
+  {
+   "read": 1, "report": 1, "role": "Auditor Viewer"
+  },
+  {
+   "read": 1, "report": 1, "role": "Executive Viewer"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
