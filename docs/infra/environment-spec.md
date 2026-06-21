@@ -3,7 +3,8 @@
 **Audience:** DevOps engineer / system administrator  
 **Purpose:** Reference document for provisioning and operating Fundara environments  
 **Stack:** ERPNext v16 / Frappe Framework / Ubuntu Server 24.04.4 LTS  
-**Last updated:** 2026-06-19
+**Last updated:** 2026-06-21  
+**Changelog:** v1.1 — Python 3.12→3.14, Node.js 18→24 (verified against Frappe 16.23.0 actual requirements)
 
 ---
 
@@ -51,9 +52,9 @@ All environments target the same pinned versions. Dev is the first to receive ve
 | Component | Version |
 |---|---|
 | Ubuntu | 24.04.4 LTS |
-| Python | 3.12.x |
-| Node.js | 18.x LTS |
-| npm | bundled with Node.js 18 |
+| Python | 3.14.x (from deadsnakes PPA — see note below) |
+| Node.js | 24.x LTS (from NodeSource — see note below) |
+| npm | bundled with Node.js 24 |
 | Yarn | 1.22.x |
 | MariaDB | 10.11.x |
 | Redis | 7.x |
@@ -63,6 +64,23 @@ All environments target the same pinned versions. Dev is the first to receive ve
 | Fundara | main / feature branch |
 | wkhtmltopdf | 0.12.6 (with patched Qt) |
 | Certbot | latest via snap |
+
+> **⚠ Catatan versi Python dan Node.js:**
+>
+> Ubuntu 24.04 hanya menyertakan Python 3.12.x secara default. Frappe 16.23.0 mensyaratkan **Python ≥ 3.14, < 3.15**.
+> Install dari PPA deadsnakes:
+> ```bash
+> sudo add-apt-repository -y ppa:deadsnakes/ppa
+> sudo apt-get install -y python3.14 python3.14-venv python3.14-dev
+> ```
+> Gunakan flag `--python python3.14` saat `bench init`.
+>
+> Node.js 18.x tidak lagi kompatibel dengan Frappe 16.23.0+ (requires `>=24`).
+> Install dari NodeSource:
+> ```bash
+> curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
+> sudo apt-get install -y nodejs
+> ```
 
 ### 1.4 Frappe Bench Configuration
 
