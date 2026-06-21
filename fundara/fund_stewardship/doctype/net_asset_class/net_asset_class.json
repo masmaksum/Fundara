@@ -1,0 +1,88 @@
+{
+ "actions": [],
+ "autoname": "field:class_name",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "class_name",
+  "isak35_label",
+  "fasb_label",
+  "description",
+  "is_active"
+ ],
+ "fields": [
+  {
+   "fieldname": "class_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Class Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "isak35_label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "ISAK 35 Label"
+  },
+  {
+   "fieldname": "fasb_label",
+   "fieldtype": "Data",
+   "label": "FASB ASC 958 Label"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  }
+ ],
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fund Stewardship",
+ "name": "Net Asset Class",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Auditor Viewer"
+  }
+ ],
+ "search_fields": "class_name,isak35_label",
+ "sort_field": "class_name",
+ "sort_order": "ASC",
+ "states": [],
+ "track_changes": 0
+}

@@ -1,0 +1,9 @@
+[
+ {"doctype": "Activity Type", "name": "Training", "activity_type": "Training", "disabled": 0},
+ {"doctype": "Activity Type", "name": "Advocacy", "activity_type": "Advocacy", "disabled": 0},
+ {"doctype": "Activity Type", "name": "Service Delivery", "activity_type": "Service Delivery", "disabled": 0},
+ {"doctype": "Activity Type", "name": "Research", "activity_type": "Research", "disabled": 0},
+ {"doctype": "Activity Type", "name": "Community Engagement", "activity_type": "Community Engagement", "disabled": 0},
+ {"doctype": "Activity Type", "name": "Coordination", "activity_type": "Coordination", "disabled": 0},
+ {"doctype": "Activity Type", "name": "Monitoring and Evaluation", "activity_type": "Monitoring and Evaluation", "disabled": 0}
+]

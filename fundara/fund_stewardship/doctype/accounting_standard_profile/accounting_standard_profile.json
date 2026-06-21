@@ -1,0 +1,141 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2026-06-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "profile_name",
+  "company",
+  "standard",
+  "sb_isak35",
+  "enable_isak35_reports",
+  "net_asset_class_unrestricted",
+  "net_asset_class_restricted",
+  "net_asset_class_board_designated",
+  "sb_notes",
+  "notes",
+  "is_active"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "ASP-.YYYY.-.####",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "profile_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Profile Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "standard",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Standard",
+   "options": "Indonesia-ISAK35\nGlobal-ASC958\nCustom",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_isak35",
+   "fieldtype": "Section Break",
+   "label": "Net Asset Class Mapping"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_isak35_reports",
+   "fieldtype": "Check",
+   "label": "Enable ISAK 35 Report Templates"
+  },
+  {
+   "fieldname": "net_asset_class_unrestricted",
+   "fieldtype": "Link",
+   "label": "Net Asset Class — Unrestricted",
+   "options": "Net Asset Class"
+  },
+  {
+   "fieldname": "net_asset_class_restricted",
+   "fieldtype": "Link",
+   "label": "Net Asset Class — Restricted",
+   "options": "Net Asset Class"
+  },
+  {
+   "fieldname": "net_asset_class_board_designated",
+   "fieldtype": "Link",
+   "label": "Net Asset Class — Board-designated",
+   "options": "Net Asset Class"
+  },
+  {
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Long Text",
+   "label": "Notes"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  }
+ ],
+ "links": [],
+ "modified": "2026-06-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fund Stewardship",
+ "name": "Accounting Standard Profile",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Finance Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Auditor Viewer"
+  }
+ ],
+ "search_fields": "profile_name,company",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
