@@ -9,12 +9,13 @@ app_license = "mit"
 # ---------------
 app_include_icons = "fundara/public/icons.svg"
 
-# Fixtures — Custom Fields on ERPNext built-ins
+# Fixtures
 fixtures = [
-    {
-        "dt": "Custom Field",
-        "filters": [["module", "=", "Organization"]],
-    }
+    {"dt": "Role", "filters": [["role_name", "in", [
+        "Program Manager", "Project Officer", "Executive Viewer", "Auditor Viewer",
+        "Finance Officer",
+    ]]]},
+    {"dt": "Custom Field", "filters": [["module", "=", "Organization"]]},
 ]
 
 # Apps

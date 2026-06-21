@@ -1,0 +1,78 @@
+{
+ "app": "fundara",
+ "charts": [],
+ "content": "[]",
+ "creation": "2026-06-21 18:35:35.672137",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "hide_custom": 0,
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Fundara",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2026-06-21 18:35:35.672137",
+ "modified_by": "Administrator",
+ "module": "Organization",
+ "name": "Fundara",
+ "number_cards": [],
+ "owner": "Administrator",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 0.0,
+ "shortcuts": [
+  {
+   "doc_view": "",
+   "label": "Organization",
+   "link_to": "Organization",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Office",
+   "link_to": "Office",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Delegation of Authority",
+   "link_to": "Delegation of Authority",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Donor",
+   "link_to": "Donor",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Institutional Donor Profile",
+   "link_to": "Institutional Donor Profile",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Funding Source",
+   "link_to": "Funding Source",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Fundraising Campaign",
+   "link_to": "Fundraising Campaign",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Donation",
+   "link_to": "Donation",
+   "type": "DocType"
+  }
+ ],
+ "title": "Fundara",
+ "type": "Workspace"
+}
